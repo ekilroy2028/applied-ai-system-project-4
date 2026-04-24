@@ -159,6 +159,10 @@ class Cartoon:
     # Visual history — how the character looked over time
     eras: list[Era] = field(default_factory=list)
 
+    # Where it was created and Wikipedia reference
+    origin_location: str = ""
+    wiki_url: str = ""
+
     # ── Computed properties ────────────────────────────────────────────────
 
     @property

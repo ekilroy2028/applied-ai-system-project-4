@@ -1,7 +1,8 @@
 """
 seed_data.py
 Pre-built cartoon records for CartoonPal.
-Import build_library() to get a fully populated Library instance.
+Each Era includes image_url and notes.
+Each Cartoon includes wiki_url and origin_location.
 """
 
 from cartoon_system import (
@@ -49,16 +50,26 @@ def build_library() -> Library:
     felix.add_era(Era(1919, 1929,
         "Silent era — simple black silhouette, large expressive white eyes, rubber-hose limbs",
         art_style="Black & white",
-        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/thirty/Felix_the_cat.svg/240px-Felix_the_cat.svg.png"))
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Felix_the_cat.svg/240px-Felix_the_cat.svg.png",
+        notes="Created by Otto Messmer at Pat Sullivan Studio, New York City. Debuted in Feline Follies (1919)."))
     felix.add_era(Era(1929, 1958,
         "Transitional sound era — design largely unchanged, early color experiments",
-        art_style="Black & white / early color"))
+        art_style="Black & white / early color",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Felix_the_cat.svg/240px-Felix_the_cat.svg.png",
+        notes="Felix struggled to transition to sound cartoons after the Sullivan studio declined."))
     felix.add_era(Era(1958, 1994,
         "TV redesign — rounder, simplified for limited animation; introduced magic bag",
-        art_style="Flat color TV cel"))
+        art_style="Flat color TV cel",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Felix_the_cat.svg/240px-Felix_the_cat.svg.png",
+        notes="Joe Oriolo redesigned Felix for TV. The magic bag of tricks became his signature prop."))
     felix.add_era(Era(1995, None,
         "Modern revival — retro-influenced styling, updated palette, more expressive",
-        art_style="Mixed digital/traditional"))
+        art_style="Mixed digital/traditional",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Felix_the_cat.svg/240px-Felix_the_cat.svg.png",
+        notes="Film Roman produced The Twisted Tales of Felix the Cat for CBS Saturday mornings."))
+
+    felix.wiki_url = "https://en.wikipedia.org/wiki/Felix_the_Cat"
+    felix.origin_location = "New York City, USA — Pat Sullivan's Manhattan studio"
     lib.add_cartoon(felix)
 
     # ── MICKEY MOUSE (1928) ───────────────────────────────────────────────
@@ -94,24 +105,37 @@ def build_library() -> Library:
     mickey.add_ownership_record(OwnershipRecord(
         "The Walt Disney Company", 1986, None,
         "corporate restructuring", is_current_owner=True,
-        notes="Note: Steamboat Willie (1928 film) entered US public domain Jan 1 2024; "
+        notes="Steamboat Willie (1928) entered US public domain Jan 1 2024; "
               "Mickey Mouse as a trademark remains fully protected"))
 
     mickey.add_era(Era(1928, 1935,
         "Steamboat Willie look — black & white, pie-cut eyes, rubber-hose limbs, no pupils",
-        art_style="Black & white"))
+        art_style="Black & white",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Mickey_Mouse_-_color.svg/240px-Mickey_Mouse_-_color.svg.png",
+        notes="Debuted November 18, 1928 at the Colony Theatre, New York City. First cartoon with synchronized sound."))
     mickey.add_era(Era(1935, 1953,
         "Technicolor golden age — oval eyes with pupils, white gloves standardized, color palette locked in",
-        art_style="Technicolor cel animation"))
+        art_style="Technicolor cel animation",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Mickey_Mouse_-_color.svg/240px-Mickey_Mouse_-_color.svg.png",
+        notes="The Band Concert (1935) was Mickey's first color cartoon, produced at Disney's Hyperion Ave studio, Los Angeles."))
     mickey.add_era(Era(1953, 1999,
         "Classic TV era — slightly simplified lines for cheaper production, same silhouette",
-        art_style="Flat cel animation"))
+        art_style="Flat cel animation",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Mickey_Mouse_-_color.svg/240px-Mickey_Mouse_-_color.svg.png",
+        notes="Mickey transitioned primarily to TV. The Mickey Mouse Club ran 1955–1959 on ABC."))
     mickey.add_era(Era(1999, 2013,
         "Digital cleanup — HD-ready version of classic design, refined linework",
-        art_style="Digital cel"))
+        art_style="Digital cel",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Mickey_Mouse_-_color.svg/240px-Mickey_Mouse_-_color.svg.png",
+        notes="Mickey Mouse Works and House of Mouse brought Mickey back to regular animation on Disney Channel."))
     mickey.add_era(Era(2013, None,
         "Short-form redesign — expressive, rubbery, influenced by international animation styles",
-        art_style="Stylized digital"))
+        art_style="Stylized digital",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Mickey_Mouse_-_color.svg/240px-Mickey_Mouse_-_color.svg.png",
+        notes="New series directed by Paul Rudish. Won 3 Emmy Awards. Episodes set in worldwide locations."))
+
+    mickey.wiki_url = "https://en.wikipedia.org/wiki/Mickey_Mouse"
+    mickey.origin_location = "Los Angeles, California, USA — Walt Disney Studios, Hyperion Avenue"
     lib.add_cartoon(mickey)
 
     # ── BUGS BUNNY (1940) ─────────────────────────────────────────────────
@@ -161,19 +185,32 @@ def build_library() -> Library:
 
     bugs.add_era(Era(1940, 1943,
         "Proto-Bugs — varied look across directors, design still being settled",
-        art_style="Early Technicolor"))
+        art_style="Early Technicolor",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Bugs_Bunny.svg/240px-Bugs_Bunny.svg.png",
+        notes="First appearance in A Wild Hare (1940), directed by Tex Avery at Warner Bros. Termite Terrace, Burbank CA."))
     bugs.add_era(Era(1943, 1969,
         "Golden Age definitive design — grey fur, white gloves, confident posture, expressive face",
-        art_style="Technicolor cel"))
+        art_style="Technicolor cel",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Bugs_Bunny.svg/240px-Bugs_Bunny.svg.png",
+        notes="Chuck Jones and McKimson locked in the final model at Termite Terrace. 'What's Up Doc?' became his catchphrase."))
     bugs.add_era(Era(1970, 1999,
         "Saturday-morning TV era — simplified, softer colors, slightly shorter ears",
-        art_style="Limited TV animation"))
+        art_style="Limited TV animation",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Bugs_Bunny.svg/240px-Bugs_Bunny.svg.png",
+        notes="Production moved to TV after Termite Terrace closed. Bugs remained America's most popular cartoon character."))
     bugs.add_era(Era(2000, 2018,
         "Digital era — cleaned linework, HD-ready version of classic model",
-        art_style="Digital cel"))
+        art_style="Digital cel",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Bugs_Bunny.svg/240px-Bugs_Bunny.svg.png",
+        notes="Space Jam (1996) introduced Bugs to a new generation. Looney Tunes: Back in Action followed in 2003."))
     bugs.add_era(Era(2019, None,
         "Looney Tunes Cartoons revival — high-detail return to golden-age style in HD",
-        art_style="HD digital classic"))
+        art_style="HD digital classic",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Bugs_Bunny.svg/240px-Bugs_Bunny.svg.png",
+        notes="HBO Max series returned to hand-drawn style, praised as most faithful recreation of golden age look."))
+
+    bugs.wiki_url = "https://en.wikipedia.org/wiki/Bugs_Bunny"
+    bugs.origin_location = "Burbank, California, USA — Warner Bros. Termite Terrace animation studio"
     lib.add_cartoon(bugs)
 
     # ── BETTY BOOP (1930) ─────────────────────────────────────────────────
@@ -197,14 +234,12 @@ def build_library() -> Library:
     betty.add_series(Series("Betty Boop (TV reruns & specials)", 1971, 1985,
         "Various TV distributors", "TV broadcast"))
     betty.add_series(Series("Betty Boop's Hollywood Mystery (film)", 2025, None,
-        "MUBI / StudioCanal", "theatrical feature",
-        notes="Announced feature film revival"))
+        "MUBI / StudioCanal", "theatrical feature"))
 
     betty.add_ownership_record(OwnershipRecord(
         "Fleischer Studios / Paramount Pictures", 1930, 1941, "original creation"))
     betty.add_ownership_record(OwnershipRecord(
-        "Paramount Pictures", 1941, 1975,
-        "studio takeover of Fleischer",
+        "Paramount Pictures", 1941, 1975, "studio takeover of Fleischer",
         notes="Paramount seized Fleischer Studios in 1941"))
     betty.add_ownership_record(OwnershipRecord(
         "King Features Syndicate", 1975, None,
@@ -212,16 +247,27 @@ def build_library() -> Library:
 
     betty.add_era(Era(1930, 1932,
         "Original dog-eared design — partly based on a French poodle character",
-        art_style="Black & white"))
+        art_style="Black & white",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Betty_Boop_1930s.png/200px-Betty_Boop_1930s.png",
+        notes="Betty debuted in Dizzy Dishes (1930) from Fleischer Studios at 1600 Broadway, Manhattan."))
     betty.add_era(Era(1932, 1934,
         "Pre-Code peak — short skirt, garter, more overtly suggestive styling",
-        art_style="Black & white"))
+        art_style="Black & white",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Betty_Boop_1930s.png/200px-Betty_Boop_1930s.png",
+        notes="Peak creative period. Snow-White (1933) and Minnie the Moocher (1932) featured Cab Calloway."))
     betty.add_era(Era(1934, 1939,
         "Post-Hays Code redesign — longer dress, more demure, less provocative",
-        art_style="Black & white"))
+        art_style="Black & white",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Betty_Boop_1930s.png/200px-Betty_Boop_1930s.png",
+        notes="The Hays Code enforcement in 1934 forced a redesign. Popularity declined and series ended in 1939."))
     betty.add_era(Era(1985, None,
         "Modern revival — classic 1932 look restored, used in merchandise & media",
-        art_style="Retro color recreation"))
+        art_style="Retro color recreation",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Betty_Boop_1930s.png/200px-Betty_Boop_1930s.png",
+        notes="King Features licensed Betty for a massive merchandise boom in the 1980s–90s."))
+
+    betty.wiki_url = "https://en.wikipedia.org/wiki/Betty_Boop"
+    betty.origin_location = "New York City, USA — Fleischer Studios, 1600 Broadway, Manhattan"
     lib.add_cartoon(betty)
 
     # ── POPEYE (1929) ─────────────────────────────────────────────────────
@@ -256,24 +302,36 @@ def build_library() -> Library:
     popeye.add_ownership_record(OwnershipRecord(
         "King Features Syndicate", 1929, None,
         "original creation (comic strip syndication)", is_current_owner=True,
-        notes="King Features has held rights since Segar's original strip; "
-              "film/TV rights licensed separately"))
+        notes="King Features has held rights since Segar's original strip"))
 
     popeye.add_era(Era(1929, 1933,
         "Comic strip origin — rougher, more grotesque design in newspaper print",
-        art_style="Newspaper comic strip"))
+        art_style="Newspaper comic strip",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Popeye_-_Thimble_Theatre_strip.png/240px-Popeye_-_Thimble_Theatre_strip.png",
+        notes="Debuted January 17, 1929 in E.C. Segar's Thimble Theatre strip, syndicated by King Features, New York."))
     popeye.add_era(Era(1933, 1942,
         "Fleischer animated style — fluid, rubbery, rotoscoped details, expressive",
-        art_style="Black & white / early Technicolor"))
+        art_style="Black & white / early Technicolor",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Popeye_the_Sailor_Man.svg/240px-Popeye_the_Sailor_Man.svg.png",
+        notes="Fleischer Studios in Miami, FL produced the most beloved Popeye cartoons. I Yam What I Yam (1933) was first."))
     popeye.add_era(Era(1942, 1957,
         "Famous Studios era — brighter colors, slightly stiffer, more formulaic",
-        art_style="Technicolor cel"))
+        art_style="Technicolor cel",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Popeye_the_Sailor_Man.svg/240px-Popeye_the_Sailor_Man.svg.png",
+        notes="After Paramount seized Fleischer, Famous Studios continued production in New York."))
     popeye.add_era(Era(1960, 1977,
         "TV limited animation — reduced detail, simplified for budget production",
-        art_style="Flat TV cel"))
+        art_style="Flat TV cel",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Popeye_the_Sailor_Man.svg/240px-Popeye_the_Sailor_Man.svg.png",
+        notes="King Features produced new TV cartoons. Hanna-Barbera later revived the series in 1978."))
     popeye.add_era(Era(1978, None,
         "Modern interpretations — various studios, generally referencing classic look",
-        art_style="Various"))
+        art_style="Various",
+        image_url="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Popeye_the_Sailor_Man.svg/240px-Popeye_the_Sailor_Man.svg.png",
+        notes="Robin Williams played Popeye in the 1980 live-action film directed by Robert Altman."))
+
+    popeye.wiki_url = "https://en.wikipedia.org/wiki/Popeye"
+    popeye.origin_location = "New York City, USA — King Features Syndicate, 235 E 45th St, Manhattan"
     lib.add_cartoon(popeye)
 
     return lib

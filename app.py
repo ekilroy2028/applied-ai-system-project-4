@@ -63,11 +63,14 @@ def render_era_timeline(cartoon: Cartoon):
     for era in cartoon.eras:
         end_label = str(era.year_end) if era.year_end else "present"
         with st.expander(f"**{era.year_start} – {end_label}** · {era.art_style}"):
-            st.write(era.visual_description)
-            if era.image_url:
-                st.image(era.image_url, width=300)
-            if era.notes:
-                st.caption(era.notes)
+            col1, col2 = st.columns([2, 1])
+            with col1:
+                st.write(era.visual_description)
+                if era.notes:
+                    st.caption(f"📝 {era.notes}")
+            with col2:
+                if era.image_url:
+                    st.image(era.image_url, caption=f"{era.year_start}–{end_label}", width=180)
 
 
 def render_series_list(cartoon: Cartoon):
@@ -123,6 +126,12 @@ if page == "🔍 Search":
                 st.header(result.name)
                 st.caption(f"Debuted **{result.debut_year}** · {result.character_type} · {result.country_of_origin}")
                 st.write(result.description)
+
+                if result.origin_location:
+                    st.markdown(f"📍 **Origin:** {result.origin_location}")
+                if result.wiki_url:
+                    st.markdown(f"[📖 Wikipedia page]({result.wiki_url})")
+
             with col2:
                 copyright_badge(result)
                 st.caption(f"Original studio: **{result.original_studio}**")
@@ -132,6 +141,11 @@ if page == "🔍 Search":
                     st.caption(f"Originally owned by: **{orig.owner_name}**")
                 if curr:
                     st.caption(f"Currently owned by: **{curr.owner_name}**")
+
+                # Show current era image in sidebar panel
+                current_era = result.get_era_at(datetime.now().year)
+                if current_era and current_era.image_url:
+                    st.image(current_era.image_url, caption=f"Current look ({current_era.art_style})", width=200)
 
             st.divider()
             tab1, tab2, tab3, tab4 = st.tabs(["👥 Creators", "🏭 Ownership", "📺 Series", "🎨 Visual Eras"])
@@ -195,6 +209,10 @@ elif page == "📚 Browse All":
                 st.write(cartoon.description[:180] + "…" if len(cartoon.description) > 180 else cartoon.description)
                 creator_names = ", ".join(c.full_name for c in cartoon.creators)
                 st.caption(f"Created by: {creator_names}")
+                if hasattr(cartoon, 'origin_location') and cartoon.origin_location:
+                    st.caption(f"📍 {cartoon.origin_location}")
+                if hasattr(cartoon, 'wiki_url') and cartoon.wiki_url:
+                    st.markdown(f"[📖 Wikipedia]({cartoon.wiki_url})")
             with col2:
                 if cartoon.is_public_domain:
                     st.success("✅ Public Domain")
