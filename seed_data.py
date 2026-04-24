@@ -12,6 +12,7 @@ from cartoon_system import (
 from anime_characters import add_anime_characters
 from hanna_barbera_characters import add_hanna_barbera_characters
 from disney_characters import add_disney_characters
+from mgm_characters import add_mgm_characters
 
 
 def build_library() -> Library:
@@ -774,4 +775,5 @@ def build_library() -> Library:
     add_anime_characters(lib)
     add_hanna_barbera_characters(lib)
     add_disney_characters(lib)
+    add_mgm_characters(lib)
     return lib
