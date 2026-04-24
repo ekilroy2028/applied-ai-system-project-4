@@ -10,6 +10,7 @@ from cartoon_system import (
     Series, OwnershipRecord, Era, Library
 )
 from anime_characters import add_anime_characters
+from hanna_barbera_characters import add_hanna_barbera_characters
 
 
 def build_library() -> Library:
@@ -770,4 +771,5 @@ def build_library() -> Library:
     lib.add_cartoon(mightymouse)
 
     add_anime_characters(lib)
+    add_hanna_barbera_characters(lib)
     return lib
