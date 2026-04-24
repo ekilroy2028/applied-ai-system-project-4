@@ -9,6 +9,7 @@ from cartoon_system import (
     Cartoon, Creator, ProductionCompany,
     Series, OwnershipRecord, Era, Library
 )
+from anime_characters import add_anime_characters
 
 
 def build_library() -> Library:
@@ -768,4 +769,5 @@ def build_library() -> Library:
     mightymouse.origin_location = "New Rochelle, New York, USA — Terrytoons studio"
     lib.add_cartoon(mightymouse)
 
+    add_anime_characters(lib)
     return lib
