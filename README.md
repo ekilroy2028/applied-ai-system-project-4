@@ -1,83 +1,54 @@
-🐾 PawPal+
+# CartoonPal
 
-PawPal+ is a smart pet care management system that helps pet owners organize and prioritize daily responsibilities such as feeding, walking, medications, and appointments.
+A cartoon copyright and visual history explorer built as an extension of the PawPal OOP project.
 
-Built using Python and object-oriented programming (OOP), PawPal+ combines clean system design with algorithmic scheduling logic and an interactive Streamlit interface.
+## Original project
+PawPal was a pet care management system using Python OOP — Owner, Pet, Task, and Scheduler classes. CartoonPal replaces those with Cartoon, Creator, ProductionCompany, Series, OwnershipRecord, Era, Library, and CartoonAnalyzer, applying the same architectural principles to a new domain.
 
-🚀 Features
-🐶 Pet & Task Management
-Add multiple pets under one owner
-Assign tasks with time and frequency (once, daily, weekly)
-Track task completion status
-⏰ Smart Scheduling
-Automatically sorts tasks by time
-Displays a clean daily schedule
-🔍 Filtering
-Filter tasks by:
-Pet name
-Completion status
-🔁 Recurring Tasks
-Daily and weekly tasks regenerate automatically after completion
-⚠️ Conflict Detection
-Detects tasks scheduled at the same time
-Provides warnings instead of breaking the system
-🧠 Smarter Scheduling
-- Sorts tasks automatically by time
-- Detects scheduling conflicts
-- Supports daily and weekly recurring tasks
-- Filters tasks by pet and completion status
+## What it does
+- Identifies any cartoon by name, description, type, and debut year
+- Tracks who created it (individual human creators)
+- Tracks what company produced it (original studio)
+- Records every series the character appeared in with years and medium
+- Stores the complete ownership chain — who owned it originally, how it changed hands, and who owns it now
+- Determines US copyright status using the 95-year corporate rule
+- Shows how the character looked across visual eras with image links
+- Flags cartoons approaching public domain and those that changed hands
 
+## Quick start
 
-The system is built using four main classes:
+```bash
+pip install -r requirements.txt
 
-Task → Represents an individual activity
-Pet → Stores pet details and task list
-Owner → Manages multiple pets
-Scheduler → Handles sorting, filtering, recurrence, and conflicts
-🖥️ How to Run the Project
-1. Run CLI Demo
+# Verify backend logic
 python main.py
-2. Run Streamlit App
+
+# Run tests
+python -m pytest tests/ -v
+
+# Launch UI
 streamlit run app.py
-🧪 Testing PawPal+
+```
 
-Run the automated test suite with:
+## File structure
+```
+cartoonpal/
+├── cartoon_system.py      # All OOP classes (core logic)
+├── seed_data.py           # Pre-built cartoon records
+├── main.py                # CLI demo / verification script
+├── app.py                 # Streamlit UI
+├── tests/
+│   └── test_cartoonpal.py # Automated test suite
+├── assets/                # Architecture diagrams, screenshots
+├── requirements.txt
+└── README.md
+```
 
-python -m pytest
-✅ Tests Cover:
-Task completion behavior
-Adding tasks to pets
-Sorting correctness
-Conflict detection
-Recurring task generation
+## AI feature
+CartoonPal uses the Anthropic Claude API (RAG pattern) to analyze copyright status for any cartoon the user searches. The AI receives structured data — name, debut year, ownership history — and returns a plain-English explanation with a confidence rating (HIGH / MEDIUM / LOW).
 
-Confidence Level: ⭐⭐⭐⭐⭐ (5/5)
-All core features are tested and working reliably.
-
-📸 Demo
-
-(Add your screenshot here)
-
-<a href="/course_images/ai110/paw_screenshot.png" target="_blank">
-  <img src='/course_images/ai110/paw_screenshot.png' title='PawPal App' width='' alt='PawPal App' />
-</a>
-<a href="/course_images/ai110/pawpal_screenshot.png" target="_blank">
-  <img src='/course_images/ai110/pawpal_screenshot.png' title='PawPal App' alt='PawPal App'/>
-</a>
-
-🧩 Smarter Scheduling
-
-PawPal+ includes algorithmic improvements that make it more than a simple task list:
-
-Uses Python’s sorted() with lambda functions for efficient time-based ordering
-Implements lightweight conflict detection using hash maps
-Automates recurring tasks using datetime and timedelta
-Keeps logic modular through a dedicated Scheduler class
-📦 Tech Stack
-Python
-Object-Oriented Programming (OOP)
-Streamlit
-Pytest
-👩‍💻 Author
-
-Elizabeth Kilroy
+## Testing
+```bash
+python -m pytest tests/ -v
+```
+Tests cover: creator addition, series sorting, ownership chain logic, copyright boundary rules, library search/filter, analyzer sorting, series overlap detection, and seed data integrity.
