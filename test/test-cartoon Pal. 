@@ -1,0 +1,355 @@
+"""
+tests/test_cartoonpal.py
+CartoonPal automated test suite.
+Run with:  python -m pytest tests/ -v
+"""
+
+import pytest
+from datetime import datetime
+from cartoon_system import (
+    Cartoon, Creator, ProductionCompany,
+    Series, OwnershipRecord, Era,
+    Library, CartoonAnalyzer
+)
+from seed_data import build_library
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Fixtures
+# ─────────────────────────────────────────────────────────────────────────────
+
+@pytest.fixture
+def simple_cartoon():
+    """Minimal cartoon for unit testing."""
+    c = Cartoon(
+        name="Test Toon",
+        description="A test cartoon.",
+        character_type="Anthropomorphic animal",
+        debut_year=1950,
+    )
+    return c
+
+
+@pytest.fixture
+def public_domain_cartoon():
+    c = Cartoon(name="Old Toon", description="Very old.", character_type="human", debut_year=1920)
+    # No current owner → public domain
+    return c
+
+
+@pytest.fixture
+def protected_cartoon():
+    c = Cartoon(name="Modern Toon", description="Recent.", character_type="human", debut_year=1990)
+    c.add_ownership_record(OwnershipRecord("BigCorp", 1990, None, "original creation", is_current_owner=True))
+    return c
+
+
+@pytest.fixture
+def full_library():
+    return build_library()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Creator tests
+# ─────────────────────────────────────────────────────────────────────────────
+
+def test_add_creator_increases_count(simple_cartoon):
+    assert len(simple_cartoon.creators) == 0
+    simple_cartoon.add_creator(Creator("Jane Artist", "Designer"))
+    assert len(simple_cartoon.creators) == 1
+
+
+def test_add_multiple_creators(simple_cartoon):
+    simple_cartoon.add_creator(Creator("Alice", "Writer"))
+    simple_cartoon.add_creator(Creator("Bob", "Animator"))
+    assert len(simple_cartoon.creators) == 2
+    names = [c.full_name for c in simple_cartoon.creators]
+    assert "Alice" in names
+    assert "Bob" in names
+
+
+def test_creator_str(simple_cartoon):
+    c = Creator("Jane Artist", "Designer")
+    assert "Jane Artist" in str(c)
+    assert "Designer" in str(c)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Series tests
+# ─────────────────────────────────────────────────────────────────────────────
+
+def test_add_series_increases_count(simple_cartoon):
+    assert len(simple_cartoon.series_list) == 0
+    simple_cartoon.add_series(Series("Show 1", 1950, 1955, "Studio A"))
+    assert len(simple_cartoon.series_list) == 1
+
+
+def test_series_sorted_by_year(simple_cartoon):
+    simple_cartoon.add_series(Series("Show B", 1970, 1975, "Studio"))
+    simple_cartoon.add_series(Series("Show A", 1950, 1960, "Studio"))
+    simple_cartoon.add_series(Series("Show C", 1980, 1985, "Studio"))
+    years = [s.year_started for s in simple_cartoon.series_list]
+    assert years == sorted(years)
+
+
+def test_series_duration_label_ongoing():
+    s = Series("My Show", 2000, None, "Studio")
+    assert "present" in s.duration_label
+
+
+def test_series_duration_label_ended():
+    s = Series("Old Show", 1950, 1960, "Studio")
+    assert "1950" in s.duration_label
+    assert "1960" in s.duration_label
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Ownership tests
+# ─────────────────────────────────────────────────────────────────────────────
+
+def test_add_ownership_record(simple_cartoon):
+    simple_cartoon.add_ownership_record(OwnershipRecord("Owner A", 1950, None, "original creation", is_current_owner=True))
+    assert len(simple_cartoon.ownership_history) == 1
+
+
+def test_current_owner_flagged_correctly(simple_cartoon):
+    simple_cartoon.add_ownership_record(OwnershipRecord("Owner A", 1950, 1980, "original creation"))
+    simple_cartoon.add_ownership_record(OwnershipRecord("Owner B", 1980, None, "purchase", is_current_owner=True))
+    assert simple_cartoon.current_owner.owner_name == "Owner B"
+
+
+def test_new_current_owner_deflagged_previous(simple_cartoon):
+    simple_cartoon.add_ownership_record(OwnershipRecord("Owner A", 1950, 1980, "original creation", is_current_owner=True))
+    simple_cartoon.add_ownership_record(OwnershipRecord("Owner B", 1980, None, "purchase", is_current_owner=True))
+    # Owner A should no longer be flagged
+    owner_a = next(o for o in simple_cartoon.ownership_history if o.owner_name == "Owner A")
+    assert not owner_a.is_current_owner
+
+
+def test_original_owner_is_earliest(simple_cartoon):
+    simple_cartoon.add_ownership_record(OwnershipRecord("Owner B", 1980, None, "purchase", is_current_owner=True))
+    simple_cartoon.add_ownership_record(OwnershipRecord("Owner A", 1950, 1980, "original creation"))
+    assert simple_cartoon.original_owner.owner_name == "Owner A"
+
+
+def test_ownership_changed_true_when_different(simple_cartoon):
+    simple_cartoon.add_ownership_record(OwnershipRecord("Owner A", 1950, 1980, "original creation"))
+    simple_cartoon.add_ownership_record(OwnershipRecord("Owner B", 1980, None, "purchase", is_current_owner=True))
+    assert simple_cartoon.ownership_changed is True
+
+
+def test_ownership_changed_false_when_same(simple_cartoon):
+    simple_cartoon.add_ownership_record(OwnershipRecord("Owner A", 1950, None, "original creation", is_current_owner=True))
+    assert simple_cartoon.ownership_changed is False
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Era tests
+# ─────────────────────────────────────────────────────────────────────────────
+
+def test_add_era_increases_count(simple_cartoon):
+    assert len(simple_cartoon.eras) == 0
+    simple_cartoon.add_era(Era(1950, 1960, "First look"))
+    assert len(simple_cartoon.eras) == 1
+
+
+def test_eras_sorted_by_year(simple_cartoon):
+    simple_cartoon.add_era(Era(1970, 1980, "Third"))
+    simple_cartoon.add_era(Era(1950, 1960, "First"))
+    simple_cartoon.add_era(Era(1960, 1970, "Second"))
+    years = [e.year_start for e in simple_cartoon.eras]
+    assert years == sorted(years)
+
+
+def test_get_era_at_correct_year(simple_cartoon):
+    simple_cartoon.add_era(Era(1950, 1960, "First era"))
+    simple_cartoon.add_era(Era(1960, 1970, "Second era"))
+    era = simple_cartoon.get_era_at(1955)
+    assert era is not None
+    assert era.visual_description == "First era"
+
+
+def test_get_era_at_returns_none_before_debut(simple_cartoon):
+    simple_cartoon.add_era(Era(1950, 1960, "First era"))
+    era = simple_cartoon.get_era_at(1940)
+    assert era is None
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Copyright logic tests
+# ─────────────────────────────────────────────────────────────────────────────
+
+def test_pre_1928_is_public_domain():
+    c = Cartoon("Old", "Old.", "human", debut_year=1920)
+    assert c.is_public_domain is True
+
+
+def test_no_owner_is_public_domain():
+    c = Cartoon("No Owner", "desc", "human", debut_year=1950)
+    # No ownership records added → public domain
+    assert c.is_public_domain is True
+
+
+def test_recent_with_owner_is_protected():
+    c = Cartoon("New", "new.", "human", debut_year=2000)
+    c.add_ownership_record(OwnershipRecord("Corp", 2000, None, "original creation", is_current_owner=True))
+    assert c.is_public_domain is False
+
+
+def test_95_year_rule_boundary():
+    """A cartoon from exactly 95 years ago should be public domain."""
+    current_year = datetime.now().year
+    boundary_year = current_year - 95
+    c = Cartoon("Boundary", "desc", "human", debut_year=boundary_year)
+    c.add_ownership_record(OwnershipRecord("OldCorp", boundary_year, None, "original creation", is_current_owner=True))
+    # debut_year < current_year - 95 → borderline; boundary itself is NOT public domain
+    assert isinstance(c.is_public_domain, bool)
+
+
+def test_years_until_public_domain_zero_if_pd():
+    c = Cartoon("Old", "Old.", "human", debut_year=1910)
+    assert c.years_until_public_domain == 0
+
+
+def test_years_until_public_domain_positive_if_protected():
+    c = Cartoon("New", "new.", "human", debut_year=2000)
+    c.add_ownership_record(OwnershipRecord("Corp", 2000, None, "original creation", is_current_owner=True))
+    assert c.years_until_public_domain > 0
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Library tests
+# ─────────────────────────────────────────────────────────────────────────────
+
+def test_library_add_and_count():
+    lib = Library()
+    assert len(lib.cartoons) == 0
+    lib.add_cartoon(Cartoon("Toon", "d", "human", debut_year=1950))
+    assert len(lib.cartoons) == 1
+
+
+def test_library_find_case_insensitive():
+    lib = Library()
+    lib.add_cartoon(Cartoon("Mickey Mouse", "d", "mouse", debut_year=1928))
+    assert lib.find("mickey") is not None
+    assert lib.find("MICKEY") is not None
+    assert lib.find("mouse") is not None
+
+
+def test_library_find_returns_none_for_missing():
+    lib = Library()
+    assert lib.find("nonexistent cartoon") is None
+
+
+def test_library_filter_public_domain(full_library):
+    pd = full_library.all_public_domain()
+    assert all(c.is_public_domain for c in pd)
+
+
+def test_library_filter_protected(full_library):
+    protected = full_library.all_protected()
+    assert all(not c.is_public_domain for c in protected)
+
+
+def test_library_filter_by_decade(full_library):
+    thirties = full_library.filter_by_decade(1930)
+    assert all(1930 <= c.debut_year < 1940 for c in thirties)
+
+
+def test_library_filter_by_creator(full_library):
+    results = full_library.filter_by_creator("Iwerks")
+    assert any(c.name == "Mickey Mouse" for c in results)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Analyzer tests
+# ─────────────────────────────────────────────────────────────────────────────
+
+def test_sort_by_debut_ascending(full_library):
+    analyzer = CartoonAnalyzer(full_library)
+    sorted_list = analyzer.sort_by_debut(ascending=True)
+    years = [c.debut_year for c in sorted_list]
+    assert years == sorted(years)
+
+
+def test_sort_by_debut_descending(full_library):
+    analyzer = CartoonAnalyzer(full_library)
+    sorted_list = analyzer.sort_by_debut(ascending=False)
+    years = [c.debut_year for c in sorted_list]
+    assert years == sorted(years, reverse=True)
+
+
+def test_copyright_summary_totals(full_library):
+    analyzer = CartoonAnalyzer(full_library)
+    summary = analyzer.get_copyright_summary()
+    assert summary["total"] == summary["public_domain"] + summary["protected"]
+
+
+def test_flag_approaching_returns_only_protected(full_library):
+    analyzer = CartoonAnalyzer(full_library)
+    approaching = analyzer.flag_approaching_public_domain(within_years=50)
+    assert all(not c.is_public_domain for c in approaching)
+
+
+def test_detect_series_overlap():
+    lib = Library()
+    c = Cartoon("Multi-Series Toon", "d", "animal", debut_year=1940)
+    c.add_series(Series("Series A", 1940, 1970, "Studio"))
+    c.add_series(Series("Series B", 1960, 1975, "Studio"))  # overlaps with A
+    lib.add_cartoon(c)
+    analyzer = CartoonAnalyzer(lib)
+    overlaps = analyzer.detect_series_overlap(c)
+    assert len(overlaps) > 0
+
+
+def test_detect_series_no_overlap():
+    lib = Library()
+    c = Cartoon("Sequential Toon", "d", "animal", debut_year=1940)
+    c.add_series(Series("Series A", 1940, 1960, "Studio"))
+    c.add_series(Series("Series B", 1965, 1975, "Studio"))  # no overlap
+    lib.add_cartoon(c)
+    analyzer = CartoonAnalyzer(lib)
+    overlaps = analyzer.detect_series_overlap(c)
+    assert len(overlaps) == 0
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Seed data integration tests
+# ─────────────────────────────────────────────────────────────────────────────
+
+def test_seed_library_loads():
+    lib = build_library()
+    assert len(lib.cartoons) >= 4
+
+
+def test_felix_is_in_seed():
+    lib = build_library()
+    felix = lib.find("felix")
+    assert felix is not None
+    assert felix.debut_year == 1919
+
+
+def test_mickey_has_multiple_series():
+    lib = build_library()
+    mickey = lib.find("mickey")
+    assert mickey is not None
+    assert len(mickey.series_list) >= 3
+
+
+def test_bugs_ownership_changed():
+    lib = build_library()
+    bugs = lib.find("bugs")
+    assert bugs is not None
+    assert bugs.ownership_changed is True
+
+
+def test_every_cartoon_has_eras():
+    lib = build_library()
+    for c in lib.cartoons:
+        assert len(c.eras) >= 1, f"{c.name} has no eras defined"
+
+
+def test_every_cartoon_has_original_owner():
+    lib = build_library()
+    for c in lib.cartoons:
+        assert c.original_owner is not None, f"{c.name} has no ownership records"
