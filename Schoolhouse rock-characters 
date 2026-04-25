@@ -59,9 +59,9 @@ SHR_OWNERSHIP = [
     ("McCaffrey and McCall Advertising / ABC", 1973, 1977, "original creation"),
     ("ABC / Capital Cities Communications", 1977, 1985, "network acquisition"),
     ("Capital Cities / ABC — Disney partnership", 1985, 1996,
-     "Disney acquired Capital Cities/ABC"),
+    "Disney acquired Capital Cities/ABC"),
     ("The Walt Disney Company / ABC", 1996, None,
-     "full Disney acquisition of Capital Cities/ABC", ),
+    "full Disney acquisition of Capital Cities/ABC", ),
 ]
 
 IMG_SHR = "https://upload.wikimedia.org/wikipedia/en/thumb/5/5e/Schoolhouse_Rock_logo.png/240px-Schoolhouse_Rock_logo.png"
@@ -71,8 +71,8 @@ IMG_CONJ  = "https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Conjunction_Ju
 
 
 def _shr(name, description, character_type, debut_year,
-         extra_creators, series_list, eras, wiki_slug,
-         origin="New York City, USA — McCaffrey and McCall Advertising / ABC Studios"):
+        extra_creators, series_list, eras, wiki_slug,
+        origin="New York City, USA — McCaffrey and McCall Advertising / ABC Studios"):
     c = Cartoon(
         name=name,
         description=description,
@@ -103,19 +103,19 @@ def _shr(name, description, character_type, debut_year,
 # Shared series list used by all SHR segments
 SHR_SERIES = [
     Series("Schoolhouse Rock! original run (ABC Saturday mornings)",
-           1973, 1985, "McCaffrey and McCall / ABC", "TV interstitial",
-           notes="Aired between Saturday morning cartoons on ABC. Three-minute animated musical segments."),
+        1973, 1985, "McCaffrey and McCall / ABC", "TV interstitial",
+        notes="Aired between Saturday morning cartoons on ABC. Three-minute animated musical segments."),
     Series("Schoolhouse Rock! revival",
-           1993, 1996, "ABC", "TV interstitial",
-           notes="Revival airing on ABC included new segments alongside classic ones."),
+        1993, 1996, "ABC", "TV interstitial",
+        notes="Revival airing on ABC included new segments alongside classic ones."),
     Series("Schoolhouse Rock! 30th Anniversary",
-           2002, 2002, "ABC / Disney", "TV special"),
+        2002, 2002, "ABC / Disney", "TV special"),
     Series("Schoolhouse Rock! Rocks tribute album",
-           1996, 1996, "Lava / Atlantic Records", "music album",
-           notes="Indie rock artists including Blind Melon, Moby, Ween, and Deathly Hallows covered the songs."),
+        1996, 1996, "Lava / Atlantic Records", "music album",
+        notes="Indie rock artists including Blind Melon, Moby, Ween, and Deathly Hallows covered the songs."),
     Series("Schoolhouse Rock Live! stage musical",
-           1993, None, "various theatrical producers", "stage musical",
-           notes="Long-running stage adaptation performed continuously since 1993."),
+        1993, None, "various theatrical producers", "stage musical",
+        notes="Long-running stage adaptation performed continuously since 1993."),
 ]
 
 
@@ -149,25 +149,25 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Debuted January 6 1973 on ABC with Three Is a Magic Number. "
-                      "The series ran for 12 years and produced 41 original segments "
-                      "across six subject areas: Multiplication Rock, Grammar Rock, "
-                      "America Rock, Science Rock, Money Rock, and Earth Rock."),
+                    "The series ran for 12 years and produced 41 original segments "
+                    "across six subject areas: Multiplication Rock, Grammar Rock, "
+                    "America Rock, Science Rock, Money Rock, and Earth Rock."),
             Era(1993, 1999,
                 "Revival era — new segments added alongside original classics, "
                 "same graphic style updated slightly for modern broadcast",
                 art_style="Updated flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="The 1993 revival added new segments on computers, the environment, "
-                      "and other contemporary topics. The original songs remained unchanged "
-                      "and were re-aired alongside new material."),
+                    "and other contemporary topics. The original songs remained unchanged "
+                    "and were re-aired alongside new material."),
             Era(2009, None,
                 "Digital and streaming era — content available on Disney+ and streaming, "
                 "occasional new productions and live performances",
                 art_style="Various / digital recreation",
                 image_url=IMG_SHR,
                 notes="Schoolhouse Rock! is available on Disney+. "
-                      "The songs continue to be taught in American schools "
-                      "and are referenced constantly in popular culture."),
+                    "The songs continue to be taught in American schools "
+                    "and are referenced constantly in popular culture."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -201,8 +201,8 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Debuted January 6 1973. The first Schoolhouse Rock! segment ever broadcast. "
-                      "Written and performed by Bob Dorough. Sampled by De La Soul in "
-                      "The Magic Number (1989) — one of hip-hop's most famous samples."),
+                    "Written and performed by Bob Dorough. Sampled by De La Soul in "
+                    "The Magic Number (1989) — one of hip-hop's most famous samples."),
         ],
         wiki_slug="Three_Is_a_Magic_Number",
     )
@@ -229,7 +229,7 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Written and performed by Bob Dorough. One of the clearest mathematical "
-                      "explanations of place value ever produced for children."),
+                    "explanations of place value ever produced for children."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -257,8 +257,8 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="One of the most mathematically ambitious Schoolhouse Rock segments. "
-                      "The concept of alternative number bases is typically taught in middle school "
-                      "or later — this segment introduced it to Saturday morning cartoon viewers."),
+                    "The concept of alternative number bases is typically taught in middle school "
+                    "or later — this segment introduced it to Saturday morning cartoon viewers."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -286,8 +286,8 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="The pool hall setting was unusually adult for Saturday morning TV in 1973. "
-                      "The nines times table tricks (digits always sum to nine) "
-                      "are woven naturally into the song structure."),
+                    "The nines times table tricks (digits always sum to nine) "
+                    "are woven naturally into the song structure."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -323,9 +323,9 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_CONJ,
                 notes="Conjunction Junction is consistently ranked the most beloved "
-                      "Schoolhouse Rock segment. Jack Sheldon's voice became synonymous "
-                      "with the series. The segment has been referenced in The Simpsons, "
-                      "Saturday Night Live, and dozens of other pop culture moments."),
+                    "Schoolhouse Rock segment. Jack Sheldon's voice became synonymous "
+                    "with the series. The segment has been referenced in The Simpsons, "
+                    "Saturday Night Live, and dozens of other pop culture moments."),
         ],
         wiki_slug="Conjunction_Junction",
     )
@@ -353,8 +353,8 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="The market metaphor makes the abstract concept of adverbs tangible. "
-                      "The three-generation family structure reinforced the idea that "
-                      "adverbs have been around a long time and serve important functions."),
+                    "The three-generation family structure reinforced the idea that "
+                    "adverbs have been around a long time and serve important functions."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -381,8 +381,8 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Written by Lynn Ahrens who contributed several memorable segments. "
-                      "The visual approach of showing rather than telling makes this "
-                      "one of the most pedagogically effective Grammar Rock segments."),
+                    "The visual approach of showing rather than telling makes this "
+                    "one of the most pedagogically effective Grammar Rock segments."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -409,9 +409,9 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="The funk arrangement was unusually sophisticated for educational TV. "
-                      "The segment distinguishes between action verbs, mental verbs, "
-                      "and linking verbs — a level of grammatical nuance rarely attempted "
-                      "in children's programming."),
+                    "The segment distinguishes between action verbs, mental verbs, "
+                    "and linking verbs — a level of grammatical nuance rarely attempted "
+                    "in children's programming."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -439,8 +439,8 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="One of the earliest Grammar Rock segments. The person-place-thing "
-                      "definition is now so embedded in American education that it appears "
-                      "in virtually every elementary school grammar curriculum."),
+                    "definition is now so embedded in American education that it appears "
+                    "in virtually every elementary school grammar curriculum."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -468,9 +468,9 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Written by Lynn Ahrens. The humor of the segment — "
-                      "the painful repetition of the long names before pronouns rescue everyone — "
-                      "is a masterclass in using comedy to teach grammar. "
-                      "One of the most quoted Grammar Rock segments."),
+                    "the painful repetition of the long names before pronouns rescue everyone — "
+                    "is a masterclass in using comedy to teach grammar. "
+                    "One of the most quoted Grammar Rock segments."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -508,10 +508,10 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_BILL,
                 notes="Written by Dave Frishberg, performed by Jack Sheldon. "
-                      "I'm Just a Bill is the most frequently referenced Schoolhouse Rock segment "
-                      "in American political discourse. SNL's Schoolhouse Rock parody "
-                      "(I'm Just a Bill Turned Into a Law by an Executive Order) "
-                      "demonstrated the segment's cultural staying power decades later."),
+                    "I'm Just a Bill is the most frequently referenced Schoolhouse Rock segment "
+                    "in American political discourse. SNL's Schoolhouse Rock parody "
+                    "(I'm Just a Bill Turned Into a Law by an Executive Order) "
+                    "demonstrated the segment's cultural staying power decades later."),
         ],
         wiki_slug="I%27m_Just_a_Bill",
     )
@@ -539,10 +539,10 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Written by Lynn Ahrens. The segment covers more historical ground "
-                      "than almost any other Schoolhouse Rock segment. "
-                      "King George III is depicted sympathetically as confused rather than evil — "
-                      "an unusual choice that makes the segment more nuanced than typical "
-                      "patriotic children's media."),
+                    "than almost any other Schoolhouse Rock segment. "
+                    "King George III is depicted sympathetically as confused rather than evil — "
+                    "an unusual choice that makes the segment more nuanced than typical "
+                    "patriotic children's media."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -571,9 +571,9 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Written by Lynn Ahrens. The segment is unique in that it teaches "
-                      "through verbatim memorization rather than explanation. "
-                      "Generations of Americans have been able to recite the Preamble "
-                      "solely because of this song."),
+                    "through verbatim memorization rather than explanation. "
+                    "Generations of Americans have been able to recite the Preamble "
+                    "solely because of this song."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -601,9 +601,9 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Written by Lynn Ahrens. Sufferin' Till Suffrage was notable for "
-                      "addressing women's rights directly in 1975 — just five years after "
-                      "the Equal Rights Amendment was passed by Congress. "
-                      "The segment name is a direct pun on suffrage/suffering."),
+                    "addressing women's rights directly in 1975 — just five years after "
+                    "the Equal Rights Amendment was passed by Congress. "
+                    "The segment name is a direct pun on suffrage/suffering."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -632,9 +632,9 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Written by Lynn Ahrens. The melting pot metaphor is now debated — "
-                      "many scholars prefer salad bowl or mosaic — but in 1976 "
-                      "the segment was genuinely progressive in its celebration "
-                      "of immigrant contributions to American identity."),
+                    "many scholars prefer salad bowl or mosaic — but in 1976 "
+                    "the segment was genuinely progressive in its celebration "
+                    "of immigrant contributions to American identity."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -663,9 +663,9 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Written by Lynn Ahrens. Elbow Room is frequently cited in discussions "
-                      "of what Schoolhouse Rock omitted and what those omissions reveal "
-                      "about the assumptions of 1970s American mainstream culture. "
-                      "The segment celebrates expansion without addressing its costs."),
+                    "of what Schoolhouse Rock omitted and what those omissions reveal "
+                    "about the assumptions of 1970s American mainstream culture. "
+                    "The segment celebrates expansion without addressing its costs."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -722,8 +722,8 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="The segment accurately conveys the escalation from colonial protest "
-                      "to open warfare. The title phrase from Emerson gives the segment "
-                      "immediate historical weight."),
+                    "to open warfare. The title phrase from Emerson gives the segment "
+                    "immediate historical weight."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -756,17 +756,17 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_INTER,
                 notes="Written by Lynn Ahrens. Interplanet Janet consistently ranks as "
-                      "one of the top three Schoolhouse Rock segments alongside Conjunction Junction "
-                      "and I'm Just a Bill. Janet's comet-like travel between planets "
-                      "is one of the series' most visually inventive conceits."),
+                    "one of the top three Schoolhouse Rock segments alongside Conjunction Junction "
+                    "and I'm Just a Bill. Janet's comet-like travel between planets "
+                    "is one of the series' most visually inventive conceits."),
             Era(2006, None,
                 "Updated version — Pluto reclassified as dwarf planet, segment revised "
                 "to reflect eight-planet solar system",
                 art_style="Digital update of flat graphic style",
                 image_url=IMG_INTER,
                 notes="After the International Astronomical Union reclassified Pluto in 2006 "
-                      "ABC updated the segment. Many fans and educators still use the original. "
-                      "The update generated surprising cultural discussion about Pluto's status."),
+                    "ABC updated the segment. Many fans and educators still use the original. "
+                    "The update generated surprising cultural discussion about Pluto's status."),
         ],
         wiki_slug="Interplanet_Janet",
     )
@@ -794,9 +794,9 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="The telegraph metaphor was already slightly dated by 1979 "
-                      "but remained perfectly clear for the target audience. "
-                      "The segment accurately conveys the speed and direction "
-                      "of neural signals."),
+                    "but remained perfectly clear for the target audience. "
+                    "The segment accurately conveys the speed and direction "
+                    "of neural signals."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -824,9 +824,9 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="The funk-influenced track made the circulatory system one of the "
-                      "most memorable biology lessons in the series. "
-                      "The dancing blood cell metaphor is visually inventive "
-                      "and scientifically accurate."),
+                    "most memorable biology lessons in the series. "
+                    "The dancing blood cell metaphor is visually inventive "
+                    "and scientifically accurate."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -854,8 +854,8 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="One of the few Schoolhouse Rock segments that covers basic physics. "
-                      "The personification of electrons as tiny moving characters "
-                      "is a classic Schoolhouse Rock approach — making the invisible visible."),
+                    "The personification of electrons as tiny moving characters "
+                    "is a classic Schoolhouse Rock approach — making the invisible visible."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -882,8 +882,8 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Based on the traditional spiritual Dem Bones (James Weldon Johnson). "
-                      "The familiar melody made bone names easier to memorize. "
-                      "One of the few Schoolhouse Rock segments to draw on existing music."),
+                    "The familiar melody made bone names easier to memorize. "
+                    "One of the few Schoolhouse Rock segments to draw on existing music."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -916,9 +916,9 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Updated flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Money Rock was the largest new content addition of the 1993 revival. "
-                      "The segments covered concepts that no other Schoolhouse Rock series "
-                      "had attempted — taxes, debt, banking, and economic trade-offs. "
-                      "Tyrannosaurus Debt explained the national debt through a dinosaur metaphor."),
+                    "The segments covered concepts that no other Schoolhouse Rock series "
+                    "had attempted — taxes, debt, banking, and economic trade-offs. "
+                    "Tyrannosaurus Debt explained the national debt through a dinosaur metaphor."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
@@ -951,8 +951,8 @@ def add_schoolhouse_rock(lib: Library):
                 art_style="Updated flat graphic TV animation",
                 image_url=IMG_SHR,
                 notes="Earth Rock addressed environmental topics that were not part "
-                      "of the original 1970s series. The segments were produced in response "
-                      "to growing public interest in environmental education for children."),
+                    "of the original 1970s series. The segments were produced in response "
+                    "to growing public interest in environmental education for children."),
         ],
         wiki_slug="Schoolhouse_Rock!",
     )
