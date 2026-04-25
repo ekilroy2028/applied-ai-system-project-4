@@ -13,6 +13,9 @@ from anime_characters import add_anime_characters
 from hanna_barbera_characters import add_hanna_barbera_characters
 from disney_characters import add_disney_characters
 from mgm_characters import add_mgm_characters
+from schoolhouse_rock import add_schoolhouse_rock
+from dic_characters import add_dic_characters
+from filmation_characters import add_filmation_characters
 
 
 def build_library() -> Library:
@@ -776,4 +779,7 @@ def build_library() -> Library:
     add_hanna_barbera_characters(lib)
     add_disney_characters(lib)
     add_mgm_characters(lib)
+    add_schoolhouse_rock(lib)
+    add_dic_characters(lib)
+    add_filmation_characters(lib)
     return lib
