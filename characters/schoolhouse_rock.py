@@ -1,0 +1,961 @@
+"""
+schoolhouse_rock.py
+All Schoolhouse Rock segments and characters for CartoonPal.
+
+Schoolhouse Rock! was an American interstitial educational animated series
+created by David McCall and produced by Newell and Yolanda Rubin at
+McCaffrey and McCall Advertising, in conjunction with ABC.
+It aired from 1973 to 1985 and was revived from 1993 to 1999
+and again in 2009.
+
+Each segment features a song teaching a specific educational concept.
+The characters are tracked both as individual segments and as the
+recurring mascot figures that appeared across multiple episodes.
+
+Ownership:
+- McCaffrey and McCall / ABC (1973–1977) — original creation
+- ABC / Capital Cities Communications (1977–1985)
+- ABC / Capital Cities / Disney (1985–1996, Disney acquired Cap Cities/ABC)
+- The Walt Disney Company / ABC (1996–present)
+
+All Schoolhouse Rock content is currently owned by The Walt Disney Company
+through its ownership of ABC.
+
+Usage:
+    from schoolhouse_rock import add_schoolhouse_rock
+    add_schoolhouse_rock(lib)
+"""
+
+from cartoon_system import (
+    Cartoon, Creator, ProductionCompany,
+    Series, OwnershipRecord, Era, Library
+)
+
+# ── Shared objects ─────────────────────────────────────────────────────────
+SHR_STUDIO = ProductionCompany(
+    "McCaffrey and McCall Advertising / ABC", 1906, country="USA", still_active=False
+)
+
+DAVID_MCCALL = Creator(
+    "David McCall", "Creator — conceived the series while watching his son struggle with multiplication tables", 1935, 1999
+)
+BOB_DOROUGH = Creator(
+    "Bob Dorough", "Musical director & primary composer — wrote or co-wrote most songs", 1923, 2018
+)
+NEWELL_RUBIN = Creator(
+    "Newell Rubin", "Producer", 1930, 2000
+)
+YOLANDA_RUBIN = Creator(
+    "Yolanda Rubin", "Producer", 1935
+)
+GEORGE_NEWALL = Creator(
+    "George Newall", "Creative director & songwriter", 1937
+)
+TOM_YOHE = Creator(
+    "Tom Yohe", "Animation director & art director", 1930, 2000
+)
+
+SHR_OWNERSHIP = [
+    ("McCaffrey and McCall Advertising / ABC", 1973, 1977, "original creation"),
+    ("ABC / Capital Cities Communications", 1977, 1985, "network acquisition"),
+    ("Capital Cities / ABC — Disney partnership", 1985, 1996,
+     "Disney acquired Capital Cities/ABC"),
+    ("The Walt Disney Company / ABC", 1996, None,
+     "full Disney acquisition of Capital Cities/ABC", ),
+]
+
+IMG_SHR = "https://upload.wikimedia.org/wikipedia/en/thumb/5/5e/Schoolhouse_Rock_logo.png/240px-Schoolhouse_Rock_logo.png"
+IMG_BILL = "https://upload.wikimedia.org/wikipedia/en/thumb/b/b1/I%27m_Just_a_Bill.png/200px-I%27m_Just_a_Bill.png"
+IMG_INTER = "https://upload.wikimedia.org/wikipedia/en/thumb/3/38/Interplanet_Janet.png/200px-Interplanet_Janet.png"
+IMG_CONJ  = "https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Conjunction_Junction.png/200px-Conjunction_Junction.png"
+
+
+def _shr(name, description, character_type, debut_year,
+         extra_creators, series_list, eras, wiki_slug,
+         origin="New York City, USA — McCaffrey and McCall Advertising / ABC Studios"):
+    c = Cartoon(
+        name=name,
+        description=description,
+        character_type=character_type,
+        country_of_origin="USA",
+        debut_year=debut_year,
+    )
+    c.original_studio = SHR_STUDIO
+    c.add_creator(DAVID_MCCALL)
+    c.add_creator(BOB_DOROUGH)
+    c.add_creator(TOM_YOHE)
+    for ec in extra_creators:
+        c.add_creator(ec)
+    for s in series_list:
+        c.add_series(s)
+    for i, rec in enumerate(SHR_OWNERSHIP):
+        is_cur = (i == len(SHR_OWNERSHIP) - 1)
+        c.add_ownership_record(
+            OwnershipRecord(rec[0], rec[1], rec[2], rec[3], is_current_owner=is_cur)
+        )
+    for era in eras:
+        c.add_era(era)
+    c.wiki_url = f"https://en.wikipedia.org/wiki/{wiki_slug}"
+    c.origin_location = origin
+    return c
+
+
+# Shared series list used by all SHR segments
+SHR_SERIES = [
+    Series("Schoolhouse Rock! original run (ABC Saturday mornings)",
+           1973, 1985, "McCaffrey and McCall / ABC", "TV interstitial",
+           notes="Aired between Saturday morning cartoons on ABC. Three-minute animated musical segments."),
+    Series("Schoolhouse Rock! revival",
+           1993, 1996, "ABC", "TV interstitial",
+           notes="Revival airing on ABC included new segments alongside classic ones."),
+    Series("Schoolhouse Rock! 30th Anniversary",
+           2002, 2002, "ABC / Disney", "TV special"),
+    Series("Schoolhouse Rock! Rocks tribute album",
+           1996, 1996, "Lava / Atlantic Records", "music album",
+           notes="Indie rock artists including Blind Melon, Moby, Ween, and Deathly Hallows covered the songs."),
+    Series("Schoolhouse Rock Live! stage musical",
+           1993, None, "various theatrical producers", "stage musical",
+           notes="Long-running stage adaptation performed continuously since 1993."),
+]
+
+
+def add_schoolhouse_rock(lib: Library):
+    """Add all Schoolhouse Rock segments and characters to the library."""
+
+    # ══════════════════════════════════════════════════════════════════════
+    # THE FRANCHISE / OVERVIEW RECORD
+    # ══════════════════════════════════════════════════════════════════════
+    shr_main = _shr(
+        name="Schoolhouse Rock!",
+        description=(
+            "An American interstitial educational animated series that aired on "
+            "ABC Saturday mornings from 1973 to 1985, teaching children grammar, "
+            "mathematics, science, history, civics, and economics through three-minute "
+            "animated musical segments. Created by advertising executive David McCall "
+            "after noticing his son could memorize rock songs but not multiplication "
+            "tables, the series produced some of the most effective educational "
+            "media ever made. Entire generations of Americans learned how a bill "
+            "becomes a law, what conjunctions do, and how to count by threes "
+            "exclusively through these songs."
+        ),
+        character_type="Educational animated franchise — musical shorts",
+        debut_year=1973,
+        extra_creators=[GEORGE_NEWALL, NEWELL_RUBIN, YOLANDA_RUBIN],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1973, 1985,
+                "Original ABC run — hand-drawn animation with distinctive flat graphic style, "
+                "bold colors, simple character designs paired with memorable songs",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Debuted January 6 1973 on ABC with Three Is a Magic Number. "
+                      "The series ran for 12 years and produced 41 original segments "
+                      "across six subject areas: Multiplication Rock, Grammar Rock, "
+                      "America Rock, Science Rock, Money Rock, and Earth Rock."),
+            Era(1993, 1999,
+                "Revival era — new segments added alongside original classics, "
+                "same graphic style updated slightly for modern broadcast",
+                art_style="Updated flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="The 1993 revival added new segments on computers, the environment, "
+                      "and other contemporary topics. The original songs remained unchanged "
+                      "and were re-aired alongside new material."),
+            Era(2009, None,
+                "Digital and streaming era — content available on Disney+ and streaming, "
+                "occasional new productions and live performances",
+                art_style="Various / digital recreation",
+                image_url=IMG_SHR,
+                notes="Schoolhouse Rock! is available on Disney+. "
+                      "The songs continue to be taught in American schools "
+                      "and are referenced constantly in popular culture."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(shr_main)
+
+    # ══════════════════════════════════════════════════════════════════════
+    # MULTIPLICATION ROCK (1973)
+    # The original and most beloved subject area
+    # ══════════════════════════════════════════════════════════════════════
+
+    three_magic = _shr(
+        name="Three Is a Magic Number",
+        description=(
+            "The very first Schoolhouse Rock segment ever aired — a gentle, "
+            "jazzy song explaining that three is special because it takes three "
+            "to make a triangle, a family, and other fundamental triads. "
+            "Sung by Bob Dorough himself in his distinctive jazz voice, "
+            "Three Is a Magic Number set the template for the entire series: "
+            "a simple, memorable melody paired with clear visual metaphors. "
+            "The song was famously sampled by De La Soul in 1989, introducing "
+            "Schoolhouse Rock to a new generation."
+        ),
+        character_type="Educational segment — Multiplication Rock",
+        debut_year=1973,
+        extra_creators=[Creator("Bob Dorough", "Songwriter & performer", 1923, 2018)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1973, None,
+                "Original segment — father and son walking through nature, "
+                "visual threes highlighted throughout — triangles, families, seasons",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Debuted January 6 1973. The first Schoolhouse Rock! segment ever broadcast. "
+                      "Written and performed by Bob Dorough. Sampled by De La Soul in "
+                      "The Magic Number (1989) — one of hip-hop's most famous samples."),
+        ],
+        wiki_slug="Three_Is_a_Magic_Number",
+    )
+    lib.add_cartoon(three_magic)
+
+    my_hero_zero = _shr(
+        name="My Hero, Zero",
+        description=(
+            "A Multiplication Rock segment celebrating the number zero — "
+            "the hero who makes other numbers bigger simply by standing "
+            "at their side. The song explains place value and the power "
+            "of zero in the decimal system through a superhero metaphor. "
+            "Zero is depicted as a caped hero whose superpower is making "
+            "ones into tens, tens into hundreds, and so forth."
+        ),
+        character_type="Educational segment — Multiplication Rock",
+        debut_year=1973,
+        extra_creators=[Creator("Bob Dorough", "Songwriter & performer", 1923, 2018)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1973, None,
+                "Zero depicted as a superhero in cape — visual demonstration of place value "
+                "through growing numbers as zeros are added",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Written and performed by Bob Dorough. One of the clearest mathematical "
+                      "explanations of place value ever produced for children."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(my_hero_zero)
+
+    little_twelvetoes = _shr(
+        name="Little Twelvetoes",
+        description=(
+            "A Multiplication Rock segment about an alien visitor with twelve "
+            "toes who uses a base-twelve counting system instead of base-ten. "
+            "The song uses the alien perspective to teach children how our "
+            "decimal system works and why we count the way we do. "
+            "Little Twelvetoes is one of the most conceptually sophisticated "
+            "segments in the series — introducing the idea of alternative "
+            "number bases to elementary school children."
+        ),
+        character_type="Educational segment — Multiplication Rock / alien character",
+        debut_year=1973,
+        extra_creators=[Creator("Bob Dorough", "Songwriter & performer", 1923, 2018)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1973, None,
+                "Green alien with twelve toes — friendly extraterrestrial design "
+                "used to illustrate base-twelve counting vs. base-ten",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="One of the most mathematically ambitious Schoolhouse Rock segments. "
+                      "The concept of alternative number bases is typically taught in middle school "
+                      "or later — this segment introduced it to Saturday morning cartoon viewers."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(little_twelvetoes)
+
+    naughty_number_nine = _shr(
+        name="Naughty Number Nine",
+        description=(
+            "A Multiplication Rock segment depicting the number nine as a "
+            "cool, pool-playing hustler in a billiard hall — teaching the "
+            "nine times table through a jazzy, adult-feeling song about "
+            "the tricks and patterns in multiples of nine. "
+            "One of the most stylistically bold segments in the series — "
+            "its smoky pool hall setting was unusually sophisticated for "
+            "Saturday morning children's programming."
+        ),
+        character_type="Educational segment — Multiplication Rock",
+        debut_year=1973,
+        extra_creators=[Creator("Bob Dorough", "Songwriter & performer", 1923, 2018)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1973, None,
+                "Pool hall setting — personified nine as a cool hustler, "
+                "billiard balls forming multiplication patterns",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="The pool hall setting was unusually adult for Saturday morning TV in 1973. "
+                      "The nines times table tricks (digits always sum to nine) "
+                      "are woven naturally into the song structure."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(naughty_number_nine)
+
+    # ══════════════════════════════════════════════════════════════════════
+    # GRAMMAR ROCK (1973–1974)
+    # ══════════════════════════════════════════════════════════════════════
+
+    conjunction_junction = _shr(
+        name="Conjunction Junction",
+        description=(
+            "The most recognizable Schoolhouse Rock segment of all — a jazzy, "
+            "train-themed song explaining what conjunctions do: hook up words, "
+            "phrases, and clauses. And, but, and or are the three hookers "
+            "(as the song calls them) hitching freight cars together. "
+            "The segment's catchy hook — Conjunction Junction, what's your function? — "
+            "is one of the most quoted educational TV lines in American history. "
+            "Sung by Jack Sheldon in his smooth jazz style, it remains the "
+            "defining Schoolhouse Rock moment for most Americans."
+        ),
+        character_type="Educational segment — Grammar Rock",
+        debut_year=1973,
+        extra_creators=[
+            Creator("Jack Sheldon", "Vocalist — sang most Grammar Rock and America Rock segments", 1931, 2019),
+            Creator("Bob Dorough", "Songwriter", 1923, 2018),
+        ],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1973, None,
+                "Train yard setting — freight cars representing words and phrases "
+                "being joined by the conjunction train conductor",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_CONJ,
+                notes="Conjunction Junction is consistently ranked the most beloved "
+                      "Schoolhouse Rock segment. Jack Sheldon's voice became synonymous "
+                      "with the series. The segment has been referenced in The Simpsons, "
+                      "Saturday Night Live, and dozens of other pop culture moments."),
+        ],
+        wiki_slug="Conjunction_Junction",
+    )
+    lib.add_cartoon(conjunction_junction)
+
+    lolly_adverb = _shr(
+        name="Lolly Lolly Lolly Get Your Adverbs Here",
+        description=(
+            "A Grammar Rock segment depicting adverbs as a family-run market "
+            "where customers come to buy the perfect word to modify verbs, "
+            "adjectives, and other adverbs. The Lolly family — grandfather, "
+            "father, and son — hawk their adverb wares with carnival-barker "
+            "enthusiasm. The segment teaches that adverbs answer how, when, "
+            "where, and to what extent — making it one of the most comprehensive "
+            "grammar lessons in the series."
+        ),
+        character_type="Educational segment — Grammar Rock",
+        debut_year=1974,
+        extra_creators=[Creator("Bob Dorough", "Songwriter & performer", 1923, 2018)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1974, None,
+                "Market setting — three generations of the Lolly family selling adverbs "
+                "like produce from a roadside stand",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="The market metaphor makes the abstract concept of adverbs tangible. "
+                      "The three-generation family structure reinforced the idea that "
+                      "adverbs have been around a long time and serve important functions."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(lolly_adverb)
+
+    busy_prepositions = _shr(
+        name="Busy Prepositions",
+        description=(
+            "A Grammar Rock segment teaching prepositions through the adventures "
+            "of a busy little man who goes over, under, around, and through "
+            "various obstacles. The visual demonstration of prepositions as "
+            "spatial relationships makes an abstract grammatical concept "
+            "immediately concrete and memorable. One of the more visually "
+            "inventive Grammar Rock segments."
+        ),
+        character_type="Educational segment — Grammar Rock",
+        debut_year=1974,
+        extra_creators=[Creator("Lynn Ahrens", "Songwriter — wrote several Grammar and America Rock segments", 1948)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1974, None,
+                "Small energetic character navigating various spatial relationships "
+                "to demonstrate over under around through and other prepositions",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Written by Lynn Ahrens who contributed several memorable segments. "
+                      "The visual approach of showing rather than telling makes this "
+                      "one of the most pedagogically effective Grammar Rock segments."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(busy_prepositions)
+
+    unpack_verb = _shr(
+        name="Verb: That's What's Happening",
+        description=(
+            "A Grammar Rock segment presenting verbs as the action heroes of "
+            "language — the words that make everything happen. A cool, funk-influenced "
+            "song with a superhero protagonist demonstrates that verbs describe "
+            "physical action, mental action, and states of being. "
+            "One of the most musically sophisticated Schoolhouse Rock segments, "
+            "with a genuine funk groove that holds up as adult listening."
+        ),
+        character_type="Educational segment — Grammar Rock",
+        debut_year=1974,
+        extra_creators=[Creator("Bob Dorough", "Songwriter & performer", 1923, 2018)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1974, None,
+                "Superhero-themed segment — verb personified as a caped hero "
+                "whose powers are expressed through action words",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="The funk arrangement was unusually sophisticated for educational TV. "
+                      "The segment distinguishes between action verbs, mental verbs, "
+                      "and linking verbs — a level of grammatical nuance rarely attempted "
+                      "in children's programming."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(unpack_verb)
+
+    noun = _shr(
+        name="A Noun Is a Person Place or Thing",
+        description=(
+            "A Grammar Rock segment providing the fundamental definition of a noun — "
+            "a person, place, thing, or idea — through a straightforward but catchy "
+            "song that remains the most common way American children learn "
+            "what a noun is. The segment covers common nouns, proper nouns, "
+            "and abstract nouns with simple visual examples for each. "
+            "For millions of Americans, this song is their first and most "
+            "lasting grammar lesson."
+        ),
+        character_type="Educational segment — Grammar Rock",
+        debut_year=1973,
+        extra_creators=[Creator("Bob Dorough", "Songwriter & performer", 1923, 2018)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1973, None,
+                "Illustrated examples of persons places things and ideas "
+                "— simple clear visual pairings with each noun category",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="One of the earliest Grammar Rock segments. The person-place-thing "
+                      "definition is now so embedded in American education that it appears "
+                      "in virtually every elementary school grammar curriculum."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(noun)
+
+    rufus_xavier = _shr(
+        name="Rufus Xavier Sarsaparilla",
+        description=(
+            "A Grammar Rock segment about pronouns — told through the story of "
+            "Rufus Xavier Sarsaparilla, his sister Rafaella Gabriela Sarsaparilla, "
+            "and their friend Albert Andreas Armadillo, who all find animals "
+            "they want to keep. The joke is that without pronouns you'd have to "
+            "keep repeating their absurdly long names. He, she, it, and they "
+            "replace the names and save everyone's breath. "
+            "The segment is beloved for its gentle absurdist humor."
+        ),
+        character_type="Educational segment — Grammar Rock",
+        debut_year=1976,
+        extra_creators=[Creator("Lynn Ahrens", "Songwriter", 1948)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1976, None,
+                "Children with ridiculously long names finding animals — "
+                "pronoun substitution demonstrated through comic repetition and relief",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Written by Lynn Ahrens. The humor of the segment — "
+                      "the painful repetition of the long names before pronouns rescue everyone — "
+                      "is a masterclass in using comedy to teach grammar. "
+                      "One of the most quoted Grammar Rock segments."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(rufus_xavier)
+
+    # ══════════════════════════════════════════════════════════════════════
+    # AMERICA ROCK (1975–1976)
+    # History and civics segments — the most politically engaged section
+    # ══════════════════════════════════════════════════════════════════════
+
+    im_just_a_bill = _shr(
+        name="I'm Just a Bill",
+        description=(
+            "The most civically important Schoolhouse Rock segment — a crumpled "
+            "piece of paper named Bill sitting on the steps of Capitol Hill, "
+            "explaining the legislative process from committee hearing to "
+            "presidential signature. Voiced by Jack Sheldon, Bill is "
+            "simultaneously hopeful and realistic about his slim chances "
+            "of becoming law. The segment has been cited in Congressional debates, "
+            "Supreme Court briefs, and is the primary way most Americans learned "
+            "how legislation works. It was parodied memorably on Saturday Night Live "
+            "and The Simpsons."
+        ),
+        character_type="Educational segment — America Rock / civics",
+        debut_year=1975,
+        extra_creators=[
+            Creator("Jack Sheldon", "Vocalist", 1931, 2019),
+            Creator("Dave Frishberg", "Songwriter", 1933, 2021),
+        ],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1975, None,
+                "Anthropomorphized bill of legislation — crumpled paper with "
+                "eyes and mouth sitting on Capitol Hill steps, discouraged but hopeful",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_BILL,
+                notes="Written by Dave Frishberg, performed by Jack Sheldon. "
+                      "I'm Just a Bill is the most frequently referenced Schoolhouse Rock segment "
+                      "in American political discourse. SNL's Schoolhouse Rock parody "
+                      "(I'm Just a Bill Turned Into a Law by an Executive Order) "
+                      "demonstrated the segment's cultural staying power decades later."),
+        ],
+        wiki_slug="I%27m_Just_a_Bill",
+    )
+    lib.add_cartoon(im_just_a_bill)
+
+    no_more_kings = _shr(
+        name="No More Kings",
+        description=(
+            "An America Rock segment recounting the American Revolution — "
+            "the colonists' rejection of King George III and the founding "
+            "of the United States. The segment presents the Revolution as "
+            "a joyful liberation from tyranny, with colonists literally "
+            "chasing the king back across the Atlantic. One of the most "
+            "historically eventful Schoolhouse Rock segments, covering "
+            "the Stamp Act, Boston Tea Party, and Declaration of Independence."
+        ),
+        character_type="Educational segment — America Rock / history",
+        debut_year=1975,
+        extra_creators=[Creator("Lynn Ahrens", "Songwriter", 1948)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1975, None,
+                "Colonial American setting — King George III depicted as bumbling tyrant, "
+                "colonists as energetic freedom-seekers",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Written by Lynn Ahrens. The segment covers more historical ground "
+                      "than almost any other Schoolhouse Rock segment. "
+                      "King George III is depicted sympathetically as confused rather than evil — "
+                      "an unusual choice that makes the segment more nuanced than typical "
+                      "patriotic children's media."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(no_more_kings)
+
+    preamble = _shr(
+        name="Preamble",
+        description=(
+            "An America Rock segment setting the Preamble to the United States "
+            "Constitution to music — the complete text of We the People of the "
+            "United States, in Order to form a more perfect Union... sung "
+            "verbatim. This segment taught millions of Americans the complete "
+            "Preamble through sheer memorization — countless Americans who "
+            "cannot otherwise cite the Constitution can sing the Preamble "
+            "because of this segment. One of the most practically useful "
+            "pieces of educational television ever produced."
+        ),
+        character_type="Educational segment — America Rock / civics",
+        debut_year=1975,
+        extra_creators=[Creator("Lynn Ahrens", "Songwriter", 1948)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1975, None,
+                "American historical imagery — the Founders, the Constitution, "
+                "American landmarks, all underscoring the verbatim Constitutional text",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Written by Lynn Ahrens. The segment is unique in that it teaches "
+                      "through verbatim memorization rather than explanation. "
+                      "Generations of Americans have been able to recite the Preamble "
+                      "solely because of this song."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(preamble)
+
+    sufferin_suffragettes = _shr(
+        name="Sufferin' Till Suffrage",
+        description=(
+            "An America Rock segment about the women's suffrage movement — "
+            "the 72-year struggle for women's right to vote culminating in "
+            "the 19th Amendment in 1920. The segment follows the suffragette "
+            "movement from Seneca Falls through Susan B. Anthony and Elizabeth "
+            "Cady Stanton to the final amendment. One of the most progressive "
+            "Schoolhouse Rock segments and one of the few to specifically "
+            "celebrate the contributions of women in American history."
+        ),
+        character_type="Educational segment — America Rock / history",
+        debut_year=1975,
+        extra_creators=[Creator("Lynn Ahrens", "Songwriter", 1948)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1975, None,
+                "Historical women's march imagery — suffragettes in period dress "
+                "marching for the vote, key historical figures depicted",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Written by Lynn Ahrens. Sufferin' Till Suffrage was notable for "
+                      "addressing women's rights directly in 1975 — just five years after "
+                      "the Equal Rights Amendment was passed by Congress. "
+                      "The segment name is a direct pun on suffrage/suffering."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(sufferin_suffragettes)
+
+    great_american_melting_pot = _shr(
+        name="The Great American Melting Pot",
+        description=(
+            "An America Rock segment about immigration and the multicultural "
+            "foundations of the United States, depicted through a grandmother "
+            "telling her grandchildren how their family came to America. "
+            "The melting pot metaphor — a giant cooking pot into which "
+            "immigrants from around the world pour their cultures — was "
+            "the dominant American immigration narrative of the era. "
+            "The segment celebrated diversity at a time when the "
+            "civil rights movement was reshaping American identity."
+        ),
+        character_type="Educational segment — America Rock / history and civics",
+        debut_year=1976,
+        extra_creators=[Creator("Lynn Ahrens", "Songwriter", 1948)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1976, None,
+                "Multigenerational family — grandmother and grandchildren, "
+                "immigrants from many nations shown entering the melting pot",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Written by Lynn Ahrens. The melting pot metaphor is now debated — "
+                      "many scholars prefer salad bowl or mosaic — but in 1976 "
+                      "the segment was genuinely progressive in its celebration "
+                      "of immigrant contributions to American identity."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(great_american_melting_pot)
+
+    elbow_room = _shr(
+        name="Elbow Room",
+        description=(
+            "An America Rock segment about Manifest Destiny and westward "
+            "expansion — the 19th-century push of American settlers across "
+            "the continent. Told from a celebratory pioneer perspective, "
+            "the segment represents one of the more historically complex "
+            "Schoolhouse Rock moments: it does not address the displacement "
+            "of Native American peoples, which has made it a subject of "
+            "contemporary educational discussion about what the segment "
+            "leaves out."
+        ),
+        character_type="Educational segment — America Rock / history",
+        debut_year=1976,
+        extra_creators=[Creator("Lynn Ahrens", "Songwriter", 1948)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1976, None,
+                "Pioneer westward wagon train imagery — settlers moving across "
+                "the continent against backdrop of growing American map",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Written by Lynn Ahrens. Elbow Room is frequently cited in discussions "
+                      "of what Schoolhouse Rock omitted and what those omissions reveal "
+                      "about the assumptions of 1970s American mainstream culture. "
+                      "The segment celebrates expansion without addressing its costs."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(elbow_room)
+
+    three_ring = _shr(
+        name="Three-Ring Government",
+        description=(
+            "An America Rock segment explaining the three branches of the "
+            "United States government — legislative, executive, and judicial — "
+            "through a circus metaphor where each branch is a ring in the "
+            "circus of American democracy. The checks and balances between "
+            "the branches are explained through the ringmaster needing all "
+            "three rings to run the show. One of the most conceptually "
+            "clear civics lessons in the series."
+        ),
+        character_type="Educational segment — America Rock / civics",
+        debut_year=1975,
+        extra_creators=[Creator("Dave Frishberg", "Songwriter", 1933, 2021)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1975, None,
+                "Circus setting — three rings representing legislative, executive, "
+                "and judicial branches, ringmaster as the constitutional framework",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Written by Dave Frishberg. The circus metaphor is unusually sophisticated — "
+                      "it captures both the spectacle of democracy and the need for all three "
+                      "branches to function simultaneously."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(three_ring)
+
+    shot_heard = _shr(
+        name="The Shot Heard 'Round the World",
+        description=(
+            "An America Rock segment about the beginning of the American "
+            "Revolution — the battles of Lexington and Concord in April 1775 "
+            "and Paul Revere's midnight ride. The segment captures the "
+            "dramatic urgency of the Revolution's opening moments and "
+            "explains why a colonial tax dispute escalated into a world-changing "
+            "war of independence. Named after Ralph Waldo Emerson's phrase "
+            "from Concord Hymn."
+        ),
+        character_type="Educational segment — America Rock / history",
+        debut_year=1976,
+        extra_creators=[Creator("Bob Dorough", "Songwriter", 1923, 2018)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1976, None,
+                "Revolutionary War battle scenes — minutemen, redcoats, Paul Revere "
+                "on horseback, Lexington Green depicted in the flat graphic style",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="The segment accurately conveys the escalation from colonial protest "
+                      "to open warfare. The title phrase from Emerson gives the segment "
+                      "immediate historical weight."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(shot_heard)
+
+    # ══════════════════════════════════════════════════════════════════════
+    # SCIENCE ROCK (1978–1979)
+    # ══════════════════════════════════════════════════════════════════════
+
+    interplanet_janet = _shr(
+        name="Interplanet Janet",
+        description=(
+            "The most beloved Science Rock segment — a space-traveling girl "
+            "named Janet who visits every planet in the solar system, "
+            "listing their key characteristics in a catchy song that helped "
+            "generations of children memorize the planets in order. "
+            "She's a galaxy girl — a real live comet blazing a trail. "
+            "The segment was updated after Pluto's reclassification as a "
+            "dwarf planet in 2006, though many fans prefer the original "
+            "nine-planet version."
+        ),
+        character_type="Educational segment — Science Rock / astronomy",
+        debut_year=1978,
+        extra_creators=[Creator("Lynn Ahrens", "Songwriter", 1948)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1978, 2005,
+                "Original nine-planet version — Janet visiting Mercury through Pluto, "
+                "bright space-travel imagery, comet trail motif",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_INTER,
+                notes="Written by Lynn Ahrens. Interplanet Janet consistently ranks as "
+                      "one of the top three Schoolhouse Rock segments alongside Conjunction Junction "
+                      "and I'm Just a Bill. Janet's comet-like travel between planets "
+                      "is one of the series' most visually inventive conceits."),
+            Era(2006, None,
+                "Updated version — Pluto reclassified as dwarf planet, segment revised "
+                "to reflect eight-planet solar system",
+                art_style="Digital update of flat graphic style",
+                image_url=IMG_INTER,
+                notes="After the International Astronomical Union reclassified Pluto in 2006 "
+                      "ABC updated the segment. Many fans and educators still use the original. "
+                      "The update generated surprising cultural discussion about Pluto's status."),
+        ],
+        wiki_slug="Interplanet_Janet",
+    )
+    lib.add_cartoon(interplanet_janet)
+
+    telegraph_line = _shr(
+        name="Telegraph Line",
+        description=(
+            "A Science Rock segment about the human nervous system — "
+            "depicted as a telegraph network running through the body, "
+            "transmitting signals from the brain to the rest of the body "
+            "and back. The telegraph metaphor was perfectly calibrated "
+            "for its era, making the abstract concept of neural signaling "
+            "concrete through a familiar communications technology. "
+            "One of the most biologically informative segments in the series."
+        ),
+        character_type="Educational segment — Science Rock / biology",
+        debut_year=1979,
+        extra_creators=[Creator("George Newall", "Songwriter", 1937)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1979, None,
+                "Human body cutaway showing nervous system as telegraph wires — "
+                "signals traveling from brain through spinal cord to extremities",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="The telegraph metaphor was already slightly dated by 1979 "
+                      "but remained perfectly clear for the target audience. "
+                      "The segment accurately conveys the speed and direction "
+                      "of neural signals."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(telegraph_line)
+
+    do_the_circulation = _shr(
+        name="Do the Circulation",
+        description=(
+            "A Science Rock segment about the circulatory system — "
+            "how the heart pumps blood through arteries and veins "
+            "to deliver oxygen to every cell in the body. "
+            "Depicted as a funky dance number inside the human body, "
+            "the segment personifies red blood cells as dancers "
+            "moving through the cardiovascular system to a "
+            "rhythm-and-blues influenced track."
+        ),
+        character_type="Educational segment — Science Rock / biology",
+        debut_year=1979,
+        extra_creators=[Creator("George Newall", "Songwriter", 1937)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1979, None,
+                "Interior human body — blood cells as dancers, heart as the rhythm section, "
+                "arteries and veins as the dance floor",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="The funk-influenced track made the circulatory system one of the "
+                      "most memorable biology lessons in the series. "
+                      "The dancing blood cell metaphor is visually inventive "
+                      "and scientifically accurate."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(do_the_circulation)
+
+    electricity = _shr(
+        name="Electricity, Electricity",
+        description=(
+            "A Science Rock segment explaining what electricity is — "
+            "electrons flowing through a circuit, powering lights, "
+            "appliances, and the modern world. The segment covers "
+            "basic electrical concepts including conductors, insulators, "
+            "and circuits in a way that remained accurate enough to serve "
+            "as an introduction to physics for elementary school students. "
+            "One of the more technically informative Science Rock segments."
+        ),
+        character_type="Educational segment — Science Rock / physics",
+        debut_year=1979,
+        extra_creators=[Creator("Bob Dorough", "Songwriter", 1923, 2018)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1979, None,
+                "Electrical circuit imagery — electrons personified moving through wires, "
+                "household applications of electricity demonstrated",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="One of the few Schoolhouse Rock segments that covers basic physics. "
+                      "The personification of electrons as tiny moving characters "
+                      "is a classic Schoolhouse Rock approach — making the invisible visible."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(electricity)
+
+    them_bones = _shr(
+        name="Them Not-So-Dry Bones",
+        description=(
+            "A Science Rock segment about the human skeleton — based on the "
+            "spiritual Dem Bones, the segment teaches the names and locations "
+            "of the major bones in the human body. The connection to the "
+            "traditional spiritual gives the segment an unusual musical heritage "
+            "and helped it stand out from the more original compositions "
+            "in the series."
+        ),
+        character_type="Educational segment — Science Rock / biology",
+        debut_year=1978,
+        extra_creators=[Creator("George Newall", "Songwriter", 1937)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1978, None,
+                "Dancing skeleton — bones labeled and highlighted as they connect "
+                "to each other in the traditional spiritual pattern",
+                art_style="Flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Based on the traditional spiritual Dem Bones (James Weldon Johnson). "
+                      "The familiar melody made bone names easier to memorize. "
+                      "One of the few Schoolhouse Rock segments to draw on existing music."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(them_bones)
+
+    # ══════════════════════════════════════════════════════════════════════
+    # MONEY ROCK (1994–1996)
+    # Added during the revival — economics and personal finance
+    # ══════════════════════════════════════════════════════════════════════
+
+    money_rock = _shr(
+        name="Money Rock (Series)",
+        description=(
+            "A set of Schoolhouse Rock segments added during the 1993 revival "
+            "focusing on economics and personal finance — concepts including "
+            "budgeting, taxes, credit, banks, and the Federal Reserve. "
+            "Money Rock was produced specifically because research showed "
+            "that financial literacy was one of the largest gaps in American "
+            "elementary education. Key segments include Tyrannosaurus Debt, "
+            "This for That, and Where the Money Goes."
+        ),
+        character_type="Educational segment series — Money Rock / economics",
+        debut_year=1994,
+        extra_creators=[Creator("Lynn Ahrens", "Songwriter", 1948)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1994, None,
+                "Contemporary 1990s visual style — slightly updated flat graphic animation "
+                "with more detailed character designs than original 1970s segments",
+                art_style="Updated flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Money Rock was the largest new content addition of the 1993 revival. "
+                      "The segments covered concepts that no other Schoolhouse Rock series "
+                      "had attempted — taxes, debt, banking, and economic trade-offs. "
+                      "Tyrannosaurus Debt explained the national debt through a dinosaur metaphor."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(money_rock)
+
+    # ══════════════════════════════════════════════════════════════════════
+    # EARTH ROCK (1995–1996)
+    # Environmental segments added in the revival
+    # ══════════════════════════════════════════════════════════════════════
+
+    earth_rock = _shr(
+        name="Earth Rock (Series)",
+        description=(
+            "A set of Schoolhouse Rock segments about environmental issues "
+            "and earth science, added during the 1993 revival. Earth Rock "
+            "segments covered topics including recycling, ecosystems, "
+            "the food chain, and environmental conservation. "
+            "The series reflected the growing environmental awareness "
+            "of the 1990s and attempted to give children a framework "
+            "for understanding ecological interconnection."
+        ),
+        character_type="Educational segment series — Earth Rock / environmental science",
+        debut_year=1995,
+        extra_creators=[Creator("Lynn Ahrens", "Songwriter", 1948)],
+        series_list=SHR_SERIES,
+        eras=[
+            Era(1995, None,
+                "Environmental imagery — ecosystems, recycling, natural cycles "
+                "depicted in updated 1990s animation style",
+                art_style="Updated flat graphic TV animation",
+                image_url=IMG_SHR,
+                notes="Earth Rock addressed environmental topics that were not part "
+                      "of the original 1970s series. The segments were produced in response "
+                      "to growing public interest in environmental education for children."),
+        ],
+        wiki_slug="Schoolhouse_Rock!",
+    )
+    lib.add_cartoon(earth_rock)
+
+    print(f"Schoolhouse Rock added. Library now has {len(lib.cartoons)} cartoons total.")
