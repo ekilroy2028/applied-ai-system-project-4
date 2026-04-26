@@ -27,119 +27,74 @@ if "dark_mode" not in st.session_state:
 # ─────────────────────────────────────────────────────────────────────────────
 def sidebar_logo(dark: bool) -> str:
     """
-    Self-contained CartoonPal logo rendered as HTML+SVG.
-    Uses a <div> text layer on TOP of the SVG background so font rendering
-    is handled by the browser's HTML engine (not SVG's limited font stack).
-    This guarantees Bangers always shows correctly.
+    Clean, simple CartoonPal logo — pure HTML, no SVG layering tricks.
+    An orange pill badge with a film-reel emoji icon, bold Bangers title,
+    and a small subtitle. Works reliably in Streamlit's sidebar.
     """
     if dark:
-        bg_outer  = "#0f0e17"
-        bg_inner  = "#1e1435"
-        border    = "#f97316"
-        reel_c    = "#f97316"
-        spoke_c   = "#fb923c"
-        hole_c    = "#0f0e17"
-        star_c    = "#fbbf24"
-        text_c    = "#fff7ed"
-        sub_c     = "#fdba74"
-        badge_bg  = "#f97316"
-        badge_txt = "#0f0e17"
+        bg       = "#1e1b2e"
+        border   = "#f97316"
+        shadow   = "#f9731644"
+        title_c  = "#fef3c7"
+        sub_c    = "#fb923c"
+        icon_bg  = "#f97316"
+        icon_c   = "#0f0e17"
     else:
-        bg_outer  = "#7c2d12"
-        bg_inner  = "#fff7ed"
-        border    = "#c2410c"
-        reel_c    = "#ea580c"
-        spoke_c   = "#fb923c"
-        hole_c    = "#fff7ed"
-        star_c    = "#f59e0b"
-        text_c    = "#1c1917"
-        sub_c     = "#9a3412"
-        badge_bg  = "#ea580c"
-        badge_txt = "#ffffff"
+        bg       = "#fff7ed"
+        border   = "#ea580c"
+        shadow   = "#ea580c33"
+        title_c  = "#1c1917"
+        sub_c    = "#9a3412"
+        icon_bg  = "#ea580c"
+        icon_c   = "#ffffff"
 
-    # Logo is a pure HTML block — text rendered by browser, not SVG.
-    # SVG layer provides the decorative background (film reel + stars).
-    # The HTML text floats over it absolutely.
     return f"""
-<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 <div style="
-    position: relative;
-    width: 100%;
-    background: {bg_outer};
-    border: 2.5px solid {border};
-    border-radius: 14px;
-    overflow: hidden;
-    margin: 4px 0 2px 0;
-    box-shadow: 3px 3px 0px {border}88;
-">
-  <!-- SVG decorative layer -->
-  <svg viewBox="0 0 220 82" xmlns="http://www.w3.org/2000/svg"
-       style="width:100%;display:block;">
-
-    <!-- Warm inner background panel (right 2/3) -->
-    <rect x="64" y="0" width="156" height="82" fill="{bg_inner}" opacity="0.92"/>
-
-    <!-- Left accent stripe -->
-    <rect x="0" y="0" width="64" height="82" fill="{reel_c}" opacity="0.18"/>
-
-    <!-- Film reel — centred in left zone at x=32, y=41 -->
-    <!-- Outer ring -->
-    <circle cx="32" cy="41" r="26" fill="none" stroke="{reel_c}" stroke-width="3"/>
-    <!-- Inner hub -->
-    <circle cx="32" cy="41" r="10" fill="{reel_c}" stroke="{border}" stroke-width="1.5"/>
-    <!-- Hub hole -->
-    <circle cx="32" cy="41" r="4"  fill="{hole_c}"/>
-    <!-- Three spokes -->
-    <line x1="32" y1="31" x2="32" y2="18" stroke="{spoke_c}" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="32" y1="31" x2="32" y2="18" stroke="{spoke_c}" stroke-width="2.5" stroke-linecap="round" transform="rotate(120 32 41)"/>
-    <line x1="32" y1="31" x2="32" y2="18" stroke="{spoke_c}" stroke-width="2.5" stroke-linecap="round" transform="rotate(240 32 41)"/>
-    <!-- Sprocket holes around reel -->
-    <circle cx="32" cy="15" r="3" fill="{hole_c}" stroke="{reel_c}" stroke-width="1"/>
-    <circle cx="32" cy="15" r="3" fill="{hole_c}" stroke="{reel_c}" stroke-width="1" transform="rotate(60  32 41)"/>
-    <circle cx="32" cy="15" r="3" fill="{hole_c}" stroke="{reel_c}" stroke-width="1" transform="rotate(120 32 41)"/>
-    <circle cx="32" cy="15" r="3" fill="{hole_c}" stroke="{reel_c}" stroke-width="1" transform="rotate(180 32 41)"/>
-    <circle cx="32" cy="15" r="3" fill="{hole_c}" stroke="{reel_c}" stroke-width="1" transform="rotate(240 32 41)"/>
-    <circle cx="32" cy="15" r="3" fill="{hole_c}" stroke="{reel_c}" stroke-width="1" transform="rotate(300 32 41)"/>
-
-    <!-- Divider line -->
-    <line x1="64" y1="8" x2="64" y2="74" stroke="{border}" stroke-width="1.2" opacity="0.5"/>
-
-    <!-- Star sparkles -->
-    <polygon points="196,10 198,5 200,10 205,10 201,13 203,18 198,15 193,18 195,13 191,10"
-             fill="{star_c}" stroke="{border}" stroke-width="0.6" opacity="0.9"/>
-    <circle cx="210" cy="30" r="2.5" fill="{star_c}" opacity="0.7"/>
-    <circle cx="195" cy="70" r="2"   fill="{star_c}" opacity="0.6"/>
-    <circle cx="205" cy="60" r="1.5" fill="{star_c}" opacity="0.5"/>
-  </svg>
-
-  <!-- HTML text layer — sits over the SVG, guaranteed Bangers rendering -->
-  <div style="
-    position: absolute;
-    top: 0; left: 66px; right: 4px; bottom: 0;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: {bg};
+    border: 2px solid {border};
+    border-radius: 14px;
+    padding: 10px 14px;
+    margin: 4px 0 6px 0;
+    box-shadow: 3px 3px 0px {shadow};
+    width: 100%;
+    box-sizing: border-box;
+">
+  <!-- Icon pill -->
+  <div style="
+    background: {icon_bg};
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    padding: 0 8px 0 4px;
-    pointer-events: none;
-  ">
+    font-size: 1.75rem;
+    flex-shrink: 0;
+    box-shadow: 2px 2px 0px {shadow};
+  ">🎬</div>
+
+  <!-- Text stack -->
+  <div style="display:flex; flex-direction:column; gap:1px; min-width:0;">
     <span style="
       font-family: 'Bangers', Impact, cursive;
-      font-size: 1.55rem;
+      font-size: 1.65rem;
       letter-spacing: 3px;
-      color: {text_c};
-      line-height: 1.1;
-      text-shadow: 2px 2px 0px {border}66;
+      color: {title_c};
+      line-height: 1;
       white-space: nowrap;
-    ">🎬 CARTOONPAL</span>
+    ">CARTOONPAL</span>
     <span style="
       font-family: 'Bangers', Impact, cursive;
-      font-size: 0.62rem;
-      letter-spacing: 1.8px;
+      font-size: 0.68rem;
+      letter-spacing: 1.5px;
       color: {sub_c};
-      margin-top: 3px;
       white-space: nowrap;
-      opacity: 0.85;
-    ">© &amp; VISUAL HISTORY EXPLORER</span>
+      opacity: 0.9;
+    ">COPYRIGHT &amp; VISUAL HISTORY</span>
   </div>
 </div>
 """
@@ -550,11 +505,10 @@ def inject_theme():
         [data-baseweb="radio"] + div[data-testid="stMarkdownContainer"],
         div[class*="st-emotion-cache"] span[aria-hidden="true"]:empty,
         .st-emotion-cache-hidden,
-        /* General hidden-text / screen-reader-only spans */
         span[style*="position: absolute"][style*="overflow: hidden"],
-        span[style*="clip: rect(0px"][style*="white-space: nowrap"] {
+        span[style*="clip: rect(0px"][style*="white-space: nowrap"] {{
             display: none !important;
-        }
+        }}
 
         /* Alert boxes — stronger border strokes */
         .stAlert {{
@@ -768,11 +722,10 @@ def inject_theme():
         [data-baseweb="radio"] + div[data-testid="stMarkdownContainer"],
         div[class*="st-emotion-cache"] span[aria-hidden="true"]:empty,
         .st-emotion-cache-hidden,
-        /* General hidden-text / screen-reader-only spans */
         span[style*="position: absolute"][style*="overflow: hidden"],
-        span[style*="clip: rect(0px"][style*="white-space: nowrap"] {
+        span[style*="clip: rect(0px"][style*="white-space: nowrap"] {{
             display: none !important;
-        }
+        }}
 
         /* Alert boxes — stronger border strokes */
         .stAlert {{
@@ -806,6 +759,41 @@ def inject_theme():
 
 
 inject_theme()
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Audio helpers — load local MP3s from sounds/ folder as base64
+# ─────────────────────────────────────────────────────────────────────────────
+import base64 as _b64, os as _os, pathlib as _pl
+
+def _audio_b64(filename: str) -> str:
+    """Return base64-encoded data URI for a file in the sounds/ folder, or '' if missing."""
+    path = _pl.Path(__file__).parent / "sounds" / filename
+    if not path.exists():
+        return ""
+    return _b64.b64encode(path.read_bytes()).decode()
+
+KAZOO_FILE  = "Kazoo_freesound_community-075667_two-kazoo-fanfarewav-83382.mp3"
+BOING_FILE  = "u_wb4wgxdwxo-boing2-418548.mp3"
+
+def play_audio_html(filename: str, unique_key: str = "") -> str:
+    """Return an HTML snippet that auto-plays a local MP3 via base64 data URI.
+    unique_key is embedded as a comment so Streamlit re-renders on each call."""
+    data = _audio_b64(filename)
+    if not data:
+        return ""  # file not found — silent fallback
+    return f"""
+    <audio autoplay style="display:none">
+      <!-- {unique_key} -->
+      <source src="data:audio/mpeg;base64,{data}" type="audio/mpeg">
+    </audio>
+    """
+
+# ── Play boing sound once when app first loads ────────────────────────────────
+if "boing_played" not in st.session_state:
+    st.session_state.boing_played = True
+    boing_html = play_audio_html(BOING_FILE, "app-open")
+    if boing_html:
+        st.components.v1.html(boing_html, height=0)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Session state
@@ -961,61 +949,179 @@ st.sidebar.metric("Protected", summary["protected"])
 # PAGE: Search
 # ─────────────────────────────────────────────────────────────────────────────
 if page == "🔍 Search":
-    st.title("🔍 Search CartoonPal")
-    query = st.text_input("Enter a cartoon name", placeholder="e.g. Bugs Bunny, Betty Boop, Felix…")
+    dark = st.session_state.dark_mode
+
+    # ── Speech-bubble hero header ──────────────────────────────────────────
+    bubble_bg     = "#1e1435"      if dark else "#ffffff"
+    bubble_border = "#f97316"      if dark else "#ea580c"
+    bubble_title  = "#fef3c7"      if dark else "#1c1917"
+    bubble_shadow = "#f97316"      if dark else "#c2410c"
+    bubble_tail_l = "#1e1435"      if dark else "#ffffff"  # left tail fill
+    input_bg      = "#13121f"      if dark else "#fff7ed"
+    input_text    = "#fef3c7"      if dark else "#1c1917"
+    input_border  = "#f97316"      if dark else "#ea580c"
+    lens_c        = "#f97316"      if dark else "#ea580c"
+    page_bg       = "#0f0e17"      if dark else "#fff7ed"
+
+    st.markdown(f"""
+    <style>
+    /* Fade the doodle background while on search page */
+    [data-testid="stAppViewContainer"]::before {{
+        opacity: 0.22 !important;
+    }}
+
+    /* Speech bubble container */
+    .search-bubble-wrap {{
+        display: flex;
+        justify-content: center;
+        margin: 18px 0 32px 0;
+    }}
+    .search-bubble {{
+        position: relative;
+        background: {bubble_bg};
+        border: 3px solid {bubble_border};
+        border-radius: 28px;
+        padding: 28px 36px 22px 36px;
+        max-width: 360px;
+        width: auto;
+        box-shadow: 6px 6px 0px {bubble_shadow};
+    }}
+    /* Tail pointing down-left */
+    .search-bubble::after {{
+        content: "";
+        position: absolute;
+        bottom: -28px;
+        left: 60px;
+        width: 0;
+        height: 0;
+        border-left: 18px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 28px solid {bubble_border};
+    }}
+    .search-bubble::before {{
+        content: "";
+        position: absolute;
+        bottom: -22px;
+        left: 63px;
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 24px solid {bubble_bg};
+        z-index: 1;
+    }}
+    /* Title inside bubble */
+    .bubble-title {{
+        font-family: 'Bangers', Impact, cursive;
+        font-size: 2.2rem;
+        letter-spacing: 3px;
+        color: {bubble_title};
+        text-shadow: 3px 3px 0px {bubble_shadow}55;
+        margin: 0 0 16px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }}
+    /* Magnifying glass SVG icon style */
+    .bubble-title .lens-wrap {{
+        display: inline-flex;
+        align-items: center;
+    }}
+    /* Custom styled search input inside bubble */
+    .bubble-input-wrap {{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: {input_bg};
+        border: 2px solid {input_border};
+        border-radius: 50px;
+        padding: 8px 16px;
+        box-shadow: inset 0 2px 6px rgba(0,0,0,0.2);
+    }}
+    .bubble-dots {{
+        display: flex;
+        gap: 5px;
+        margin-top: 12px;
+        justify-content: flex-end;
+    }}
+    .bubble-dot {{
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: {bubble_border};
+        opacity: 0.4;
+    }}
+    .bubble-dot:last-child {{ opacity: 0.2; width:6px; height:6px; margin-top:1px; }}
+    </style>
+
+    <div class="search-bubble-wrap">
+      <div class="search-bubble">
+        <div class="bubble-title">
+          <!-- Cartoony magnifying glass: chunky handle, thick lens ring,
+               big shine blob, small stars scattered around it -->
+          <svg width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"
+               style="flex-shrink:0;">
+            <!-- Outer glow ring -->
+            <circle cx="21" cy="21" r="17" fill="{lens_c}" opacity="0.18"/>
+            <!-- Lens fill -->
+            <circle cx="21" cy="21" r="14" fill="{bubble_bg}"/>
+            <!-- Lens border — thick, slightly wobbly feel via large stroke -->
+            <circle cx="21" cy="21" r="14" fill="none" stroke="{lens_c}" stroke-width="4"/>
+            <!-- Inner tint so glass looks like glass -->
+            <circle cx="21" cy="21" r="12" fill="{lens_c}" opacity="0.08"/>
+            <!-- Big cartoon shine blob — top-left -->
+            <ellipse cx="15" cy="14" rx="5" ry="3.5"
+                     fill="white" opacity="0.55" transform="rotate(-30 15 14)"/>
+            <!-- Small secondary shine dot -->
+            <circle cx="25" cy="12" r="2" fill="white" opacity="0.35"/>
+            <!-- Chunky handle — thick rounded line with end cap -->
+            <line x1="31" y1="31" x2="46" y2="46"
+                  stroke="{lens_c}" stroke-width="7" stroke-linecap="round"/>
+            <!-- Handle inner highlight -->
+            <line x1="31" y1="31" x2="44" y2="44"
+                  stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.25"/>
+            <!-- Tiny star sparkles around the lens -->
+            <polygon points="6,8 7,5 8,8 11,8 9,10 10,13 7,11 4,13 5,10 3,8"
+                     fill="{lens_c}" opacity="0.7"/>
+            <circle cx="36" cy="10" r="2" fill="{lens_c}" opacity="0.5"/>
+            <circle cx="40" cy="18" r="1.5" fill="{lens_c}" opacity="0.4"/>
+            <!-- Motion lines on handle (cartoon speed lines) -->
+            <line x1="38" y1="40" x2="42" y2="36"
+                  stroke="{lens_c}" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
+            <line x1="41" y1="43" x2="45" y2="39"
+                  stroke="{lens_c}" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+          </svg>
+          SEARCH CARTOONPAL
+        </div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Actual Streamlit input (cannot style natively to match bubble,
+    # but sits visually below the bubble tail)
+    query = st.text_input(
+        "",
+        placeholder="🔍  Type a cartoon name… e.g. Bugs Bunny, Betty Boop, Felix",
+        label_visibility="collapsed"
+    )
 
     if query:
         result = lib.find(query)
         if result:
-            # ── Cartoon sound effect (Web Audio API via inline JS) ─────────
-            # Plays a classic 2-tone "boing" on each successful search result
-            cartoon_sound_js = """
-            <script>
-            (function() {
-                try {
-                    var ctx = new (window.AudioContext || window.webkitAudioContext)();
-                    function playNote(freq, startTime, duration, type) {
-                        var osc = ctx.createOscillator();
-                        var gain = ctx.createGain();
-                        osc.connect(gain);
-                        gain.connect(ctx.destination);
-                        osc.type = type || 'sine';
-                        osc.frequency.setValueAtTime(freq, startTime);
-                        osc.frequency.exponentialRampToValueAtTime(freq * 1.8, startTime + 0.08);
-                        osc.frequency.exponentialRampToValueAtTime(freq * 0.5, startTime + duration * 0.6);
-                        gain.gain.setValueAtTime(0.28, startTime);
-                        gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-                        osc.start(startTime);
-                        osc.stop(startTime + duration);
-                    }
-                    var now = ctx.currentTime;
-                    playNote(440, now,        0.22, 'square');
-                    playNote(660, now + 0.10, 0.18, 'sine');
-                    playNote(880, now + 0.20, 0.30, 'sine');
-                    playNote(330, now + 0.38, 0.40, 'triangle');
-                } catch(e) {}
-            })();
-            </script>
-            """
-            st.components.v1.html(cartoon_sound_js, height=0)
+            # ── Kazoo fanfare from real MP3 file ──────────────────────────
+            # Unique key = result name so Streamlit re-renders every search
+            import html as _html
+            safe_q = _html.escape(result.name)
+            kazoo_html = play_audio_html(KAZOO_FILE, f"kazoo-{safe_q}")
+            if kazoo_html:
+                st.components.v1.html(kazoo_html, height=0)
 
-            # ── Solid result card background ────────────────────────────────
-            dark = st.session_state.dark_mode
+            # ── Suppress doodle bg on results ─────────────────────────────
             card_bg  = "#1e1b2e" if dark else "#ffffff"
             card_bdr = "#f97316" if dark else "#ea580c"
             st.markdown(f"""
             <style>
-            .result-card {{
-                background: {card_bg};
-                border: 2px solid {card_bdr};
-                border-radius: 14px;
-                padding: 24px 28px 18px 28px;
-                margin-bottom: 16px;
-                box-shadow: 5px 5px 0px {card_bdr}44;
-            }}
-            /* Kill the doodle background in the main block while results show */
             [data-testid="stAppViewContainer"]::before {{
-                opacity: 0.18 !important;
+                opacity: 0.10 !important;
             }}
             </style>
             """, unsafe_allow_html=True)
