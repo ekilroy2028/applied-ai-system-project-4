@@ -27,75 +27,95 @@ if "dark_mode" not in st.session_state:
 # ─────────────────────────────────────────────────────────────────────────────
 def sidebar_logo(dark: bool) -> str:
     """
-    Clean, simple CartoonPal logo — pure HTML, no SVG layering tricks.
-    An orange pill badge with a film-reel emoji icon, bold Bangers title,
-    and a small subtitle. Works reliably in Streamlit's sidebar.
+    CartoonPal sidebar logo — 3:1 width:height ratio (~216×72px).
+    Left icon cell: hand-drawn SVG cartoon face (spiky hair, big eyes, grin).
+    Right text cell: CARTOONPAL title + subtitle in Bangers.
+    Built as an HTML table so Streamlit's wildcard sidebar CSS cannot
+    override the cell backgrounds or layout.
     """
     if dark:
-        bg       = "#1e1b2e"
-        border   = "#f97316"
-        shadow   = "#f9731644"
-        title_c  = "#fef3c7"
-        sub_c    = "#fb923c"
-        icon_bg  = "#f97316"
-        icon_c   = "#0f0e17"
+        bg      = "#1e1b2e"
+        border  = "#f97316"
+        shadow  = "#f97316"
+        title_c = "#fef3c7"
+        sub_c   = "#fb923c"
+        icon_bg = "#f97316"
+        face_c  = "#fbbf24"   # cartoon face fill
+        eye_c   = "#1e1b2e"   # eyes
+        hair_c  = "#fef3c7"   # spiky hair
+        cheek_c = "#fb7185"   # rosy cheeks
     else:
-        bg       = "#fff7ed"
-        border   = "#ea580c"
-        shadow   = "#ea580c33"
-        title_c  = "#1c1917"
-        sub_c    = "#9a3412"
-        icon_bg  = "#ea580c"
-        icon_c   = "#ffffff"
+        bg      = "#fff7ed"
+        border  = "#ea580c"
+        shadow  = "#c2410c"
+        title_c = "#1c1917"
+        sub_c   = "#9a3412"
+        icon_bg = "#ea580c"
+        face_c  = "#fde68a"
+        eye_c   = "#1c1917"
+        hair_c  = "#1c1917"
+        cheek_c = "#fca5a5"
+
+    # Hand-drawn cartoon character SVG: round head, spiky hair, big dot eyes,
+    # wide grin, rosy cheeks — classic 80s cartoon style at 46×46px viewBox.
+    cartoon_svg = f"""<svg viewBox="0 0 46 46" width="46" height="46"
+         xmlns="http://www.w3.org/2000/svg">
+  <!-- Spiky hair — drawn as jagged polygon behind the head -->
+  <polygon points="23,2 18,10 14,4 12,12 8,7 10,15 5,14 10,20 23,18 36,20 41,14 36,7 38,12 34,4 30,10"
+           fill="{hair_c}" stroke="{hair_c}" stroke-linejoin="round" stroke-width="1"/>
+  <!-- Face circle — slightly wobbly for hand-drawn feel -->
+  <ellipse cx="23" cy="28" rx="14" ry="15"
+           fill="{face_c}" stroke="{border}" stroke-width="2"/>
+  <!-- Rosy cheeks -->
+  <ellipse cx="13" cy="31" rx="4" ry="2.5" fill="{cheek_c}" opacity="0.55"/>
+  <ellipse cx="33" cy="31" rx="4" ry="2.5" fill="{cheek_c}" opacity="0.55"/>
+  <!-- Eyes — big filled circles with white shine -->
+  <circle cx="17" cy="26" r="3.5" fill="{eye_c}"/>
+  <circle cx="29" cy="26" r="3.5" fill="{eye_c}"/>
+  <circle cx="18.2" cy="24.8" r="1.2" fill="white" opacity="0.9"/>
+  <circle cx="30.2" cy="24.8" r="1.2" fill="white" opacity="0.9"/>
+  <!-- Wide cartoon grin -->
+  <path d="M14,34 Q23,42 32,34" fill="none" stroke="{eye_c}"
+        stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Teeth peek -->
+  <path d="M17,35 Q23,40 29,35" fill="white" stroke="none" opacity="0.7"/>
+  <!-- Star sparkle accent -->
+  <polygon points="39,6 40,3 41,6 44,6 42,8 43,11 40,9 37,11 38,8 36,6"
+           fill="{face_c}" stroke="{border}" stroke-width="0.7" opacity="0.9"/>
+</svg>"""
 
     return f"""
 <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
-<div style="
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: {bg};
-    border: 2px solid {border};
-    border-radius: 14px;
-    padding: 10px 14px;
-    margin: 4px 0 6px 0;
-    box-shadow: 3px 3px 0px {shadow};
-    width: 100%;
-    box-sizing: border-box;
-">
-  <!-- Icon pill -->
-  <div style="
-    background: {icon_bg};
-    border-radius: 10px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.75rem;
-    flex-shrink: 0;
-    box-shadow: 2px 2px 0px {shadow};
-  ">🎬</div>
-
-  <!-- Text stack -->
-  <div style="display:flex; flex-direction:column; gap:1px; min-width:0;">
-    <span style="
-      font-family: 'Bangers', Impact, cursive;
-      font-size: 1.65rem;
-      letter-spacing: 3px;
-      color: {title_c};
-      line-height: 1;
-      white-space: nowrap;
-    ">CARTOONPAL</span>
-    <span style="
-      font-family: 'Bangers', Impact, cursive;
-      font-size: 0.68rem;
-      letter-spacing: 1.5px;
-      color: {sub_c};
-      white-space: nowrap;
-      opacity: 0.9;
-    ">COPYRIGHT &amp; VISUAL HISTORY</span>
-  </div>
+<style>
+  .cp-logo-wrap  {{ all:unset; display:block; padding:4px 0 10px 0;
+                    width:216px; min-width:216px; max-width:216px; }}
+  .cp-logo-tbl   {{ border-collapse:separate; border-spacing:0;
+                    background:{bg}; border:2.5px solid {border};
+                    border-radius:14px; width:216px; min-width:216px; max-width:216px;
+                    table-layout:fixed;
+                    box-shadow:3px 3px 0px {shadow}55; overflow:hidden; }}
+  .cp-logo-icon  {{ width:66px; padding:8px 0 8px 10px; vertical-align:middle;
+                    background:{icon_bg}; }}
+  .cp-logo-text  {{ padding:10px 10px 10px 10px; vertical-align:middle; }}
+  .cp-logo-title {{ font-family:'Bangers',Impact,cursive !important;
+                    font-size:1.55rem; letter-spacing:3px;
+                    color:{title_c} !important; line-height:1.05;
+                    display:block; white-space:nowrap; }}
+  .cp-logo-sub   {{ font-family:'Bangers',Impact,cursive !important;
+                    font-size:0.58rem; letter-spacing:1.4px;
+                    color:{sub_c} !important; opacity:0.88;
+                    display:block; white-space:nowrap; margin-top:2px; }}
+</style>
+<div class="cp-logo-wrap">
+  <table class="cp-logo-tbl" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="cp-logo-icon">{cartoon_svg}</td>
+      <td class="cp-logo-text">
+        <span class="cp-logo-title">CARTOONPAL</span>
+        <span class="cp-logo-sub">COPYRIGHT &amp; VISUAL HISTORY</span>
+      </td>
+    </tr>
+  </table>
 </div>
 """
 
@@ -308,6 +328,15 @@ def inject_theme():
             font-family: 'Bangers', cursive !important;
             letter-spacing: 1.2px !important;
         }
+        /* ── Logo fixed size — does not stretch with sidebar ── */
+        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] div[style*="width: 240px"],
+        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] div[style*="width:240px"] {{
+            width: 240px !important;
+            min-width: 240px !important;
+            max-width: 240px !important;
+            flex-shrink: 0 !important;
+        }}
+
         /* Byline caption — slightly smaller */
         [data-testid="stSidebar"] .stCaption,
         [data-testid="stSidebar"] small {
@@ -499,7 +528,9 @@ def inject_theme():
         }}
 
 
-        /* Hide Streamlit's keyboard-navigation accessibility hint text */
+        /* ── Hide ALL Streamlit keyboard/accessibility hint text ── */
+
+        /* Radio widget screen-reader hints */
         [data-testid="stSidebar"] .stRadio [data-baseweb="radio"] ~ div > div[aria-hidden="true"],
         [data-testid="stSidebar"] .stRadio > div > div > div:last-child > div:last-child,
         [data-baseweb="radio"] + div[data-testid="stMarkdownContainer"],
@@ -508,6 +539,35 @@ def inject_theme():
         span[style*="position: absolute"][style*="overflow: hidden"],
         span[style*="clip: rect(0px"][style*="white-space: nowrap"] {{
             display: none !important;
+        }}
+
+        /* ── Sidebar & top-bar collapse button tooltip text ── */
+        /* Suppress the native browser tooltip by zeroing font on text nodes
+           inside the collapse buttons, while keeping the SVG arrow visible */
+        [data-testid="stSidebarCollapseButton"] span:not(:has(svg)),
+        [data-testid="stSidebarCollapseButton"] > div > span,
+        [data-testid="collapsedControl"] span:not(:has(svg)),
+        [data-testid="collapsedControl"] > div > span,
+        button[kind="header"] span:not(:has(svg)),
+        button[data-testid="baseButton-header"] span:not(:has(svg)) {{
+            font-size: 0 !important;
+            width: 0 !important;
+            overflow: hidden !important;
+            display: inline-block !important;
+        }}
+
+        /* Prevent native browser title= tooltip from ever showing */
+        [data-testid="stSidebarCollapseButton"],
+        [data-testid="collapsedControl"],
+        [data-testid="stSidebarCollapseButton"] *,
+        [data-testid="collapsedControl"] * {{
+            pointer-events: auto !important;
+        }}
+        /* Zero out any injected text-based tooltips via attribute */
+        [data-testid="stSidebarCollapseButton"]::after,
+        [data-testid="collapsedControl"]::after {{
+            display: none !important;
+            content: "" !important;
         }}
 
         /* Alert boxes — stronger border strokes */
@@ -534,6 +594,20 @@ def inject_theme():
         .stAlert p {{ font-size: 1rem !important; color: inherit !important; }}
         hr {{ border-color: var(--accent1) !important; opacity: 0.35 !important; }}
         .stCaption, small {{ color: var(--text-muted) !important; font-size: 0.95rem !important; }}
+
+        /* ── Hide Streamlit top black bar ── */
+        [data-testid="stHeader"],
+        [data-testid="stToolbar"],
+        [data-testid="stDecoration"],
+        header[data-testid="stHeader"] {{
+            display: none !important;
+            height: 0 !important;
+            visibility: hidden !important;
+        }}
+        /* Reclaim the space the header occupied */
+        .main .block-container {{
+            padding-top: 1.5rem !important;
+        }}
         ::-webkit-scrollbar {{ width: 8px; background: var(--bg-main); }}
         ::-webkit-scrollbar-thumb {{ background: var(--accent1); border-radius: 4px; }}
         </style>
@@ -716,7 +790,9 @@ def inject_theme():
         }}
 
 
-        /* Hide Streamlit's keyboard-navigation accessibility hint text */
+        /* ── Hide ALL Streamlit keyboard/accessibility hint text ── */
+
+        /* Radio widget screen-reader hints */
         [data-testid="stSidebar"] .stRadio [data-baseweb="radio"] ~ div > div[aria-hidden="true"],
         [data-testid="stSidebar"] .stRadio > div > div > div:last-child > div:last-child,
         [data-baseweb="radio"] + div[data-testid="stMarkdownContainer"],
@@ -725,6 +801,35 @@ def inject_theme():
         span[style*="position: absolute"][style*="overflow: hidden"],
         span[style*="clip: rect(0px"][style*="white-space: nowrap"] {{
             display: none !important;
+        }}
+
+        /* ── Sidebar & top-bar collapse button tooltip text ── */
+        /* Suppress the native browser tooltip by zeroing font on text nodes
+           inside the collapse buttons, while keeping the SVG arrow visible */
+        [data-testid="stSidebarCollapseButton"] span:not(:has(svg)),
+        [data-testid="stSidebarCollapseButton"] > div > span,
+        [data-testid="collapsedControl"] span:not(:has(svg)),
+        [data-testid="collapsedControl"] > div > span,
+        button[kind="header"] span:not(:has(svg)),
+        button[data-testid="baseButton-header"] span:not(:has(svg)) {{
+            font-size: 0 !important;
+            width: 0 !important;
+            overflow: hidden !important;
+            display: inline-block !important;
+        }}
+
+        /* Prevent native browser title= tooltip from ever showing */
+        [data-testid="stSidebarCollapseButton"],
+        [data-testid="collapsedControl"],
+        [data-testid="stSidebarCollapseButton"] *,
+        [data-testid="collapsedControl"] * {{
+            pointer-events: auto !important;
+        }}
+        /* Zero out any injected text-based tooltips via attribute */
+        [data-testid="stSidebarCollapseButton"]::after,
+        [data-testid="collapsedControl"]::after {{
+            display: none !important;
+            content: "" !important;
         }}
 
         /* Alert boxes — stronger border strokes */
@@ -750,6 +855,20 @@ def inject_theme():
         .stAlert p {{ font-size: 1rem !important; color: var(--text-main) !important; }}
         hr {{ border-color: var(--accent1) !important; opacity: 0.25 !important; }}
         .stCaption, small {{ color: var(--text-muted) !important; font-size: 0.95rem !important; }}
+
+        /* ── Hide Streamlit top black bar ── */
+        [data-testid="stHeader"],
+        [data-testid="stToolbar"],
+        [data-testid="stDecoration"],
+        header[data-testid="stHeader"] {{
+            display: none !important;
+            height: 0 !important;
+            visibility: hidden !important;
+        }}
+        /* Reclaim the space the header occupied */
+        .main .block-container {{
+            padding-top: 1.5rem !important;
+        }}
         ::-webkit-scrollbar {{ width: 8px; background: var(--bg-main); }}
         ::-webkit-scrollbar-thumb {{ background: var(--accent1); border-radius: 4px; }}
         </style>
@@ -759,6 +878,46 @@ def inject_theme():
 
 
 inject_theme()
+
+# ── Strip native browser tooltip ("keyboard double arrow left") from
+#    Streamlit's collapse buttons using JS + MutationObserver ─────────────────
+st.components.v1.html("""
+<script>
+(function() {
+    function stripTitles() {
+        var selectors = [
+            '[data-testid="stSidebarCollapseButton"]',
+            '[data-testid="collapsedControl"]',
+            'button[kind="header"]',
+            'button[data-testid="baseButton-header"]',
+            '[data-testid="stSidebarCollapseButton"] button',
+            '[data-testid="collapsedControl"] button'
+        ];
+        selectors.forEach(function(sel) {
+            document.querySelectorAll(sel).forEach(function(el) {
+                el.removeAttribute('title');
+                el.removeAttribute('aria-label');
+                el.setAttribute('title', '');
+                // Walk all descendants too
+                el.querySelectorAll('[title], [aria-label]').forEach(function(child) {
+                    child.removeAttribute('title');
+                    child.setAttribute('title', '');
+                });
+            });
+        });
+    }
+
+    // Run immediately and after a short delay (Streamlit renders async)
+    stripTitles();
+    setTimeout(stripTitles, 500);
+    setTimeout(stripTitles, 1500);
+
+    // MutationObserver: re-strip whenever DOM changes (Streamlit re-renders)
+    var observer = new MutationObserver(function() { stripTitles(); });
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['title', 'aria-label'] });
+})();
+</script>
+""", height=0)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Audio helpers — load local MP3s from sounds/ folder as base64
@@ -775,25 +934,17 @@ def _audio_b64(filename: str) -> str:
 KAZOO_FILE  = "Kazoo_freesound_community-075667_two-kazoo-fanfarewav-83382.mp3"
 BOING_FILE  = "u_wb4wgxdwxo-boing2-418548.mp3"
 
-def play_audio_html(filename: str, unique_key: str = "") -> str:
-    """Return an HTML snippet that auto-plays a local MP3 via base64 data URI.
-    unique_key is embedded as a comment so Streamlit re-renders on each call."""
-    data = _audio_b64(filename)
-    if not data:
-        return ""  # file not found — silent fallback
-    return f"""
-    <audio autoplay style="display:none">
-      <!-- {unique_key} -->
-      <source src="data:audio/mpeg;base64,{data}" type="audio/mpeg">
-    </audio>
-    """
-
-# ── Play boing sound once when app first loads ────────────────────────────────
-if "boing_played" not in st.session_state:
-    st.session_state.boing_played = True
-    boing_html = play_audio_html(BOING_FILE, "app-open")
-    if boing_html:
-        st.components.v1.html(boing_html, height=0)
+def play_sound(filename: str) -> None:
+    """Play a local MP3 via st.audio() with autoplay=True.
+    Counter key ensures a new widget on every call so audio always replays."""
+    path = _pl.Path(__file__).parent / "sounds" / filename
+    if not path.exists():
+        return
+    counter_key = f"_snd_{filename}"
+    count = st.session_state.get(counter_key, 0) + 1
+    st.session_state[counter_key] = count
+    audio_bytes = path.read_bytes()
+    st.audio(audio_bytes, format="audio/mp3", autoplay=True)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Session state
@@ -939,11 +1090,23 @@ page = st.sidebar.radio(
     label_visibility="collapsed",
 )
 
+# ── Boing on every page switch ────────────────────────────────────────────────
+if "current_page" not in st.session_state:
+    st.session_state.current_page = page
+elif st.session_state.current_page != page:
+    st.session_state.current_page = page
+    play_sound(BOING_FILE)
+
 st.sidebar.divider()
 summary = analyzer.get_copyright_summary()
 st.sidebar.metric("In library", summary["total"])
 st.sidebar.metric("Public domain", summary["public_domain"])
 st.sidebar.metric("Protected", summary["protected"])
+
+# ── Play boing once on first app load (after sidebar is fully rendered) ───────
+if "boing_played" not in st.session_state:
+    st.session_state.boing_played = True
+    play_sound(BOING_FILE)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # PAGE: Search
@@ -1108,12 +1271,7 @@ if page == "🔍 Search":
         result = lib.find(query)
         if result:
             # ── Kazoo fanfare from real MP3 file ──────────────────────────
-            # Unique key = result name so Streamlit re-renders every search
-            import html as _html
-            safe_q = _html.escape(result.name)
-            kazoo_html = play_audio_html(KAZOO_FILE, f"kazoo-{safe_q}")
-            if kazoo_html:
-                st.components.v1.html(kazoo_html, height=0)
+            play_sound(KAZOO_FILE)
 
             # ── Suppress doodle bg on results ─────────────────────────────
             card_bg  = "#1e1b2e" if dark else "#ffffff"
@@ -1171,6 +1329,12 @@ if page == "🔍 Search":
 # PAGE: Browse All
 # ─────────────────────────────────────────────────────────────────────────────
 elif page == "📚 Browse All":
+    st.markdown("""
+    <style id="pg-bg">
+    [data-testid="stAppViewContainer"]::before { opacity: 0.12 !important; }
+    [data-testid="stAppViewContainer"] { background-attachment: fixed !important; }
+    </style>
+    """, unsafe_allow_html=True)
     st.title("📚 Browse All Cartoons")
 
     col1, col2, col3 = st.columns(3)
@@ -1227,6 +1391,12 @@ elif page == "📚 Browse All":
 # PAGE: Copyright Dashboard
 # ─────────────────────────────────────────────────────────────────────────────
 elif page == "⚖️ Copyright Dashboard":
+    st.markdown("""
+    <style id="pg-bg">
+    [data-testid="stAppViewContainer"]::before { opacity: 0.12 !important; }
+    [data-testid="stAppViewContainer"] { background-attachment: fixed !important; }
+    </style>
+    """, unsafe_allow_html=True)
     st.title("⚖️ Copyright Dashboard")
 
     c1, c2, c3, c4 = st.columns(4)
@@ -1270,6 +1440,12 @@ elif page == "⚖️ Copyright Dashboard":
 # PAGE: Add a Cartoon
 # ─────────────────────────────────────────────────────────────────────────────
 elif page == "➕ Add a Cartoon":
+    st.markdown("""
+    <style id="pg-bg">
+    [data-testid="stAppViewContainer"]::before { opacity: 0.12 !important; }
+    [data-testid="stAppViewContainer"] { background-attachment: fixed !important; }
+    </style>
+    """, unsafe_allow_html=True)
     st.title("➕ Add a Cartoon")
     st.caption("Fill in the details below. Fields marked * are required.")
 
