@@ -444,7 +444,7 @@ def inject_theme():
             opacity: 0.78;
         }}
 
-        [data-testid="stSidebar"] {
+        [data-testid="stSidebar"] {{
             background: var(--bg-sidebar) !important;
             border-right: none !important;
             position: sticky !important;
@@ -466,21 +466,21 @@ def inject_theme():
                 99% 97.5%,98% 100%,
                 0% 100%
             ) !important;
-        }
-        /* SVG wave stroke drawn as ::before — sits outside clip-path so it's visible */
-        [data-testid="stSidebar"]::before {
+        }}
+        /* SVG wave stroke drawn as ::before — thick orange, sits outside clip-path */
+        [data-testid="stSidebar"]::before {{
             content: "" !important;
             position: absolute !important;
             top: 0 !important; right: 0 !important;
-            width: 10px !important; height: 100% !important;
-            background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2210%22%20height%3D%221000%22%20preserveAspectRatio%3D%22none%22%3E%0A%20%20%3Cpolyline%20points%3D%2210%2C0%208%2C0%2010%2C25%206%2C50%2010%2C75%206%2C100%2010%2C125%206%2C150%2010%2C175%206%2C200%2010%2C225%206%2C250%2010%2C275%206%2C300%2010%2C325%206%2C350%2010%2C375%206%2C400%2010%2C425%206%2C450%2010%2C475%206%2C500%2010%2C525%206%2C550%2010%2C575%206%2C600%2010%2C625%206%2C650%2010%2C675%206%2C700%2010%2C725%206%2C750%2010%2C775%206%2C800%2010%2C825%206%2C850%2010%2C875%206%2C900%2010%2C925%206%2C950%2010%2C975%208%2C1000%22%0A%20%20%20%20%20%20%20%20%20%20%20%20fill%3D%22none%22%20stroke%3D%22%23f97316%22%20stroke-width%3D%223%22%0A%20%20%20%20%20%20%20%20%20%20%20%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22/%3E%0A%3C/svg%3E") !important;
-            background-size: 10px 100% !important;
+            width: 28px !important; height: 100% !important;
+            background-image: url("%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2228%22%20height%3D%221000%22%20preserveAspectRatio%3D%22none%22%3E%3Cpolyline%20points%3D%2210%2C0%208%2C0%2010%2C25%206%2C50%2010%2C75%206%2C100%2010%2C125%206%2C150%2010%2C175%206%2C200%2010%2C225%206%2C250%2010%2C275%206%2C300%2010%2C325%206%2C350%2010%2C375%206%2C400%2010%2C425%206%2C450%2010%2C475%206%2C500%2010%2C525%206%2C550%2010%2C575%206%2C600%2010%2C625%206%2C650%2010%2C675%206%2C700%2010%2C725%206%2C750%2010%2C775%206%2C800%2010%2C825%206%2C850%2010%2C875%206%2C900%2010%2C925%206%2C950%2010%2C975%208%2C1000%22%20fill%3D%22none%22%20stroke%3D%22%23f97316%22%20stroke-width%3D%2218%22%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E") !important;
+            background-size: 28px 100% !important;
             background-repeat: no-repeat !important;
             pointer-events: none !important;
             z-index: 999 !important;
-        }
+        }}
         /* Thick orange fill behind the wave stroke */
-        [data-testid="stSidebar"]::after {
+        [data-testid="stSidebar"]::after {{
             content: "" !important;
             position: absolute !important;
             top: 0 !important; right: 0 !important;
@@ -488,7 +488,7 @@ def inject_theme():
             background: #f97316 !important;
             pointer-events: none !important;
             z-index: 998 !important;
-        }
+        }}
 
         {sidebar_font_rules}
 
@@ -685,7 +685,21 @@ def inject_theme():
         .main .block-container {{
             padding-top: 1.5rem !important;
         }}
-        ::-webkit-scrollbar {{ width: 8px; background: var(--bg-main); }}
+        ::-webkit-scrollbar {{ width: 8px; background: var(--bg-main); 
+        /* ── Wave stroke overlay on body — outside sidebar clip-path ── */
+        body::after {{
+            content: "" !important;
+            position: fixed !important;
+            top: 0 !important; left: 0 !important;
+            width: 21rem !important; height: 100vh !important;
+            background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2232%22%20height%3D%221000%22%20preserveAspectRatio%3D%22none%22%3E%3Cpolyline%20points%3D%2210%2C0%208%2C0%2010%2C25%206%2C50%2010%2C75%206%2C100%2010%2C125%206%2C150%2010%2C175%206%2C200%2010%2C225%206%2C250%2010%2C275%206%2C300%2010%2C325%206%2C350%2010%2C375%206%2C400%2010%2C425%206%2C450%2010%2C475%206%2C500%2010%2C525%206%2C550%2010%2C575%206%2C600%2010%2C625%206%2C650%2010%2C675%206%2C700%2010%2C725%206%2C750%2010%2C775%206%2C800%2010%2C825%206%2C850%2010%2C875%206%2C900%2010%2C925%206%2C950%2010%2C975%208%2C1000%22%20fill%3D%22none%22%20stroke%3D%22%23f97316%22%20stroke-width%3D%2220%22%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E") !important;
+            background-position: right center !important;
+            background-size: 32px 100% !important;
+            background-repeat: no-repeat !important;
+            pointer-events: none !important;
+            z-index: 9999 !important;
+        }}
+}}
         ::-webkit-scrollbar-thumb {{ background: var(--accent1); border-radius: 4px; }}
         </style>
         """
@@ -765,14 +779,14 @@ def inject_theme():
                 0% 100%
             ) !important;
         }}
-        /* SVG wave stroke — sits on top of the clipped sidebar */
+        /* SVG wave stroke — thick orange, sits on top of the clipped sidebar */
         [data-testid="stSidebar"]::before {{
             content: "" !important;
             position: absolute !important;
             top: 0 !important; right: 0 !important;
-            width: 10px !important; height: 100% !important;
-            background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2210%22%20height%3D%221000%22%20preserveAspectRatio%3D%22none%22%3E%0A%20%20%3Cpolyline%20points%3D%2210%2C0%208%2C0%2010%2C25%206%2C50%2010%2C75%206%2C100%2010%2C125%206%2C150%2010%2C175%206%2C200%2010%2C225%206%2C250%2010%2C275%206%2C300%2010%2C325%206%2C350%2010%2C375%206%2C400%2010%2C425%206%2C450%2010%2C475%206%2C500%2010%2C525%206%2C550%2010%2C575%206%2C600%2010%2C625%206%2C650%2010%2C675%206%2C700%2010%2C725%206%2C750%2010%2C775%206%2C800%2010%2C825%206%2C850%2010%2C875%206%2C900%2010%2C925%206%2C950%2010%2C975%208%2C1000%22%0A%20%20%20%20%20%20%20%20%20%20%20%20fill%3D%22none%22%20stroke%3D%22%23ea580c%22%20stroke-width%3D%223%22%0A%20%20%20%20%20%20%20%20%20%20%20%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22/%3E%0A%3C/svg%3E") !important;
-            background-size: 10px 100% !important;
+            width: 28px !important; height: 100% !important;
+            background-image: url("%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2228%22%20height%3D%221000%22%20preserveAspectRatio%3D%22none%22%3E%3Cpolyline%20points%3D%2210%2C0%208%2C0%2010%2C25%206%2C50%2010%2C75%206%2C100%2010%2C125%206%2C150%2010%2C175%206%2C200%2010%2C225%206%2C250%2010%2C275%206%2C300%2010%2C325%206%2C350%2010%2C375%206%2C400%2010%2C425%206%2C450%2010%2C475%206%2C500%2010%2C525%206%2C550%2010%2C575%206%2C600%2010%2C625%206%2C650%2010%2C675%206%2C700%2010%2C725%206%2C750%2010%2C775%206%2C800%2010%2C825%206%2C850%2010%2C875%206%2C900%2010%2C925%206%2C950%2010%2C975%208%2C1000%22%20fill%3D%22none%22%20stroke%3D%22%23ea580c%22%20stroke-width%3D%2218%22%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E") !important;
+            background-size: 28px 100% !important;
             background-repeat: no-repeat !important;
             pointer-events: none !important;
             z-index: 999 !important;
@@ -987,7 +1001,21 @@ def inject_theme():
         .main .block-container {{
             padding-top: 1.5rem !important;
         }}
-        ::-webkit-scrollbar {{ width: 8px; background: var(--bg-main); }}
+        ::-webkit-scrollbar {{ width: 8px; background: var(--bg-main); 
+        /* ── Wave stroke overlay on body — outside sidebar clip-path ── */
+        body::after {{
+            content: "" !important;
+            position: fixed !important;
+            top: 0 !important; left: 0 !important;
+            width: 21rem !important; height: 100vh !important;
+            background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2232%22%20height%3D%221000%22%20preserveAspectRatio%3D%22none%22%3E%3Cpolyline%20points%3D%2210%2C0%208%2C0%2010%2C25%206%2C50%2010%2C75%206%2C100%2010%2C125%206%2C150%2010%2C175%206%2C200%2010%2C225%206%2C250%2010%2C275%206%2C300%2010%2C325%206%2C350%2010%2C375%206%2C400%2010%2C425%206%2C450%2010%2C475%206%2C500%2010%2C525%206%2C550%2010%2C575%206%2C600%2010%2C625%206%2C650%2010%2C675%206%2C700%2010%2C725%206%2C750%2010%2C775%206%2C800%2010%2C825%206%2C850%2010%2C875%206%2C900%2010%2C925%206%2C950%2010%2C975%208%2C1000%22%20fill%3D%22none%22%20stroke%3D%22%23ea580c%22%20stroke-width%3D%2220%22%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E") !important;
+            background-position: right center !important;
+            background-size: 32px 100% !important;
+            background-repeat: no-repeat !important;
+            pointer-events: none !important;
+            z-index: 9999 !important;
+        }}
+}}
         ::-webkit-scrollbar-thumb {{ background: var(--accent1); border-radius: 4px; }}
         </style>
         """
@@ -1533,7 +1561,7 @@ elif page == "⚖️ Copyright Dashboard":
         subtitle = "OWNERSHIP STATUS & PUBLIC DOMAIN TRACKER",
         bg       = "#1e1b2e" if _dark else "#ffffff",
         border   = "#f97316" if _dark else "#ea580c",
-        icon_bg  = "#f97316" if _dark else "#ea580c",
+        icon_bg  = "#fef9c3" if _dark else "#fef9c3",
         title_c  = "#fef3c7" if _dark else "#1c1917",
         sub_c    = "#fb923c" if _dark else "#9a3412",
         shadow   = "#f97316" if _dark else "#c2410c",
