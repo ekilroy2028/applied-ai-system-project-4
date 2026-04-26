@@ -45,39 +45,69 @@ def sidebar_logo(dark: bool) -> str:
         sub_c   = "#92400e"
         stripe  = "#fff7ed"
 
+    # Layout rationale:
+    # - ViewBox 220×80. Safe inner area starts at x=20 (after left sprockets) and ends x=200 (before right sprockets).
+    # - Left zone (x=20–60): clapperboard icon only, no text overlap.
+    # - Right text zone (x=66–198): CARTOONPAL title + subtitle, both well clear of icon and sprockets.
+    # - Vertical: title baseline at y=40, subtitle at y=58, both inside the 80px box with padding.
     return f"""
-<div style="padding:6px 2px 2px 2px;">
-<svg viewBox="0 0 200 72" xmlns="http://www.w3.org/2000/svg"
+<link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+<div style="padding:6px 2px 4px 2px; font-family: Bangers, cursive;">
+<svg viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg"
      style="width:100%;display:block;">
-  <rect x="2" y="2" width="196" height="68" rx="14"
+
+  <!-- Outer pill -->
+  <rect x="2" y="2" width="216" height="76" rx="14"
         fill="{bg}" stroke="{border}" stroke-width="2.5"/>
-  <rect x="7"  y="10" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
-  <rect x="7"  y="26" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
-  <rect x="7"  y="42" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
-  <rect x="7"  y="58" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
-  <rect x="187" y="10" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
-  <rect x="187" y="26" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
-  <rect x="187" y="42" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
-  <rect x="187" y="58" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
-  <rect x="18" y="18" width="24" height="20" rx="2.5"
-        fill="{clap_b}" stroke="{border}" stroke-width="1.2"/>
-  <rect x="18" y="18" width="24" height="6" rx="2" fill="{clap_t}"/>
-  <line x1="21" y1="18" x2="19" y2="24" stroke="{stripe}" stroke-width="1.8"/>
-  <line x1="26" y1="18" x2="24" y2="24" stroke="{stripe}" stroke-width="1.8"/>
-  <line x1="31" y1="18" x2="29" y2="24" stroke="{stripe}" stroke-width="1.8"/>
-  <line x1="36" y1="18" x2="34" y2="24" stroke="{stripe}" stroke-width="1.8"/>
-  <polygon points="24,28 24,34 31,31" fill="{star}"/>
-  <polygon points="48,14 50,9 52,14 57,14 53,17 55,22 50,19 45,22 47,17 43,14"
-           fill="{star}" stroke="{border}" stroke-width="0.8"/>
-  <text x="62" y="36"
+
+  <!-- Left film-strip column (x=4–16, safe zone ends at 18) -->
+  <rect x="4" y="2"  width="14" height="76" rx="8" fill="{border}" opacity="0.15"/>
+  <rect x="6"  y="10" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
+  <rect x="6"  y="27" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
+  <rect x="6"  y="44" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
+  <rect x="6"  y="61" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
+
+  <!-- Right film-strip column (x=202–216, safe zone starts at 200) -->
+  <rect x="202" y="2"  width="14" height="76" rx="8" fill="{border}" opacity="0.15"/>
+  <rect x="207" y="10" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
+  <rect x="207" y="27" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
+  <rect x="207" y="44" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
+  <rect x="207" y="61" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
+
+  <!-- Clapperboard icon — lives entirely in x=20–58, y=16–54 -->
+  <rect x="22" y="20" width="34" height="28" rx="3"
+        fill="{clap_b}" stroke="{border}" stroke-width="1.5"/>
+  <!-- clapper top bar -->
+  <rect x="22" y="20" width="34" height="9" rx="3" fill="{clap_t}"/>
+  <!-- diagonal stripes on top bar -->
+  <line x1="26" y1="20" x2="23" y2="29" stroke="{stripe}" stroke-width="2.2"/>
+  <line x1="32" y1="20" x2="29" y2="29" stroke="{stripe}" stroke-width="2.2"/>
+  <line x1="38" y1="20" x2="35" y2="29" stroke="{stripe}" stroke-width="2.2"/>
+  <line x1="44" y1="20" x2="41" y2="29" stroke="{stripe}" stroke-width="2.2"/>
+  <line x1="50" y1="20" x2="47" y2="29" stroke="{stripe}" stroke-width="2.2"/>
+  <!-- play triangle centred in lower body -->
+  <polygon points="30,34 30,44 42,39" fill="{star}" opacity="0.95"/>
+
+  <!-- Thin divider line between icon zone and text zone -->
+  <line x1="62" y1="14" x2="62" y2="66" stroke="{border}" stroke-width="1" opacity="0.4"/>
+
+  <!-- CARTOONPAL — anchored at x=68, well clear of divider and right sprockets -->
+  <text x="68" y="42"
         font-family="Bangers, Impact, cursive"
-        font-size="22" letter-spacing="1.5"
-        fill="{text_c}" stroke="{border}" stroke-width="0.8"
+        font-size="24" letter-spacing="2"
+        fill="{text_c}"
+        stroke="{border}" stroke-width="1"
         paint-order="stroke fill">CARTOONPAL</text>
-  <text x="62" y="52"
+
+  <!-- Subtitle — same left edge, tighter tracking, safely above bottom edge -->
+  <text x="68" y="60"
         font-family="Bangers, Impact, cursive"
-        font-size="10" letter-spacing="1"
-        fill="{sub_c}">COPYRIGHT &amp; VISUAL HISTORY</text>
+        font-size="9.5" letter-spacing="1.2"
+        fill="{sub_c}" opacity="0.88">COPYRIGHT &amp; VISUAL HISTORY</text>
+
+  <!-- Small star accent — safely inside icon zone, x max = 60 -->
+  <polygon points="52,13 54,8 56,13 61,13 57,16 59,21 54,18 49,21 51,16 47,13"
+           fill="{star}" stroke="{border}" stroke-width="0.7" opacity="0.9"/>
 </svg>
 </div>
 """
@@ -291,14 +321,26 @@ def inject_theme():
             font-family: 'Bangers', cursive !important;
             letter-spacing: 1.2px !important;
         }
-        /* Numbers in metric values stay readable */
+        /* Byline caption — slightly smaller */
+        [data-testid="stSidebar"] .stCaption,
+        [data-testid="stSidebar"] small {
+            font-size: 0.78rem !important;
+            letter-spacing: 0.8px !important;
+            opacity: 0.82;
+        }
+        /* Sidebar metric numbers — 2x larger */
         [data-testid="stSidebar"] [data-testid="stMetricValue"] {
             font-family: 'Bangers', cursive !important;
-            font-size: 1.6rem !important;
-            letter-spacing: 1px !important;
+            font-size: 4.8rem !important;
+            letter-spacing: 2px !important;
+            line-height: 1.1 !important;
+        }
+        [data-testid="stSidebar"] [data-testid="metric-container"] {
+            padding: 12px 10px 8px 10px !important;
         }
         [data-testid="stSidebar"] [data-testid="metric-container"] label {
             font-size: 1rem !important;
+            letter-spacing: 1px !important;
         }
         [data-testid="stSidebar"] .stRadio label {
             font-size: 1.15rem !important;
@@ -313,7 +355,7 @@ def inject_theme():
         :root {{
             --bg-main:      #0f0e17;
             --bg-card:      #1e1b2e;
-            --bg-sidebar:   #13121f;
+            --bg-sidebar:   #1c1008;
             --accent1:      #f97316;
             --accent2:      #38bdf8;
             --accent3:      #fbbf24;
@@ -416,35 +458,46 @@ def inject_theme():
 
         .stTextInput input, .stTextArea textarea, .stNumberInput input {{
             background: var(--bg-card) !important;
-            border: 2px solid var(--accent1) !important;
-            border-radius: 8px !important;
+            border: 1.5px solid rgba(249,115,22,0.5) !important;
+            border-radius: 6px !important;
             color: var(--text-main) !important;
             font-family: var(--body-font) !important;
             font-size: 1rem !important;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.25) !important;
+            transition: border-color 0.15s ease !important;
+        }}
+        .stTextInput input:focus, .stTextArea textarea:focus, .stNumberInput input:focus {{
+            border-color: var(--accent1) !important;
+            box-shadow: 0 0 0 2px rgba(249,115,22,0.25) !important;
         }}
         .stTextInput label, .stTextArea label, .stNumberInput label,
         .stSelectbox label, .stCheckbox label {{
             color: var(--text-main) !important;
-            font-size: 1rem !important;
+            font-size: 0.95rem !important;
             font-weight: 700 !important;
+            letter-spacing: 0.3px !important;
+            text-transform: uppercase !important;
         }}
         .stSelectbox [data-baseweb="select"] {{
             background: var(--bg-card) !important;
-            border: 2px solid var(--accent2) !important;
-            border-radius: 8px !important;
+            border: 1.5px solid rgba(56,189,248,0.5) !important;
+            border-radius: 6px !important;
             color: var(--text-main) !important;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.20) !important;
         }}
 
         details {{
             background: var(--bg-card) !important;
-            border: 2px solid var(--accent1) !important;
-            border-radius: 10px !important;
-            margin-bottom: 8px !important;
+            border: 1.5px solid rgba(249,115,22,0.4) !important;
+            border-radius: 8px !important;
+            margin-bottom: 6px !important;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.18) !important;
         }}
         summary {{
             color: var(--accent3) !important;
             font-weight: 800 !important;
             font-size: 1.05rem !important;
+            letter-spacing: 0.3px !important;
         }}
 
         .stTabs [data-baseweb="tab"] {{
@@ -520,8 +573,13 @@ def inject_theme():
         }}
 
         [data-testid="stSidebar"] {{
-            background: linear-gradient(155deg, #fff7ed 0%, #ecfeff 55%, #fefce8 100%) !important;
+            background: linear-gradient(155deg, #fde68a 0%, #fbbf24 40%, #f97316 100%) !important;
             border-right: 4px solid var(--accent1) !important;
+        }}
+        /* Amber sidebar needs dark text */
+        [data-testid="stSidebar"],
+        [data-testid="stSidebar"] * {{
+            color: #1c1917 !important;
         }}
 
         {sidebar_font_rules}
@@ -585,35 +643,46 @@ def inject_theme():
 
         .stTextInput input, .stTextArea textarea, .stNumberInput input {{
             background: var(--bg-card) !important;
-            border: 2px solid var(--accent1) !important;
-            border-radius: 8px !important;
+            border: 1.5px solid rgba(234,88,12,0.45) !important;
+            border-radius: 6px !important;
             color: var(--text-main) !important;
             font-family: var(--body-font) !important;
             font-size: 1rem !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.10) !important;
+            transition: border-color 0.15s ease !important;
+        }}
+        .stTextInput input:focus, .stTextArea textarea:focus, .stNumberInput input:focus {{
+            border-color: var(--accent1) !important;
+            box-shadow: 0 0 0 2px rgba(234,88,12,0.18) !important;
         }}
         .stTextInput label, .stTextArea label, .stNumberInput label,
         .stSelectbox label, .stCheckbox label {{
             color: var(--text-main) !important;
-            font-size: 1rem !important;
+            font-size: 0.95rem !important;
             font-weight: 700 !important;
+            letter-spacing: 0.3px !important;
+            text-transform: uppercase !important;
         }}
         .stSelectbox [data-baseweb="select"] {{
             background: var(--bg-card) !important;
-            border: 2px solid var(--accent2) !important;
-            border-radius: 8px !important;
+            border: 1.5px solid rgba(8,145,178,0.45) !important;
+            border-radius: 6px !important;
             color: var(--text-main) !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08) !important;
         }}
 
         details {{
             background: var(--bg-card) !important;
-            border: 2px solid var(--accent1) !important;
-            border-radius: 12px !important;
-            margin-bottom: 8px !important;
+            border: 1.5px solid rgba(234,88,12,0.35) !important;
+            border-radius: 8px !important;
+            margin-bottom: 6px !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.07) !important;
         }}
         summary {{
             color: var(--accent1) !important;
             font-weight: 800 !important;
             font-size: 1.05rem !important;
+            letter-spacing: 0.3px !important;
         }}
 
         .stTabs [data-baseweb="tab"] {{
@@ -801,6 +870,59 @@ if page == "🔍 Search":
     if query:
         result = lib.find(query)
         if result:
+            # ── Cartoon sound effect (Web Audio API via inline JS) ─────────
+            # Plays a classic 2-tone "boing" on each successful search result
+            cartoon_sound_js = """
+            <script>
+            (function() {
+                try {
+                    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    function playNote(freq, startTime, duration, type) {
+                        var osc = ctx.createOscillator();
+                        var gain = ctx.createGain();
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.type = type || 'sine';
+                        osc.frequency.setValueAtTime(freq, startTime);
+                        osc.frequency.exponentialRampToValueAtTime(freq * 1.8, startTime + 0.08);
+                        osc.frequency.exponentialRampToValueAtTime(freq * 0.5, startTime + duration * 0.6);
+                        gain.gain.setValueAtTime(0.28, startTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+                        osc.start(startTime);
+                        osc.stop(startTime + duration);
+                    }
+                    var now = ctx.currentTime;
+                    playNote(440, now,        0.22, 'square');
+                    playNote(660, now + 0.10, 0.18, 'sine');
+                    playNote(880, now + 0.20, 0.30, 'sine');
+                    playNote(330, now + 0.38, 0.40, 'triangle');
+                } catch(e) {}
+            })();
+            </script>
+            """
+            st.components.v1.html(cartoon_sound_js, height=0)
+
+            # ── Solid result card background ────────────────────────────────
+            dark = st.session_state.dark_mode
+            card_bg  = "#1e1b2e" if dark else "#ffffff"
+            card_bdr = "#f97316" if dark else "#ea580c"
+            st.markdown(f"""
+            <style>
+            .result-card {{
+                background: {card_bg};
+                border: 2px solid {card_bdr};
+                border-radius: 14px;
+                padding: 24px 28px 18px 28px;
+                margin-bottom: 16px;
+                box-shadow: 5px 5px 0px {card_bdr}44;
+            }}
+            /* Kill the doodle background in the main block while results show */
+            [data-testid="stAppViewContainer"]::before {{
+                opacity: 0.18 !important;
+            }}
+            </style>
+            """, unsafe_allow_html=True)
+
             st.divider()
             col1, col2 = st.columns([2, 1])
             with col1:
