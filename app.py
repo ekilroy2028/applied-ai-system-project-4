@@ -303,6 +303,42 @@ def cartoon_bg_svg(dark: bool) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# Page header banner — rounded box with icon + title, used on Browse/Copyright/Add
+# ─────────────────────────────────────────────────────────────────────────────
+_PAGE_HEADER_CSS = """
+<style>
+.pg-header-wrap { margin: 0 0 18px 0; }
+.pg-header-tbl  { border-collapse:separate; border-spacing:0;
+                  border-radius:16px; overflow:hidden; }
+.pg-header-icon { width:72px; text-align:center; vertical-align:middle;
+                  font-size:2.2rem; padding:14px 0; }
+.pg-header-text { vertical-align:middle; padding:14px 20px; }
+.pg-header-title { font-family:'Bangers',Impact,cursive;
+                   font-size:2rem; letter-spacing:3px;
+                   line-height:1.05; display:block; white-space:nowrap; }
+.pg-header-sub  { font-family:'Bangers',Impact,cursive;
+                  font-size:0.72rem; letter-spacing:1.5px;
+                  opacity:0.75; display:block; margin-top:3px; }
+</style>
+"""
+
+def page_header_html(icon, title, subtitle, bg, border, icon_bg, title_c, sub_c, shadow):
+    return f"""{_PAGE_HEADER_CSS}
+<div class="pg-header-wrap">
+  <table class="pg-header-tbl" cellpadding="0" cellspacing="0"
+         style="background:{bg}; border:2.5px solid {border}; box-shadow:4px 4px 0px {shadow}44;">
+    <tr>
+      <td class="pg-header-icon" style="background:{icon_bg};">{icon}</td>
+      <td class="pg-header-text">
+        <span class="pg-header-title" style="color:{title_c};">{title}</span>
+        <span class="pg-header-sub"   style="color:{sub_c};">{subtitle}</span>
+      </td>
+    </tr>
+  </table>
+</div>
+"""
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Theme injection
 # ─────────────────────────────────────────────────────────────────────────────
 def inject_theme():
@@ -408,10 +444,51 @@ def inject_theme():
             opacity: 0.78;
         }}
 
-        [data-testid="stSidebar"] {{
+        [data-testid="stSidebar"] {
             background: var(--bg-sidebar) !important;
-            border-right: 3px solid var(--accent1) !important;
-        }}
+            border-right: none !important;
+            position: sticky !important;
+            top: 0 !important;
+            height: 100vh !important;
+            overflow-y: auto !important;
+            clip-path: polygon(
+                0% 0%,
+                98% 0%,   99% 2.5%,  97% 5%,
+                99% 7.5%, 97% 10%,   99% 12.5%, 97% 15%,
+                99% 17.5%,97% 20%,   99% 22.5%, 97% 25%,
+                99% 27.5%,97% 30%,   99% 32.5%, 97% 35%,
+                99% 37.5%,97% 40%,   99% 42.5%, 97% 45%,
+                99% 47.5%,97% 50%,   99% 52.5%, 97% 55%,
+                99% 57.5%,97% 60%,   99% 62.5%, 97% 65%,
+                99% 67.5%,97% 70%,   99% 72.5%, 97% 75%,
+                99% 77.5%,97% 80%,   99% 82.5%, 97% 85%,
+                99% 87.5%,97% 90%,   99% 92.5%, 97% 95%,
+                99% 97.5%,98% 100%,
+                0% 100%
+            ) !important;
+        }
+        /* SVG wave stroke drawn as ::before — sits outside clip-path so it's visible */
+        [data-testid="stSidebar"]::before {
+            content: "" !important;
+            position: absolute !important;
+            top: 0 !important; right: 0 !important;
+            width: 10px !important; height: 100% !important;
+            background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2210%22%20height%3D%221000%22%20preserveAspectRatio%3D%22none%22%3E%0A%20%20%3Cpolyline%20points%3D%2210%2C0%208%2C0%2010%2C25%206%2C50%2010%2C75%206%2C100%2010%2C125%206%2C150%2010%2C175%206%2C200%2010%2C225%206%2C250%2010%2C275%206%2C300%2010%2C325%206%2C350%2010%2C375%206%2C400%2010%2C425%206%2C450%2010%2C475%206%2C500%2010%2C525%206%2C550%2010%2C575%206%2C600%2010%2C625%206%2C650%2010%2C675%206%2C700%2010%2C725%206%2C750%2010%2C775%206%2C800%2010%2C825%206%2C850%2010%2C875%206%2C900%2010%2C925%206%2C950%2010%2C975%208%2C1000%22%0A%20%20%20%20%20%20%20%20%20%20%20%20fill%3D%22none%22%20stroke%3D%22%23f97316%22%20stroke-width%3D%223%22%0A%20%20%20%20%20%20%20%20%20%20%20%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22/%3E%0A%3C/svg%3E") !important;
+            background-size: 10px 100% !important;
+            background-repeat: no-repeat !important;
+            pointer-events: none !important;
+            z-index: 999 !important;
+        }
+        /* Thick orange fill behind the wave stroke */
+        [data-testid="stSidebar"]::after {
+            content: "" !important;
+            position: absolute !important;
+            top: 0 !important; right: 0 !important;
+            width: 4px !important; height: 100% !important;
+            background: #f97316 !important;
+            pointer-events: none !important;
+            z-index: 998 !important;
+        }
 
         {sidebar_font_rules}
 
@@ -667,7 +744,48 @@ def inject_theme():
 
         [data-testid="stSidebar"] {{
             background: linear-gradient(155deg, #fde68a 0%, #fbbf24 40%, #f97316 100%) !important;
-            border-right: 4px solid var(--accent1) !important;
+            border-right: none !important;
+            position: sticky !important;
+            top: 0 !important;
+            height: 100vh !important;
+            overflow-y: auto !important;
+            clip-path: polygon(
+                0% 0%,
+                98% 0%,   99% 2.5%,  97% 5%,
+                99% 7.5%, 97% 10%,   99% 12.5%, 97% 15%,
+                99% 17.5%,97% 20%,   99% 22.5%, 97% 25%,
+                99% 27.5%,97% 30%,   99% 32.5%, 97% 35%,
+                99% 37.5%,97% 40%,   99% 42.5%, 97% 45%,
+                99% 47.5%,97% 50%,   99% 52.5%, 97% 55%,
+                99% 57.5%,97% 60%,   99% 62.5%, 97% 65%,
+                99% 67.5%,97% 70%,   99% 72.5%, 97% 75%,
+                99% 77.5%,97% 80%,   99% 82.5%, 97% 85%,
+                99% 87.5%,97% 90%,   99% 92.5%, 97% 95%,
+                99% 97.5%,98% 100%,
+                0% 100%
+            ) !important;
+        }}
+        /* SVG wave stroke — sits on top of the clipped sidebar */
+        [data-testid="stSidebar"]::before {{
+            content: "" !important;
+            position: absolute !important;
+            top: 0 !important; right: 0 !important;
+            width: 10px !important; height: 100% !important;
+            background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2210%22%20height%3D%221000%22%20preserveAspectRatio%3D%22none%22%3E%0A%20%20%3Cpolyline%20points%3D%2210%2C0%208%2C0%2010%2C25%206%2C50%2010%2C75%206%2C100%2010%2C125%206%2C150%2010%2C175%206%2C200%2010%2C225%206%2C250%2010%2C275%206%2C300%2010%2C325%206%2C350%2010%2C375%206%2C400%2010%2C425%206%2C450%2010%2C475%206%2C500%2010%2C525%206%2C550%2010%2C575%206%2C600%2010%2C625%206%2C650%2010%2C675%206%2C700%2010%2C725%206%2C750%2010%2C775%206%2C800%2010%2C825%206%2C850%2010%2C875%206%2C900%2010%2C925%206%2C950%2010%2C975%208%2C1000%22%0A%20%20%20%20%20%20%20%20%20%20%20%20fill%3D%22none%22%20stroke%3D%22%23ea580c%22%20stroke-width%3D%223%22%0A%20%20%20%20%20%20%20%20%20%20%20%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22/%3E%0A%3C/svg%3E") !important;
+            background-size: 10px 100% !important;
+            background-repeat: no-repeat !important;
+            pointer-events: none !important;
+            z-index: 999 !important;
+        }}
+        /* Thick orange fill behind the wave stroke */
+        [data-testid="stSidebar"]::after {{
+            content: "" !important;
+            position: absolute !important;
+            top: 0 !important; right: 0 !important;
+            width: 4px !important; height: 100% !important;
+            background: #ea580c !important;
+            pointer-events: none !important;
+            z-index: 998 !important;
         }}
         /* Amber sidebar needs dark text */
         [data-testid="stSidebar"],
@@ -1335,7 +1453,18 @@ elif page == "📚 Browse All":
     [data-testid="stAppViewContainer"] { background-attachment: fixed !important; }
     </style>
     """, unsafe_allow_html=True)
-    st.title("📚 Browse All Cartoons")
+    _dark = st.session_state.dark_mode
+    st.markdown(page_header_html(
+        icon     = "📚",
+        title    = "BROWSE ALL CARTOONS",
+        subtitle = "EVERY CHARACTER IN THE LIBRARY",
+        bg       = "#1e1b2e" if _dark else "#ffffff",
+        border   = "#f97316" if _dark else "#ea580c",
+        icon_bg  = "#f97316" if _dark else "#ea580c",
+        title_c  = "#fef3c7" if _dark else "#1c1917",
+        sub_c    = "#fb923c" if _dark else "#9a3412",
+        shadow   = "#f97316" if _dark else "#c2410c",
+    ), unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns(3)
     sort_by = col1.selectbox("Sort by", ["Debut year (oldest first)", "Debut year (newest first)", "Name A–Z"])
@@ -1397,7 +1526,18 @@ elif page == "⚖️ Copyright Dashboard":
     [data-testid="stAppViewContainer"] { background-attachment: fixed !important; }
     </style>
     """, unsafe_allow_html=True)
-    st.title("⚖️ Copyright Dashboard")
+    _dark = st.session_state.dark_mode
+    st.markdown(page_header_html(
+        icon     = "⚖️",
+        title    = "COPYRIGHT DASHBOARD",
+        subtitle = "OWNERSHIP STATUS & PUBLIC DOMAIN TRACKER",
+        bg       = "#1e1b2e" if _dark else "#ffffff",
+        border   = "#f97316" if _dark else "#ea580c",
+        icon_bg  = "#f97316" if _dark else "#ea580c",
+        title_c  = "#fef3c7" if _dark else "#1c1917",
+        sub_c    = "#fb923c" if _dark else "#9a3412",
+        shadow   = "#f97316" if _dark else "#c2410c",
+    ), unsafe_allow_html=True)
 
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Total cartoons", summary["total"])
@@ -1446,7 +1586,18 @@ elif page == "➕ Add a Cartoon":
     [data-testid="stAppViewContainer"] { background-attachment: fixed !important; }
     </style>
     """, unsafe_allow_html=True)
-    st.title("➕ Add a Cartoon")
+    _dark = st.session_state.dark_mode
+    st.markdown(page_header_html(
+        icon     = "➕",
+        title    = "ADD A CARTOON",
+        subtitle = "REGISTER A NEW CHARACTER TO THE LIBRARY",
+        bg       = "#1e1b2e" if _dark else "#ffffff",
+        border   = "#34d399" if _dark else "#16a34a",
+        icon_bg  = "#34d399" if _dark else "#16a34a",
+        title_c  = "#fef3c7" if _dark else "#1c1917",
+        sub_c    = "#6ee7b7" if _dark else "#14532d",
+        shadow   = "#34d399" if _dark else "#15803d",
+    ), unsafe_allow_html=True)
     st.caption("Fill in the details below. Fields marked * are required.")
 
     with st.form("add_cartoon_form"):
