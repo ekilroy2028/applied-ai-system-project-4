@@ -298,9 +298,19 @@ class Library:
         logging.info(f"Library: added '{cartoon.name}'")
 
     def find(self, name: str) -> Optional[Cartoon]:
-        """Case-insensitive partial name search."""
+        """Case-insensitive partial name search — returns first match."""
         name_lower = name.lower().strip()
         return next((c for c in self.cartoons if name_lower in c.name.lower()), None)
+
+    def find_all(self, query: str) -> list:
+        """Case-insensitive partial search — returns ALL matching cartoons."""
+        q = query.lower().strip()
+        results = [c for c in self.cartoons if q in c.name.lower()]
+        # Also search description and character_type for broader matches
+        if not results:
+            results = [c for c in self.cartoons
+                      if q in c.description.lower() or q in c.character_type.lower()]
+        return sorted(results, key=lambda c: c.debut_year)
 
     def all_public_domain(self) -> list[Cartoon]:
         return [c for c in self.cartoons if c.is_public_domain]

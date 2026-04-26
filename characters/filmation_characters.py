@@ -411,15 +411,24 @@ def add_filmation_characters(lib: Library):
         name="Batman and Superman (Filmation animated)",
         description=(
             "Filmation produced the first animated adaptations of Batman and Superman "
-            "for television in the late 1960s — predating all other DC animation. "
+            "for television in the late 1960s. "
+            "BATMAN was created by Bob Kane and Bill Finger for Detective Comics #27 (1939). "
+            "Bill Finger co-created virtually everything recognizable about Batman — "
+            "the costume, Bruce Wayne, Gotham City, the Joker, Alfred, Commissioner Gordon — "
+            "but was not officially credited until 2015. "
+            "SUPERMAN was created by Jerry Siegel and Joe Shuster for Action Comics #1 (1938). "
             "The Batman/Superman Hour featured the Caped Crusader in animated form "
-            "for the first time since the 1940s theatrical shorts, alongside the "
-            "Man of Steel in separate adventures. The series used limited animation "
-            "but faithful interpretations of the comics designs."
+            "for the first time since the 1940s theatrical shorts. "
+            "The series used limited animation but faithful interpretations of the comics designs."
         ),
         character_type="Superhero — DC Comics animated adaptations",
         debut_year=1968,
-        extra_creators=[],
+        extra_creators=[
+            Creator("Bob Kane", "Batman co-creator — conceived original concept", 1915, 1998),
+            Creator("Bill Finger", "Batman co-creator — costume, Bruce Wayne, Gotham, Joker, Alfred. Credited 2015.", 1914, 1974),
+            Creator("Jerry Siegel", "Superman co-creator", 1914, 1996),
+            Creator("Joe Shuster", "Superman co-creator", 1914, 1992),
+        ],
         series_list=[
             Series("The Batman Superman Hour", 1968, 1969,
                    "Filmation Associates / CBS", "TV series", episode_count=34),

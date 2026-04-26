@@ -27,8 +27,8 @@ from cartoon_system import (
 
 DC_STUDIO = ProductionCompany("DC Comics / Warner Bros. Animation", 1938, country="USA")
 
-BOB_KANE    = Creator("Bob Kane", "Batman co-creator (credited)", 1915, 1998)
-BILL_FINGER = Creator("Bill Finger", "Batman co-creator (uncredited until 2015)", 1914, 1974)
+BOB_KANE    = Creator("Bob Kane", "Batman co-creator — conceived original concept, credited as sole creator until 2015", 1915, 1998)
+BILL_FINGER = Creator("Bill Finger", "Batman co-creator — created the costume, Bruce Wayne name, Gotham City, origin story, Joker, Alfred, Commissioner Gordon. Officially credited by DC in 2015.", 1914, 1974)
 JERRY_SIEGEL = Creator("Jerry Siegel", "Superman co-creator", 1914, 1996)
 JOE_SHUSTER  = Creator("Joe Shuster", "Superman co-creator", 1914, 1992)
 BRUCE_TIMM   = Creator("Bruce Timm", "DCAU creator & producer", 1961)
@@ -97,14 +97,22 @@ def add_dc_characters(lib: Library):
         name="Batman (animated history)",
         description=(
             "Bruce Wayne — billionaire orphan who witnessed his parents' murder "
-            "and dedicated his life to fighting crime as the Dark Knight. "
+            "and dedicated his life to fighting crime as the Dark Knight of Gotham City. "
+            "CREATION: Batman was created by Bob Kane and Bill Finger. Bob Kane conceived "
+            "and drew the original Batman for Detective Comics #27 (May 1939). Bill Finger "
+            "co-created virtually every element of the Batman mythology — the costume, "
+            "the name Bruce Wayne, Gotham City, Alfred the butler, Commissioner Gordon, "
+            "the Batmobile, the origin story, and the Joker — but received no credit "
+            "during his lifetime. DC Comics officially recognized Bill Finger as co-creator "
+            "in 2015, adding his name to all Batman credits. "
             "Batman has appeared in more animated series than any other DC character, "
             "produced by different studios across six decades. Each production "
-            "reflected the culture of its era: Filmation's campy 1968 version, "
+            "reflected the culture of its era: the campy Filmation 1968 version, "
             "Hanna-Barbera's Super Friends adventure format, and Bruce Timm's "
             "celebrated noir-influenced 1992 masterpiece that defined Batman "
-            "for a generation. NOTE: DC Comics has always owned the Batman character — "
-            "different studios produced animated versions under license at different times."
+            "for a generation and created Harley Quinn. "
+            "NOTE: DC Comics has always owned Batman — different studios produced "
+            "animated versions under license at different times."
         ),
         character_type="Human — DC Comics superhero / Dark Knight",
         debut_year=1939,
