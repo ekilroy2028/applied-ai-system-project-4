@@ -112,11 +112,20 @@ def analyze_copyright_with_ai(cartoon: Cartoon) -> dict:
 
     except Exception as e:
         log.error("AI analysis failed for %s: %s", cartoon.name, e)
+        error_text = str(e).lower()
+        if "authentication_error" in error_text or "invalid x-api-key" in error_text or "401" in error_text:
+            analysis = (
+                "Anthropic authentication failed: invalid, missing, or expired ANTHROPIC_API_KEY. "
+                "Set a valid ANTHROPIC_API_KEY in your environment."
+            )
+        else:
+            analysis = (
+                "Could not reach Claude API. "
+                "Make sure ANTHROPIC_API_KEY is set and valid in your environment."
+            )
+
         return {
             "success": False,
-            "analysis": (
-                f"Could not reach Claude API: {e}. "
-                "Make sure ANTHROPIC_API_KEY is set in your environment."
-            ),
+            "analysis": analysis,
             "confidence": "ERROR"
         }
