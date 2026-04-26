@@ -26,89 +26,121 @@ if "dark_mode" not in st.session_state:
 # SVG LOGO
 # ─────────────────────────────────────────────────────────────────────────────
 def sidebar_logo(dark: bool) -> str:
+    """
+    Self-contained CartoonPal logo rendered as HTML+SVG.
+    Uses a <div> text layer on TOP of the SVG background so font rendering
+    is handled by the browser's HTML engine (not SVG's limited font stack).
+    This guarantees Bangers always shows correctly.
+    """
     if dark:
-        bg      = "#12122a"
-        border  = "#f97316"
-        star    = "#fbbf24"
-        clap_b  = "#f97316"
-        clap_t  = "#fb923c"
-        text_c  = "#ffffff"
-        sub_c   = "#fdba74"
-        stripe  = "#12122a"
+        bg_outer  = "#0f0e17"
+        bg_inner  = "#1e1435"
+        border    = "#f97316"
+        reel_c    = "#f97316"
+        spoke_c   = "#fb923c"
+        hole_c    = "#0f0e17"
+        star_c    = "#fbbf24"
+        text_c    = "#fff7ed"
+        sub_c     = "#fdba74"
+        badge_bg  = "#f97316"
+        badge_txt = "#0f0e17"
     else:
-        bg      = "#fff7ed"
-        border  = "#ea580c"
-        star    = "#f59e0b"
-        clap_b  = "#ea580c"
-        clap_t  = "#fb923c"
-        text_c  = "#1c1917"
-        sub_c   = "#92400e"
-        stripe  = "#fff7ed"
+        bg_outer  = "#7c2d12"
+        bg_inner  = "#fff7ed"
+        border    = "#c2410c"
+        reel_c    = "#ea580c"
+        spoke_c   = "#fb923c"
+        hole_c    = "#fff7ed"
+        star_c    = "#f59e0b"
+        text_c    = "#1c1917"
+        sub_c     = "#9a3412"
+        badge_bg  = "#ea580c"
+        badge_txt = "#ffffff"
 
-    # Layout rationale:
-    # - ViewBox 220×80. Safe inner area starts at x=20 (after left sprockets) and ends x=200 (before right sprockets).
-    # - Left zone (x=20–60): clapperboard icon only, no text overlap.
-    # - Right text zone (x=66–198): CARTOONPAL title + subtitle, both well clear of icon and sprockets.
-    # - Vertical: title baseline at y=40, subtitle at y=58, both inside the 80px box with padding.
+    # Logo is a pure HTML block — text rendered by browser, not SVG.
+    # SVG layer provides the decorative background (film reel + stars).
+    # The HTML text floats over it absolutely.
     return f"""
-<link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
-<div style="padding:6px 2px 4px 2px; font-family: Bangers, cursive;">
-<svg viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg"
-     style="width:100%;display:block;">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@700&display=swap" rel="stylesheet">
+<div style="
+    position: relative;
+    width: 100%;
+    background: {bg_outer};
+    border: 2.5px solid {border};
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 4px 0 2px 0;
+    box-shadow: 3px 3px 0px {border}88;
+">
+  <!-- SVG decorative layer -->
+  <svg viewBox="0 0 220 82" xmlns="http://www.w3.org/2000/svg"
+       style="width:100%;display:block;">
 
-  <!-- Outer pill -->
-  <rect x="2" y="2" width="216" height="76" rx="14"
-        fill="{bg}" stroke="{border}" stroke-width="2.5"/>
+    <!-- Warm inner background panel (right 2/3) -->
+    <rect x="64" y="0" width="156" height="82" fill="{bg_inner}" opacity="0.92"/>
 
-  <!-- Left film-strip column (x=4–16, safe zone ends at 18) -->
-  <rect x="4" y="2"  width="14" height="76" rx="8" fill="{border}" opacity="0.15"/>
-  <rect x="6"  y="10" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
-  <rect x="6"  y="27" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
-  <rect x="6"  y="44" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
-  <rect x="6"  y="61" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
+    <!-- Left accent stripe -->
+    <rect x="0" y="0" width="64" height="82" fill="{reel_c}" opacity="0.18"/>
 
-  <!-- Right film-strip column (x=202–216, safe zone starts at 200) -->
-  <rect x="202" y="2"  width="14" height="76" rx="8" fill="{border}" opacity="0.15"/>
-  <rect x="207" y="10" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
-  <rect x="207" y="27" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
-  <rect x="207" y="44" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
-  <rect x="207" y="61" width="7" height="9" rx="2" fill="{border}" opacity="0.75"/>
+    <!-- Film reel — centred in left zone at x=32, y=41 -->
+    <!-- Outer ring -->
+    <circle cx="32" cy="41" r="26" fill="none" stroke="{reel_c}" stroke-width="3"/>
+    <!-- Inner hub -->
+    <circle cx="32" cy="41" r="10" fill="{reel_c}" stroke="{border}" stroke-width="1.5"/>
+    <!-- Hub hole -->
+    <circle cx="32" cy="41" r="4"  fill="{hole_c}"/>
+    <!-- Three spokes -->
+    <line x1="32" y1="31" x2="32" y2="18" stroke="{spoke_c}" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="32" y1="31" x2="32" y2="18" stroke="{spoke_c}" stroke-width="2.5" stroke-linecap="round" transform="rotate(120 32 41)"/>
+    <line x1="32" y1="31" x2="32" y2="18" stroke="{spoke_c}" stroke-width="2.5" stroke-linecap="round" transform="rotate(240 32 41)"/>
+    <!-- Sprocket holes around reel -->
+    <circle cx="32" cy="15" r="3" fill="{hole_c}" stroke="{reel_c}" stroke-width="1"/>
+    <circle cx="32" cy="15" r="3" fill="{hole_c}" stroke="{reel_c}" stroke-width="1" transform="rotate(60  32 41)"/>
+    <circle cx="32" cy="15" r="3" fill="{hole_c}" stroke="{reel_c}" stroke-width="1" transform="rotate(120 32 41)"/>
+    <circle cx="32" cy="15" r="3" fill="{hole_c}" stroke="{reel_c}" stroke-width="1" transform="rotate(180 32 41)"/>
+    <circle cx="32" cy="15" r="3" fill="{hole_c}" stroke="{reel_c}" stroke-width="1" transform="rotate(240 32 41)"/>
+    <circle cx="32" cy="15" r="3" fill="{hole_c}" stroke="{reel_c}" stroke-width="1" transform="rotate(300 32 41)"/>
 
-  <!-- Clapperboard icon — lives entirely in x=20–58, y=16–54 -->
-  <rect x="22" y="20" width="34" height="28" rx="3"
-        fill="{clap_b}" stroke="{border}" stroke-width="1.5"/>
-  <!-- clapper top bar -->
-  <rect x="22" y="20" width="34" height="9" rx="3" fill="{clap_t}"/>
-  <!-- diagonal stripes on top bar -->
-  <line x1="26" y1="20" x2="23" y2="29" stroke="{stripe}" stroke-width="2.2"/>
-  <line x1="32" y1="20" x2="29" y2="29" stroke="{stripe}" stroke-width="2.2"/>
-  <line x1="38" y1="20" x2="35" y2="29" stroke="{stripe}" stroke-width="2.2"/>
-  <line x1="44" y1="20" x2="41" y2="29" stroke="{stripe}" stroke-width="2.2"/>
-  <line x1="50" y1="20" x2="47" y2="29" stroke="{stripe}" stroke-width="2.2"/>
-  <!-- play triangle centred in lower body -->
-  <polygon points="30,34 30,44 42,39" fill="{star}" opacity="0.95"/>
+    <!-- Divider line -->
+    <line x1="64" y1="8" x2="64" y2="74" stroke="{border}" stroke-width="1.2" opacity="0.5"/>
 
-  <!-- Thin divider line between icon zone and text zone -->
-  <line x1="62" y1="14" x2="62" y2="66" stroke="{border}" stroke-width="1" opacity="0.4"/>
+    <!-- Star sparkles -->
+    <polygon points="196,10 198,5 200,10 205,10 201,13 203,18 198,15 193,18 195,13 191,10"
+             fill="{star_c}" stroke="{border}" stroke-width="0.6" opacity="0.9"/>
+    <circle cx="210" cy="30" r="2.5" fill="{star_c}" opacity="0.7"/>
+    <circle cx="195" cy="70" r="2"   fill="{star_c}" opacity="0.6"/>
+    <circle cx="205" cy="60" r="1.5" fill="{star_c}" opacity="0.5"/>
+  </svg>
 
-  <!-- CARTOONPAL — anchored at x=68, well clear of divider and right sprockets -->
-  <text x="68" y="42"
-        font-family="Bangers, Impact, cursive"
-        font-size="24" letter-spacing="2"
-        fill="{text_c}"
-        stroke="{border}" stroke-width="1"
-        paint-order="stroke fill">CARTOONPAL</text>
-
-  <!-- Subtitle — same left edge, tighter tracking, safely above bottom edge -->
-  <text x="68" y="60"
-        font-family="Bangers, Impact, cursive"
-        font-size="9.5" letter-spacing="1.2"
-        fill="{sub_c}" opacity="0.88">COPYRIGHT &amp; VISUAL HISTORY</text>
-
-  <!-- Small star accent — safely inside icon zone, x max = 60 -->
-  <polygon points="52,13 54,8 56,13 61,13 57,16 59,21 54,18 49,21 51,16 47,13"
-           fill="{star}" stroke="{border}" stroke-width="0.7" opacity="0.9"/>
-</svg>
+  <!-- HTML text layer — sits over the SVG, guaranteed Bangers rendering -->
+  <div style="
+    position: absolute;
+    top: 0; left: 66px; right: 4px; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 8px 0 4px;
+    pointer-events: none;
+  ">
+    <span style="
+      font-family: 'Bangers', Impact, cursive;
+      font-size: 1.55rem;
+      letter-spacing: 3px;
+      color: {text_c};
+      line-height: 1.1;
+      text-shadow: 2px 2px 0px {border}66;
+      white-space: nowrap;
+    ">🎬 CARTOONPAL</span>
+    <span style="
+      font-family: 'Bangers', Impact, cursive;
+      font-size: 0.62rem;
+      letter-spacing: 1.8px;
+      color: {sub_c};
+      margin-top: 3px;
+      white-space: nowrap;
+      opacity: 0.85;
+    ">© &amp; VISUAL HISTORY EXPLORER</span>
+  </div>
 </div>
 """
 
@@ -511,7 +543,40 @@ def inject_theme():
             border-bottom: 3px solid var(--accent1) !important;
         }}
 
-        .stAlert {{ border-radius: 10px !important; font-size: 1rem !important; }}
+
+        /* Hide Streamlit's keyboard-navigation accessibility hint text */
+        [data-testid="stSidebar"] .stRadio [data-baseweb="radio"] ~ div > div[aria-hidden="true"],
+        [data-testid="stSidebar"] .stRadio > div > div > div:last-child > div:last-child,
+        [data-baseweb="radio"] + div[data-testid="stMarkdownContainer"],
+        div[class*="st-emotion-cache"] span[aria-hidden="true"]:empty,
+        .st-emotion-cache-hidden,
+        /* General hidden-text / screen-reader-only spans */
+        span[style*="position: absolute"][style*="overflow: hidden"],
+        span[style*="clip: rect(0px"][style*="white-space: nowrap"] {
+            display: none !important;
+        }
+
+        /* Alert boxes — stronger border strokes */
+        .stAlert {{
+            border-radius: 10px !important;
+            font-size: 1rem !important;
+            border-width: 2px !important;
+            border-style: solid !important;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.45) !important;
+        }}
+        div[data-testid="stAlert"][data-baseweb="notification"][kind="error"],
+        div.stAlert.st-emotion-cache-1wivap2 {{
+            border-color: #c53030 !important;
+            box-shadow: 3px 3px 0px #7b1c1c !important;
+        }}
+        div[data-testid="stAlert"][kind="warning"] {{
+            border-color: #b45309 !important;
+            box-shadow: 3px 3px 0px #78350f !important;
+        }}
+        div[data-testid="stAlert"][kind="success"] {{
+            border-color: #166534 !important;
+            box-shadow: 3px 3px 0px #14532d !important;
+        }}
         .stAlert p {{ font-size: 1rem !important; color: inherit !important; }}
         hr {{ border-color: var(--accent1) !important; opacity: 0.35 !important; }}
         .stCaption, small {{ color: var(--text-muted) !important; font-size: 0.95rem !important; }}
@@ -696,7 +761,39 @@ def inject_theme():
             border-bottom: 3px solid var(--accent1) !important;
         }}
 
-        .stAlert {{ border-radius: 10px !important; font-size: 1rem !important; }}
+
+        /* Hide Streamlit's keyboard-navigation accessibility hint text */
+        [data-testid="stSidebar"] .stRadio [data-baseweb="radio"] ~ div > div[aria-hidden="true"],
+        [data-testid="stSidebar"] .stRadio > div > div > div:last-child > div:last-child,
+        [data-baseweb="radio"] + div[data-testid="stMarkdownContainer"],
+        div[class*="st-emotion-cache"] span[aria-hidden="true"]:empty,
+        .st-emotion-cache-hidden,
+        /* General hidden-text / screen-reader-only spans */
+        span[style*="position: absolute"][style*="overflow: hidden"],
+        span[style*="clip: rect(0px"][style*="white-space: nowrap"] {
+            display: none !important;
+        }
+
+        /* Alert boxes — stronger border strokes */
+        .stAlert {{
+            border-radius: 10px !important;
+            font-size: 1rem !important;
+            border-width: 2px !important;
+            border-style: solid !important;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.22) !important;
+        }}
+        div[data-testid="stAlert"][kind="error"] {{
+            border-color: #b91c1c !important;
+            box-shadow: 3px 3px 0px #7f1d1d !important;
+        }}
+        div[data-testid="stAlert"][kind="warning"] {{
+            border-color: #b45309 !important;
+            box-shadow: 3px 3px 0px #78350f !important;
+        }}
+        div[data-testid="stAlert"][kind="success"] {{
+            border-color: #15803d !important;
+            box-shadow: 3px 3px 0px #14532d !important;
+        }}
         .stAlert p {{ font-size: 1rem !important; color: var(--text-main) !important; }}
         hr {{ border-color: var(--accent1) !important; opacity: 0.25 !important; }}
         .stCaption, small {{ color: var(--text-muted) !important; font-size: 0.95rem !important; }}
