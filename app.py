@@ -43,19 +43,83 @@ def copyright_badge(cartoon: Cartoon):
 
 
 def render_ownership_chain(cartoon: Cartoon):
-    st.markdown("##### Ownership chain")
-    cols = st.columns(len(cartoon.ownership_history)) if cartoon.ownership_history else [st]
+    total = len(cartoon.ownership_history)
+    st.markdown(f"##### 📋 Complete Ownership History — {total} owner(s)")
+
+    # Summary bar
+    orig = cartoon.original_owner
+    curr = cartoon.current_owner
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Original Owner", orig.owner_name if orig else "Unknown", help="Who owned it when first created")
+    c2.metric("Current Owner", curr.owner_name if curr else "Public Domain", help="Who owns it today")
+    c3.metric("Times Changed Hands", total - 1)
+
+    st.divider()
+    st.markdown("**Full ownership timeline — every company, every year:**")
+    st.caption("Read top to bottom from creation to present day.")
+    st.markdown("---")
+
     for i, record in enumerate(cartoon.ownership_history):
-        with cols[i]:
-            if record.is_current_owner:
-                st.markdown(f"**{record.owner_name}**")
-                st.caption(f"*Current owner*")
-            else:
-                st.markdown(f"{record.owner_name}")
-            st.caption(f"{record.year_acquired}–{record.year_relinquished or 'present'}")
-            st.caption(f"via {record.acquisition_method}")
+        is_first = (i == 0)
+        is_current = record.is_current_owner
+        year_end = record.year_relinquished or datetime.now().year
+        years_held = year_end - record.year_acquired
+        year_end_label = str(record.year_relinquished) if record.year_relinquished else "present"
+
+        # Choose icon and color label
+        if is_current and is_first:
+            icon = "🟢"
+            label = "ORIGINAL & CURRENT OWNER"
+        elif is_current:
+            icon = "🟢"
+            label = "CURRENT OWNER"
+        elif is_first:
+            icon = "🔵"
+            label = "ORIGINAL OWNER (at creation)"
+        else:
+            icon = "⚪"
+            label = f"PREVIOUS OWNER #{i}"
+
+        # Main record block
+        col_icon, col_main, col_stats = st.columns([0.5, 4, 1.5])
+
+        with col_icon:
+            st.markdown(f"## {icon}")
+
+        with col_main:
+            st.markdown(f"**{label}**")
+            st.markdown(f"## {record.owner_name}")
+            st.markdown(
+                f"📅 &nbsp; Owned from **{record.year_acquired}** to **{year_end_label}** &nbsp;|&nbsp; "
+                f"🤝 &nbsp; How acquired: *{record.acquisition_method}*"
+            )
             if record.notes:
-                st.caption(f"ℹ {record.notes}")
+                st.info(f"📌 {record.notes}")
+
+        with col_stats:
+            st.metric("Years held", f"{years_held} yrs")
+            if is_current:
+                st.success("Active")
+            else:
+                st.caption(f"Ended {record.year_relinquished}")
+
+        # Arrow to next owner
+        if i < total - 1:
+            next_record = cartoon.ownership_history[i + 1]
+            st.markdown(
+                f"&nbsp; &nbsp; &nbsp; &nbsp; ⬇️ &nbsp; *Transferred to* ***{next_record.owner_name}*** *in {next_record.year_acquired} via {next_record.acquisition_method}*"
+            )
+        st.markdown("---")
+
+    # Copyright status conclusion
+    st.markdown("##### ⚖️ Copyright status today")
+    if cartoon.is_public_domain:
+        st.success(f"✅ **PUBLIC DOMAIN** — This character entered the public domain and is free to use. Original debut: {cartoon.debut_year}.")
+    else:
+        yrs = cartoon.years_until_public_domain
+        st.error(
+            f"🔒 **PROTECTED** — Currently owned by **{curr.owner_name if curr else 'Unknown'}**. "
+            f"Under US copyright law this character will enter the public domain in approximately **{yrs} year(s)** ({datetime.now().year + yrs})."        )
 
 
 def render_era_timeline(cartoon: Cartoon):
@@ -74,14 +138,18 @@ def render_era_timeline(cartoon: Cartoon):
 
 
 def render_series_list(cartoon: Cartoon):
-    st.markdown("##### Series history")
+    st.markdown(f"##### All series & productions ({len(cartoon.series_list)} total)")
     for s in cartoon.series_list:
         end_label = str(s.year_ended) if s.year_ended else "present"
-        cols = st.columns([3, 2, 2, 1])
-        cols[0].markdown(f"**{s.title}**")
-        cols[1].caption(f"{s.year_started}–{end_label}")
-        cols[2].caption(s.medium)
-        cols[3].caption(f"{s.episode_count} eps" if s.episode_count else "")
+        years = (s.year_ended or datetime.now().year) - s.year_started
+        with st.expander(f"**{s.title}** ({s.year_started}–{end_label})"):
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Medium", s.medium)
+            col2.metric("Years running", years)
+            col3.metric("Episodes", s.episode_count if s.episode_count else "N/A")
+            st.caption(f"📺 Produced by: {s.produced_by}")
+            if s.notes:
+                st.info(f"ℹ️ {s.notes}")
 
 
 def render_creators(cartoon: Cartoon):

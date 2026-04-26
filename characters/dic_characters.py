@@ -478,9 +478,9 @@ def add_dic_characters(lib: Library):
     )
     sabrina.ownership_history.clear()
     sabrina.add_ownership_record(OwnershipRecord("Archie Comics Publications", 1962, 2017,
-                                                "original creation"))
+                                                  "original creation"))
     sabrina.add_ownership_record(OwnershipRecord("Archie Comics / Warner Bros. (Chilling Adventures)", 2017, None,
-                                                "licensing for live-action adaptation", is_current_owner=True))
+                                                  "licensing for live-action adaptation", is_current_owner=True))
     lib.add_cartoon(sabrina)
 
     print(f"DIC characters added. Library now has {len(lib.cartoons)} cartoons total.")

@@ -390,7 +390,7 @@ def add_mgm_characters(lib: Library):
         creators=[QUIMBY, TEX_AVERY],
         series_list=[
             Series("George and Junior theatrical shorts", 1944, 1949,
-                "MGM Cartoons / Tex Avery unit", "theatrical short", episode_count=7),
+                   "MGM Cartoons / Tex Avery unit", "theatrical short", episode_count=7),
         ],
         eras=[
             Era(1944, 1949,
@@ -399,8 +399,8 @@ def add_mgm_characters(lib: Library):
                 art_style="Technicolor cel animation",
                 image_url=IMG["george"],
                 notes="Voiced by Frank Graham (George) and Tex Avery himself (Junior). "
-                    "The direct parody of Of Mice and Men was unusual for animation. "
-                    "Seven shorts were produced between 1944 and 1949."),
+                      "The direct parody of Of Mice and Men was unusual for animation. "
+                      "Seven shorts were produced between 1944 and 1949."),
         ],
         wiki_slug="George_and_Junior",
     )
@@ -426,7 +426,7 @@ def add_mgm_characters(lib: Library):
         creators=[HARMAN, ISING],
         series_list=[
             Series("Little Cheeser Happy Harmonies shorts", 1936, 1938,
-                "Harman-Ising Productions / MGM", "theatrical short", episode_count=4),
+                   "Harman-Ising Productions / MGM", "theatrical short", episode_count=4),
         ],
         eras=[
             Era(1936, 1938,
@@ -435,8 +435,8 @@ def add_mgm_characters(lib: Library):
                 art_style="Technicolor cel animation",
                 image_url=IMG["little"],
                 notes="Debuted in Little Cheeser (1936). The Happy Harmonies series was MGM's "
-                    "attempt to compete with Disney's Silly Symphonies. "
-                    "The series ended when MGM brought Fred Quimby in to restructure the cartoon unit."),
+                      "attempt to compete with Disney's Silly Symphonies. "
+                      "The series ended when MGM brought Fred Quimby in to restructure the cartoon unit."),
         ],
         wiki_slug="Little_Cheeser",
     )
@@ -462,8 +462,8 @@ def add_mgm_characters(lib: Library):
         creators=[HARMAN, ISING],
         series_list=[
             Series("The Captain and the Kids MGM shorts", 1938, 1939,
-                "Harman-Ising Productions / MGM", "theatrical short", episode_count=12,
-                notes="MGM adaptation of the classic Katzenjammer Kids comic strip by Rudolph Dirks."),
+                   "Harman-Ising Productions / MGM", "theatrical short", episode_count=12,
+                   notes="MGM adaptation of the classic Katzenjammer Kids comic strip by Rudolph Dirks."),
         ],
         eras=[
             Era(1938, 1939,
@@ -472,8 +472,8 @@ def add_mgm_characters(lib: Library):
                 art_style="Technicolor cel animation",
                 image_url=IMG["happy"],
                 notes="Based on Rudolph Dirks' 1897 newspaper comic strip — one of the oldest "
-                    "American comics. MGM produced 12 shorts before the unit was restructured. "
-                    "The original comic strip predates cinema itself."),
+                      "American comics. MGM produced 12 shorts before the unit was restructured. "
+                      "The original comic strip predates cinema itself."),
         ],
         wiki_slug="The_Katzenjammer_Kids",
         origin="Culver City, California, USA — Harman-Ising Productions / MGM",
@@ -512,8 +512,8 @@ def add_mgm_characters(lib: Library):
         creators=[QUIMBY, TEX_AVERY],
         series_list=[
             Series("Spike and Chester Tex Avery shorts", 1952, 1955,
-                "MGM Cartoons / Tex Avery unit", "theatrical short", episode_count=3,
-                notes="Three cartoons: Rock-a-Bye Bear, Half-Pint Palomino, and others."),
+                   "MGM Cartoons / Tex Avery unit", "theatrical short", episode_count=3,
+                   notes="Three cartoons: Rock-a-Bye Bear, Half-Pint Palomino, and others."),
         ],
         eras=[
             Era(1952, 1955,
@@ -522,7 +522,7 @@ def add_mgm_characters(lib: Library):
                 art_style="Technicolor cel animation",
                 image_url=IMG["mgm"],
                 notes="Voiced by Daws Butler (Chester) using his rapid-fire enthusiastic delivery. "
-                    "Rock-a-Bye Bear (1952) is the most celebrated of the three shorts."),
+                      "Rock-a-Bye Bear (1952) is the most celebrated of the three shorts."),
         ],
         wiki_slug="Spike_and_Chester",
     )
@@ -549,9 +549,9 @@ def add_mgm_characters(lib: Library):
         creators=[QUIMBY, HANNA, BARBERA],
         series_list=[
             Series("Puss Gets the Boot debut short", 1940, 1940,
-                "MGM Cartoons / Hanna-Barbera unit", "theatrical short",
-                notes="The short that launched the Tom and Jerry franchise. "
-                        "Nominated for the Academy Award for Best Animated Short Film."),
+                   "MGM Cartoons / Hanna-Barbera unit", "theatrical short",
+                   notes="The short that launched the Tom and Jerry franchise. "
+                         "Nominated for the Academy Award for Best Animated Short Film."),
         ],
         eras=[
             Era(1940, 1940,
@@ -560,9 +560,9 @@ def add_mgm_characters(lib: Library):
                 art_style="Technicolor cel animation",
                 image_url=IMG["tom"],
                 notes="Puss Gets the Boot (February 20 1940) was nominated for the Academy Award "
-                    "for Best Animated Short Film but lost to Milky Way (MGM's own Rudolph Ising). "
-                    "Producer Fred Quimby initially did not want a sequel before audience "
-                    "demand made the decision for him."),
+                      "for Best Animated Short Film but lost to Milky Way (MGM's own Rudolph Ising). "
+                      "Producer Fred Quimby initially did not want a sequel before audience "
+                      "demand made the decision for him."),
         ],
         wiki_slug="Puss_Gets_the_Boot",
     )
@@ -589,9 +589,9 @@ def add_mgm_characters(lib: Library):
         creators=[QUIMBY, TEX_AVERY],
         series_list=[
             Series("King-Size Canary", 1947, 1947,
-                "MGM Cartoons / Tex Avery unit", "theatrical short",
-                notes="Frequently cited as the greatest cartoon ever made by animation "
-                        "professionals including John Lasseter, Brad Bird, and others."),
+                   "MGM Cartoons / Tex Avery unit", "theatrical short",
+                   notes="Frequently cited as the greatest cartoon ever made by animation "
+                         "professionals including John Lasseter, Brad Bird, and others."),
         ],
         eras=[
             Era(1947, 1947,
@@ -599,9 +599,9 @@ def add_mgm_characters(lib: Library):
                 art_style="Technicolor cel animation",
                 image_url=IMG["mgm"],
                 notes="King-Size Canary (December 6 1947) ends with the characters so large "
-                    "The film was submitted for consideration for the Nobel Peace Prize — "
-                    "the only animated film ever to receive such consideration. "
-                    "John Lasseter of Pixar has called it the greatest cartoon ever made."),
+                      "they have consumed all the Jumbo-Gro. They address the camera directly "
+                      "to announce there is no more to drink and the cartoon ends. "
+                      "John Lasseter of Pixar has called it the greatest cartoon ever made."),
         ],
         wiki_slug="King-Size_Canary",
     )
@@ -627,11 +627,11 @@ def add_mgm_characters(lib: Library):
         creators=[HARMAN],
         series_list=[
             Series("Peace on Earth short film", 1939, 1939,
-                "Harman-Ising Productions / MGM", "theatrical short",
-                notes="Nominated for the Nobel Peace Prize and the Academy Award for Best Short Subject."),
+                   "Harman-Ising Productions / MGM", "theatrical short",
+                   notes="Nominated for the Nobel Peace Prize and the Academy Award for Best Short Subject."),
             Series("Good Will to Men remake", 1955, 1955,
-                "MGM Cartoons", "theatrical short",
-                notes="Remake directed by William Hanna and Joseph Barbera."),
+                   "MGM Cartoons", "theatrical short",
+                   notes="Remake directed by William Hanna and Joseph Barbera."),
         ],
         eras=[
             Era(1939, 1955,
@@ -640,9 +640,9 @@ def add_mgm_characters(lib: Library):
                 art_style="Technicolor cel animation",
                 image_url=IMG["peace"],
                 notes="Released December 9 1939. Hugh Harman's masterpiece. "
-                    "The film was submitted for consideration for the Nobel Peace Prize — "
-                    "the only animated film ever to receive such consideration. "
-                    "The 1955 remake Good Will to Men updated the story for the atomic age."),
+                      "The film was submitted for consideration for the Nobel Peace Prize — "
+                      "the only animated film ever to receive such consideration. "
+                      "The 1955 remake Good Will to Men updated the story for the atomic age."),
         ],
         wiki_slug="Peace_on_Earth_(film)",
     )
@@ -668,9 +668,9 @@ def add_mgm_characters(lib: Library):
         creators=[QUIMBY, TEX_AVERY],
         series_list=[
             Series("Lonesome Lenny theatrical short", 1946, 1946,
-                "MGM Cartoons / Tex Avery unit", "theatrical short",
-                notes="A parody of Of Mice and Men featuring Screwy Squirrel "
-                        "as the inadvertent victim. One of Tex Avery's most studied works."),
+                   "MGM Cartoons / Tex Avery unit", "theatrical short",
+                   notes="A parody of Of Mice and Men featuring Screwy Squirrel "
+                         "as the inadvertent victim. One of Tex Avery's most studied works."),
         ],
         eras=[
             Era(1946, 1946,
@@ -679,10 +679,10 @@ def add_mgm_characters(lib: Library):
                 art_style="Technicolor cel animation",
                 image_url=IMG["mgm"],
                 notes="Lonesome Lenny (March 9 1946) ends with Lenny accidentally killing "
-                    "Screwy Squirrel — one of animation's most shocking conclusions. "
-                    "Lenny breaks the fourth wall and asks the audience for a new friend "
-                    "in the final frame. Animation historians cite it alongside "
-                    "King-Size Canary as Avery's greatest achievements."),
+                      "Screwy Squirrel — one of animation's most shocking conclusions. "
+                      "Lenny breaks the fourth wall and asks the audience for a new friend "
+                      "in the final frame. Animation historians cite it alongside "
+                      "King-Size Canary as Avery's greatest achievements."),
         ],
         wiki_slug="Lonesome_Lenny",
     )
@@ -719,8 +719,8 @@ def add_mgm_characters(lib: Library):
         creators=[QUIMBY, TEX_AVERY],
         series_list=[
             Series("Three Little Pups theatrical short", 1953, 1953,
-                "MGM Cartoons / Tex Avery unit", "theatrical short",
-                notes="Parody of Three Little Pigs featuring Droopy-styled puppy characters."),
+                   "MGM Cartoons / Tex Avery unit", "theatrical short",
+                   notes="Parody of Three Little Pigs featuring Droopy-styled puppy characters."),
         ],
         eras=[
             Era(1953, 1953,
@@ -729,8 +729,8 @@ def add_mgm_characters(lib: Library):
                 art_style="Technicolor cel animation",
                 image_url=IMG["droopy"],
                 notes="Three Little Pups (December 26 1953) was one of Avery's final MGM cartoons. "
-                    "The TV set gag sequence is widely studied in animation schools as an example "
-                    "of escalating absurdist comedy."),
+                      "The TV set gag sequence is widely studied in animation schools as an example "
+                      "of escalating absurdist comedy."),
         ],
         wiki_slug="Three_Little_Pups",
     )
@@ -757,11 +757,11 @@ def add_mgm_characters(lib: Library):
         creators=[QUIMBY, HANNA, BARBERA],
         series_list=[
             Series("Tom and Jerry shorts featuring Nibbles", 1946, 1957,
-                "MGM Cartoons / Hanna-Barbera unit", "theatrical short", episode_count=9,
-                notes="Includes The Milky Waif (debut), The Two Mouseketeers (AA winner), "
-                        "and Johann Mouse (AA winner)."),
+                   "MGM Cartoons / Hanna-Barbera unit", "theatrical short", episode_count=9,
+                   notes="Includes The Milky Waif (debut), The Two Mouseketeers (AA winner), "
+                         "and Johann Mouse (AA winner)."),
             Series("Tom and Jerry TV appearances", 1975, None,
-                "various", "TV series and streaming"),
+                   "various", "TV series and streaming"),
         ],
         eras=[
             Era(1946, 1957,
@@ -770,9 +770,9 @@ def add_mgm_characters(lib: Library):
                 art_style="Technicolor cel animation",
                 image_url=IMG["tom"],
                 notes="Debuted in The Milky Waif (May 18 1946). "
-                    "The Two Mouseketeers (1952) and Johann Mouse (1953) both won Academy Awards. "
-                    "Nibbles speaks French in the Musketeer shorts — a charming detail "
-                    "that adds to his character."),
+                      "The Two Mouseketeers (1952) and Johann Mouse (1953) both won Academy Awards. "
+                      "Nibbles speaks French in the Musketeer shorts — a charming detail "
+                      "that adds to his character."),
             Era(1975, None,
                 "TV and modern era — appears occasionally in Tom and Jerry revivals",
                 art_style="Various",
@@ -806,9 +806,9 @@ def add_mgm_characters(lib: Library):
         creators=[QUIMBY, TEX_AVERY],
         series_list=[
             Series("The Three Bears MGM short", 1944, 1944,
-                "MGM Cartoons / Tex Avery unit", "theatrical short"),
+                   "MGM Cartoons / Tex Avery unit", "theatrical short"),
             Series("Bear Family follow-up appearances", 1949, 1952,
-                "MGM Cartoons", "theatrical short", episode_count=2),
+                   "MGM Cartoons", "theatrical short", episode_count=2),
         ],
         eras=[
             Era(1944, 1952,
@@ -817,8 +817,8 @@ def add_mgm_characters(lib: Library):
                 art_style="Technicolor cel animation",
                 image_url=IMG["mgm"],
                 notes="The Three Bears (September 9 1944) was followed by two more shorts featuring "
-                    "the same family. Avery used the bears to satirize postwar American family "
-                    "dynamics — an unusually sophisticated subtext for a cartoon."),
+                      "the same family. Avery used the bears to satirize postwar American family "
+                      "dynamics — an unusually sophisticated subtext for a cartoon."),
         ],
         wiki_slug="The_Three_Bears_(1944_film)",
     )
@@ -846,8 +846,8 @@ def add_mgm_characters(lib: Library):
         creators=[HARMAN, ISING],
         series_list=[
             Series("Happy Harmonies series", 1934, 1938,
-                "Harman-Ising Productions / MGM", "theatrical short", episode_count=28,
-                notes="MGM's prestige animation series before Fred Quimby restructured the unit."),
+                   "Harman-Ising Productions / MGM", "theatrical short", episode_count=28,
+                   notes="MGM's prestige animation series before Fred Quimby restructured the unit."),
         ],
         eras=[
             Era(1934, 1938,
@@ -856,9 +856,9 @@ def add_mgm_characters(lib: Library):
                 art_style="Early Technicolor cel animation",
                 image_url=IMG["happy"],
                 notes="The Happy Harmonies series ran 28 shorts and won Academy Awards for "
-                    "The Old Mill Pond (1936) and To Spring (1936). "
-                    "When Fred Quimby took over in 1937 he ended the Harman-Ising partnership "
-                    "and restructured the unit toward faster, cheaper character comedy."),
+                      "The Old Mill Pond (1936) and To Spring (1936). "
+                      "When Fred Quimby took over in 1937 he ended the Harman-Ising partnership "
+                      "and restructured the unit toward faster, cheaper character comedy."),
         ],
         wiki_slug="Happy_Harmonies",
         origin="Culver City, California, USA — Harman-Ising Productions / MGM",
