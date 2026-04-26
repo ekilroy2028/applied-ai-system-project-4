@@ -23,12 +23,12 @@ if "dark_mode" not in st.session_state:
     st.session_state.dark_mode = False
 
 # ─────────────────────────────────────────────────────────────────────────────
-# SVG LOGO — compact, text fits inside the box
+# SVG LOGO
 # ─────────────────────────────────────────────────────────────────────────────
 def sidebar_logo(dark: bool) -> str:
     if dark:
         bg      = "#12122a"
-        border  = "#f97316"   # orange
+        border  = "#f97316"
         star    = "#fbbf24"
         clap_b  = "#f97316"
         clap_t  = "#fb923c"
@@ -45,147 +45,220 @@ def sidebar_logo(dark: bool) -> str:
         sub_c   = "#92400e"
         stripe  = "#fff7ed"
 
-    # viewBox is 200×72 — generous horizontal room, compact height
     return f"""
 <div style="padding:6px 2px 2px 2px;">
 <svg viewBox="0 0 200 72" xmlns="http://www.w3.org/2000/svg"
      style="width:100%;display:block;">
-  <!-- Rounded pill background -->
   <rect x="2" y="2" width="196" height="68" rx="14"
         fill="{bg}" stroke="{border}" stroke-width="2.5"/>
-
-  <!-- Sprocket holes — left strip -->
   <rect x="7"  y="10" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
   <rect x="7"  y="26" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
   <rect x="7"  y="42" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
   <rect x="7"  y="58" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
-
-  <!-- Sprocket holes — right strip -->
   <rect x="187" y="10" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
   <rect x="187" y="26" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
   <rect x="187" y="42" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
   <rect x="187" y="58" width="6" height="8" rx="1.5" fill="{border}" opacity="0.6"/>
-
-  <!-- Clapperboard icon (left of text) -->
   <rect x="18" y="18" width="24" height="20" rx="2.5"
         fill="{clap_b}" stroke="{border}" stroke-width="1.2"/>
-  <!-- clapper top bar -->
   <rect x="18" y="18" width="24" height="6" rx="2" fill="{clap_t}"/>
-  <!-- diagonal stripes on top bar -->
   <line x1="21" y1="18" x2="19" y2="24" stroke="{stripe}" stroke-width="1.8"/>
   <line x1="26" y1="18" x2="24" y2="24" stroke="{stripe}" stroke-width="1.8"/>
   <line x1="31" y1="18" x2="29" y2="24" stroke="{stripe}" stroke-width="1.8"/>
   <line x1="36" y1="18" x2="34" y2="24" stroke="{stripe}" stroke-width="1.8"/>
-  <!-- play triangle -->
   <polygon points="24,28 24,34 31,31" fill="{star}"/>
-
-  <!-- Star accent -->
   <polygon points="48,14 50,9 52,14 57,14 53,17 55,22 50,19 45,22 47,17 43,14"
            fill="{star}" stroke="{border}" stroke-width="0.8"/>
-
-  <!-- CARTOONPAL — scaled to fit horizontally -->
   <text x="62" y="36"
         font-family="Bangers, Impact, cursive"
-        font-size="22"
-        letter-spacing="1.5"
-        fill="{text_c}"
-        stroke="{border}" stroke-width="0.8"
+        font-size="22" letter-spacing="1.5"
+        fill="{text_c}" stroke="{border}" stroke-width="0.8"
         paint-order="stroke fill">CARTOONPAL</text>
-
-  <!-- Subtitle line -->
   <text x="62" y="52"
-        font-family="Nunito, Arial, sans-serif"
-        font-size="8.5"
-        font-weight="700"
-        letter-spacing="0.3"
-        fill="{sub_c}">Copyright &amp; Visual History</text>
+        font-family="Bangers, Impact, cursive"
+        font-size="10" letter-spacing="1"
+        fill="{sub_c}">COPYRIGHT &amp; VISUAL HISTORY</text>
 </svg>
 </div>
 """
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Background tile — cartoon doodles each rotated differently
+# Hand-drawn 80s cartoon background tile
+# Every shape uses wobbly paths + freehand strokes to look like crayon/marker
 # ─────────────────────────────────────────────────────────────────────────────
 def cartoon_bg_svg(dark: bool) -> str:
     import base64
 
     if dark:
-        # semi-transparent on dark bg
-        c_star   = "rgba(251,191,36,0.30)"   # amber
-        c_bubble = "rgba(56,189,248,0.28)"   # sky blue
-        c_bolt   = "rgba(249,115,22,0.30)"   # orange
-        c_film   = "rgba(167,139,250,0.28)"  # violet
-        c_wave   = "rgba(52,211,153,0.30)"   # emerald
-        sk       = "rgba(255,255,255,0.22)"
-        pl       = "rgba(255,255,255,0.55)"
+        sun     = "rgba(251,191,36,0.38)"
+        bubble  = "rgba(56,189,248,0.34)"
+        star    = "rgba(249,115,22,0.36)"
+        heart   = "rgba(244,114,182,0.34)"
+        zigzag  = "rgba(52,211,153,0.36)"
+        dino    = "rgba(167,139,250,0.34)"
+        sk      = "rgba(255,255,255,0.30)"
+        sk2     = "rgba(255,255,255,0.18)"
+        inner   = "rgba(255,255,255,0.14)"
     else:
-        # more vivid on light/cream bg
-        c_star   = "rgba(245,158,11,0.35)"   # amber
-        c_bubble = "rgba(14,165,233,0.32)"   # sky blue
-        c_bolt   = "rgba(234,88,12,0.32)"    # orange
-        c_film   = "rgba(139,92,246,0.30)"   # violet
-        c_wave   = "rgba(16,185,129,0.34)"   # emerald
-        sk       = "rgba(0,0,0,0.18)"
-        pl       = "rgba(0,0,0,0.50)"
+        sun     = "rgba(245,158,11,0.42)"
+        bubble  = "rgba(14,165,233,0.38)"
+        star    = "rgba(234,88,12,0.40)"
+        heart   = "rgba(236,72,153,0.36)"
+        zigzag  = "rgba(16,185,129,0.40)"
+        dino    = "rgba(139,92,246,0.36)"
+        sk      = "rgba(0,0,0,0.22)"
+        sk2     = "rgba(0,0,0,0.14)"
+        inner   = "rgba(0,0,0,0.10)"
 
-    # 200×200 tile; each icon gets a rotate() transform so they scatter naturally
-    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+    # Each shape is drawn with intentionally wobbly/imperfect paths —
+    # simulate the look of a kid drawing with marker or crayon in the 80s.
+    # Tile is 240×240 so figures feel generous and slightly overlapping.
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240">
+  <defs>
+    <!-- Crayon texture filter — roughens edges slightly -->
+    <filter id="crayon" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.065" numOctaves="3"
+                    seed="2" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="marker" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.04" numOctaves="2"
+                    seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
 
-  <!-- ★ Star — top-left, tilted 15° -->
-  <g transform="translate(32,28) rotate(15,0,0)">
-    <polygon points="0,-18 4,-7 16,-7 7,0 10,11 0,4 -10,11 -7,0 -16,-7 -4,-7"
-             fill="{c_star}" stroke="{sk}" stroke-width="1.4"/>
+  <!-- ☀️ Hand-drawn wobbly sun — top-left, tilted 12° -->
+  <g transform="translate(38,34) rotate(12,0,0)" filter="url(#crayon)">
+    <!-- sun body — slightly lumpy circle drawn as path -->
+    <path d="M0,-22 C6,-21 14,-16 16,-9 C19,-1 16,8 10,14
+             C4,19 -5,22 -13,19 C-20,16 -24,8 -22,0
+             C-20,-8 -14,-18 -6,-21 Z"
+          fill="{sun}" stroke="{sk}" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- wonky rays — each a squiggly line -->
+    <line x1="0" y1="-26" x2="1" y2="-34" stroke="{sun}" stroke-width="3"
+          stroke-linecap="round"/>
+    <line x1="18" y1="-18" x2="24" y2="-24" stroke="{sun}" stroke-width="3"
+          stroke-linecap="round"/>
+    <line x1="25" y1="0"   x2="33" y2="1"  stroke="{sun}" stroke-width="3"
+          stroke-linecap="round"/>
+    <line x1="17" y1="17"  x2="23" y2="22" stroke="{sun}" stroke-width="3"
+          stroke-linecap="round"/>
+    <line x1="0"  y1="25"  x2="-1" y2="33" stroke="{sun}" stroke-width="3"
+          stroke-linecap="round"/>
+    <line x1="-18" y1="17" x2="-24" y2="22" stroke="{sun}" stroke-width="3"
+          stroke-linecap="round"/>
+    <line x1="-25" y1="0"  x2="-33" y2="-1" stroke="{sun}" stroke-width="3"
+          stroke-linecap="round"/>
+    <line x1="-17" y1="-18" x2="-23" y2="-23" stroke="{sun}" stroke-width="3"
+          stroke-linecap="round"/>
+    <!-- simple smiley face inside -->
+    <circle cx="-5" cy="-3" r="2.5" fill="{sk}" opacity="0.7"/>
+    <circle cx="5"  cy="-3" r="2.5" fill="{sk}" opacity="0.7"/>
+    <path d="M-6,5 Q0,11 6,5" fill="none" stroke="{sk}" stroke-width="2"
+          stroke-linecap="round" opacity="0.7"/>
   </g>
 
-  <!-- 💬 Speech bubble — top-right, tilted -20° -->
-  <g transform="translate(148,34) rotate(-20,0,0)">
-    <rect x="-22" y="-18" width="44" height="28" rx="8"
-          fill="{c_bubble}" stroke="{sk}" stroke-width="1.3"/>
-    <polygon points="-10,10 -16,22 2,10" fill="{c_bubble}" stroke="{sk}" stroke-width="1"/>
-    <circle cx="-10" cy="-4" r="3.5" fill="{sk}"/>
-    <circle cx="0"   cy="-4" r="3.5" fill="{sk}"/>
-    <circle cx="10"  cy="-4" r="3.5" fill="{sk}"/>
+  <!-- 💬 Hand-drawn speech bubble — top-right, tilted -18° -->
+  <g transform="translate(178,42) rotate(-18,0,0)" filter="url(#marker)">
+    <path d="M-28,-20 C-26,-26 -18,-30 -8,-30 C4,-30 18,-28 24,-22
+             C30,-16 30,-6 24,2 C18,10 6,14 -8,13
+             C-16,13 -24,9 -28,3 L-32,18 L-18,5 C-24,3 -28,-2 -28,-8 Z"
+          fill="{bubble}" stroke="{sk}" stroke-width="2"
+          stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- ZZZ inside — classic 80s sleep/cartoon text -->
+    <text x="-14" y="2" font-family="Bangers,cursive" font-size="14"
+          fill="{sk}" opacity="0.75" letter-spacing="1">ZAP!</text>
   </g>
 
-  <!-- ⚡ Lightning bolt — middle-left, tilted 10° -->
-  <g transform="translate(28,110) rotate(10,0,0)">
-    <polygon points="8,-22 -4,4 4,4 -6,22 14,0 6,0 18,-22"
-             fill="{c_bolt}" stroke="{sk}" stroke-width="1.3"/>
+  <!-- ⭐ Wobbly hand-drawn star — middle-left, tilted -15° -->
+  <g transform="translate(32,122) rotate(-15,0,0)" filter="url(#crayon)">
+    <path d="M0,-24 C2,-14 4,-12 14,-12 C6,-6 4,-4 8,6
+             C2,0 0,2 -8,8 C-6,-2 -8,-4 -18,-10
+             C-8,-10 -6,-12 0,-24 Z"
+          fill="{star}" stroke="{sk}" stroke-width="2.2"
+          stroke-linejoin="round"/>
+    <!-- second layer for fat marker look -->
+    <path d="M0,-20 C2,-12 3,-10 12,-10 C5,-5 3,-3 7,5
+             C1,-1 -1,1 -7,7 C-5,-1 -7,-3 -15,-8
+             C-7,-8 -5,-10 0,-20 Z"
+          fill="{inner}" stroke="none"/>
   </g>
 
-  <!-- 🎬 Film frame — middle-right, tilted -12° -->
-  <g transform="translate(158,105) rotate(-12,0,0)">
-    <rect x="-22" y="-18" width="44" height="36" rx="3.5"
-          fill="{c_film}" stroke="{sk}" stroke-width="1.3"/>
-    <rect x="-22" y="-18" width="44" height="8" rx="2.5" fill="{sk}" opacity="0.35"/>
-    <line x1="-17" y1="-18" x2="-19" y2="-10" stroke="white" stroke-width="1.5" opacity="0.5"/>
-    <line x1="-10" y1="-18" x2="-12" y2="-10" stroke="white" stroke-width="1.5" opacity="0.5"/>
-    <line x1="-3"  y1="-18" x2="-5"  y2="-10" stroke="white" stroke-width="1.5" opacity="0.5"/>
-    <line x1="4"   y1="-18" x2="2"   y2="-10" stroke="white" stroke-width="1.5" opacity="0.5"/>
-    <line x1="11"  y1="-18" x2="9"   y2="-10" stroke="white" stroke-width="1.5" opacity="0.5"/>
-    <line x1="18"  y1="-18" x2="16"  y2="-10" stroke="white" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="-10,0 -10,14 6,7" fill="{pl}"/>
+  <!-- ❤️ Chubby crayon heart — middle-right, tilted 20° -->
+  <g transform="translate(192,118) rotate(20,0,0)" filter="url(#crayon)">
+    <path d="M0,20 C-2,18 -22,8 -22,-6 C-22,-16 -14,-22 -4,-18
+             C-2,-17 0,-14 0,-14 C0,-14 2,-17 4,-18
+             C14,-22 22,-16 22,-6 C22,8 2,18 0,20 Z"
+          fill="{heart}" stroke="{sk}" stroke-width="2.2"
+          stroke-linejoin="round"/>
+    <!-- shine mark — 80s cartoon highlight -->
+    <path d="M-10,-12 Q-6,-16 -2,-12" fill="none" stroke="{sk}"
+          stroke-width="2" stroke-linecap="round" opacity="0.6"/>
   </g>
 
-  <!-- ~ Squiggle wave — bottom, tilted -8° -->
-  <g transform="translate(100,168) rotate(-8,0,0)">
-    <path d="M-50,-6 Q-38,-18 -26,-6 Q-14,6 -2,-6 Q10,-18 22,-6 Q34,6 46,-6 Q58,-18 70,-6"
-          fill="none" stroke="{c_wave}" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M-50,8 Q-38,-4 -26,8 Q-14,20 -2,8 Q10,-4 22,8 Q34,20 46,8 Q58,-4 70,8"
-          fill="none" stroke="{c_wave}" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- 🦕 Tiny lumpy dinosaur silhouette — bottom-left, tilted 8° -->
+  <g transform="translate(44,186) rotate(8,0,0)" filter="url(#marker)">
+    <!-- body -->
+    <ellipse cx="0" cy="0" rx="22" ry="14" fill="{dino}" stroke="{sk}"
+             stroke-width="2"/>
+    <!-- neck -->
+    <path d="M14,-10 C16,-18 22,-24 24,-30 C20,-28 14,-22 10,-14 Z"
+          fill="{dino}" stroke="{sk}" stroke-width="2" stroke-linejoin="round"/>
+    <!-- head -->
+    <ellipse cx="24" cy="-32" rx="9" ry="7" fill="{dino}" stroke="{sk}"
+             stroke-width="2"/>
+    <!-- eye -->
+    <circle cx="28" cy="-34" r="2" fill="{sk}" opacity="0.7"/>
+    <!-- tail -->
+    <path d="M-22,4 C-30,2 -36,-2 -38,-8" fill="none" stroke="{dino}"
+          stroke-width="5" stroke-linecap="round"/>
+    <!-- legs -->
+    <line x1="-8"  y1="13" x2="-10" y2="24" stroke="{dino}" stroke-width="5"
+          stroke-linecap="round"/>
+    <line x1="8"   y1="13" x2="10"  y2="24" stroke="{dino}" stroke-width="5"
+          stroke-linecap="round"/>
+    <!-- spikes on back -->
+    <polygon points="0,-14 -4,-22 4,-22" fill="{dino}" stroke="{sk}" stroke-width="1"/>
+    <polygon points="8,-14 4,-20 12,-20" fill="{dino}" stroke="{sk}" stroke-width="1"/>
   </g>
 
-  <!-- ✦ 4-point sparkle — bottom-left, tilted 25° -->
-  <g transform="translate(38,164) rotate(25,0,0)">
-    <polygon points="0,-14 3,-5 12,-5 5,1 8,10 0,5 -8,10 -5,1 -12,-5 -3,-5"
-             fill="{c_star}" stroke="{sk}" stroke-width="1"/>
+  <!-- ⚡ Fat marker zigzag bolt — bottom-right, tilted -10° -->
+  <g transform="translate(188,178) rotate(-10,0,0)" filter="url(#crayon)">
+    <path d="M6,-28 C4,-20 2,-14 -4,-8 C2,-8 8,-8 8,-8
+             C4,2 0,10 -8,20 C0,14 6,14 6,14
+             C2,20 -2,24 -6,28
+             L8,10 C2,10 -2,10 -2,10
+             C2,0 6,-6 12,-14
+             C6,-14 2,-14 2,-14 Z"
+          fill="{zigzag}" stroke="{sk}" stroke-width="2"
+          stroke-linejoin="round" stroke-linecap="round"/>
   </g>
 
-  <!-- small accent dots scattered -->
-  <circle cx="88"  cy="52"  r="4" fill="{c_bubble}" opacity="0.6"/>
-  <circle cx="168" cy="168" r="3" fill="{c_bolt}"   opacity="0.6"/>
-  <circle cx="60"  cy="80"  r="3" fill="{c_film}"   opacity="0.55"/>
-  <circle cx="140" cy="148" r="4" fill="{c_star}"   opacity="0.6"/>
+  <!-- small scattered doodle marks -->
+  <!-- wobbly circle — top-center -->
+  <circle cx="120" cy="22" r="7" fill="none" stroke="{bubble}"
+          stroke-width="2.5" stroke-dasharray="3,2" filter="url(#crayon)"/>
+  <!-- x mark -->
+  <g transform="translate(164,148) rotate(15,0,0)">
+    <line x1="-6" y1="-6" x2="6" y2="6" stroke="{star}" stroke-width="3"
+          stroke-linecap="round"/>
+    <line x1="6" y1="-6" x2="-6" y2="6" stroke="{star}" stroke-width="3"
+          stroke-linecap="round"/>
+  </g>
+  <!-- tiny star sparkle -->
+  <g transform="translate(102,148)">
+    <line x1="0" y1="-6" x2="0" y2="6" stroke="{sun}" stroke-width="2.5"
+          stroke-linecap="round"/>
+    <line x1="-6" y1="0" x2="6" y2="0" stroke="{sun}" stroke-width="2.5"
+          stroke-linecap="round"/>
+    <line x1="-4" y1="-4" x2="4" y2="4" stroke="{sun}" stroke-width="2"
+          stroke-linecap="round"/>
+    <line x1="4" y1="-4" x2="-4" y2="4" stroke="{sun}" stroke-width="2"
+          stroke-linecap="round"/>
+  </g>
 </svg>"""
 
     encoded = base64.b64encode(svg.encode()).decode()
@@ -199,23 +272,55 @@ def inject_theme():
     dark = st.session_state.dark_mode
     bg_tile = cartoon_bg_svg(dark)
 
+    # Shared Bangers import + sidebar font overrides used in both modes
+    bangers_url = "https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap"
+
+    sidebar_font_rules = """
+        /* ── Force Bangers on ALL sidebar text ── */
+        [data-testid="stSidebar"],
+        [data-testid="stSidebar"] *,
+        [data-testid="stSidebar"] p,
+        [data-testid="stSidebar"] span,
+        [data-testid="stSidebar"] label,
+        [data-testid="stSidebar"] div,
+        [data-testid="stSidebar"] a,
+        [data-testid="stSidebar"] .stRadio label,
+        [data-testid="stSidebar"] .stMarkdown,
+        [data-testid="stSidebar"] .stCaption,
+        [data-testid="stSidebar"] small {
+            font-family: 'Bangers', cursive !important;
+            letter-spacing: 1.2px !important;
+        }
+        /* Numbers in metric values stay readable */
+        [data-testid="stSidebar"] [data-testid="stMetricValue"] {
+            font-family: 'Bangers', cursive !important;
+            font-size: 1.6rem !important;
+            letter-spacing: 1px !important;
+        }
+        [data-testid="stSidebar"] [data-testid="metric-container"] label {
+            font-size: 1rem !important;
+        }
+        [data-testid="stSidebar"] .stRadio label {
+            font-size: 1.15rem !important;
+        }
+    """
+
     if dark:
-        # Dark mode: warm orange/amber cartoon palette — readable on dark navy
         css = f"""
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap');
+        @import url('{bangers_url}');
 
         :root {{
             --bg-main:      #0f0e17;
             --bg-card:      #1e1b2e;
             --bg-sidebar:   #13121f;
-            --accent1:      #f97316;   /* orange — headings */
-            --accent2:      #38bdf8;   /* sky blue */
-            --accent3:      #fbbf24;   /* amber */
-            --accent5:      #34d399;   /* emerald */
-            --text-main:    #fef3c7;   /* warm cream — excellent contrast on dark */
-            --text-body:    #e8d5b7;   /* slightly warmer for paragraphs */
-            --text-muted:   #a78bfa;   /* violet muted */
+            --accent1:      #f97316;
+            --accent2:      #38bdf8;
+            --accent3:      #fbbf24;
+            --accent5:      #34d399;
+            --text-main:    #fef3c7;
+            --text-body:    #e8d5b7;
+            --text-muted:   #a78bfa;
             --heading-font: 'Bangers', cursive;
             --body-font:    'Nunito', sans-serif;
         }}
@@ -227,38 +332,33 @@ def inject_theme():
             font-size: 17px !important;
         }}
 
-        /* General paragraph / markdown text */
         p, li, .stMarkdown p, [data-testid="stMarkdownContainer"] p {{
             color: var(--text-body) !important;
             font-size: 1.05rem !important;
             line-height: 1.7 !important;
         }}
 
-        /* Cartoon doodle background tile */
         [data-testid="stAppViewContainer"]::before {{
             content: "";
             position: fixed;
             inset: 0;
             background-image: url('{bg_tile}');
-            background-size: 200px 200px;
+            background-size: 240px 240px;
             background-repeat: repeat;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.80;
+            opacity: 0.78;
         }}
 
         [data-testid="stSidebar"] {{
             background: var(--bg-sidebar) !important;
             border-right: 3px solid var(--accent1) !important;
         }}
-        [data-testid="stSidebar"] * {{
-            color: var(--text-main) !important;
-            font-family: var(--body-font) !important;
-        }}
+
+        {sidebar_font_rules}
 
         .main .block-container {{ position: relative; z-index: 1; }}
 
-        /* Headings — orange with sky-blue shadow */
         h1, [data-testid="stHeading"] h1 {{
             font-family: var(--heading-font) !important;
             letter-spacing: 2px !important;
@@ -280,7 +380,6 @@ def inject_theme():
             color: var(--accent3) !important;
         }}
 
-        /* Metric boxes */
         [data-testid="metric-container"] {{
             background: var(--bg-card) !important;
             border: 2px solid var(--accent2) !important;
@@ -299,7 +398,6 @@ def inject_theme():
             font-size: 1.8rem !important;
         }}
 
-        /* Buttons */
         .stButton > button {{
             font-family: var(--heading-font) !important;
             letter-spacing: 2px !important;
@@ -316,7 +414,6 @@ def inject_theme():
             box-shadow: 6px 6px 0px var(--accent2) !important;
         }}
 
-        /* Inputs */
         .stTextInput input, .stTextArea textarea, .stNumberInput input {{
             background: var(--bg-card) !important;
             border: 2px solid var(--accent1) !important;
@@ -331,7 +428,6 @@ def inject_theme():
             font-size: 1rem !important;
             font-weight: 700 !important;
         }}
-
         .stSelectbox [data-baseweb="select"] {{
             background: var(--bg-card) !important;
             border: 2px solid var(--accent2) !important;
@@ -339,7 +435,6 @@ def inject_theme():
             color: var(--text-main) !important;
         }}
 
-        /* Expanders */
         details {{
             background: var(--bg-card) !important;
             border: 2px solid var(--accent1) !important;
@@ -352,7 +447,6 @@ def inject_theme():
             font-size: 1.05rem !important;
         }}
 
-        /* Tabs */
         .stTabs [data-baseweb="tab"] {{
             font-family: var(--heading-font) !important;
             font-size: 1.1rem !important;
@@ -364,49 +458,29 @@ def inject_theme():
             border-bottom: 3px solid var(--accent1) !important;
         }}
 
-        /* Alert boxes */
         .stAlert {{ border-radius: 10px !important; font-size: 1rem !important; }}
         .stAlert p {{ font-size: 1rem !important; color: inherit !important; }}
-
         hr {{ border-color: var(--accent1) !important; opacity: 0.35 !important; }}
-
-        /* Sidebar nav */
-        [data-testid="stSidebar"] .stRadio label {{
-            font-size: 1.1rem !important;
-            font-weight: 700 !important;
-        }}
-        [data-testid="stSidebar"] .stCaption,
-        [data-testid="stSidebar"] small {{
-            color: var(--text-muted) !important;
-            font-size: 0.92rem !important;
-        }}
-
-        /* Caption / small text */
-        .stCaption, small {{
-            color: var(--text-muted) !important;
-            font-size: 0.95rem !important;
-        }}
-
+        .stCaption, small {{ color: var(--text-muted) !important; font-size: 0.95rem !important; }}
         ::-webkit-scrollbar {{ width: 8px; background: var(--bg-main); }}
         ::-webkit-scrollbar-thumb {{ background: var(--accent1); border-radius: 4px; }}
         </style>
         """
     else:
-        # Light mode: deep navy text on warm cream — cartoon orange/teal palette
         css = f"""
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap');
+        @import url('{bangers_url}');
 
         :root {{
-            --bg-main:      #fff7ed;   /* warm cream */
+            --bg-main:      #fff7ed;
             --bg-card:      #ffffff;
-            --accent1:      #ea580c;   /* burnt orange — headings */
-            --accent2:      #0891b2;   /* teal */
-            --accent3:      #d97706;   /* amber */
-            --accent5:      #16a34a;   /* green */
-            --text-main:    #1c1917;   /* near-black — maximum readability */
-            --text-body:    #292524;   /* dark brown-black for paragraphs */
-            --text-muted:   #57534e;   /* warm gray */
+            --accent1:      #ea580c;
+            --accent2:      #0891b2;
+            --accent3:      #d97706;
+            --accent5:      #16a34a;
+            --text-main:    #1c1917;
+            --text-body:    #292524;
+            --text-muted:   #57534e;
             --heading-font: 'Bangers', cursive;
             --body-font:    'Nunito', sans-serif;
         }}
@@ -417,14 +491,12 @@ def inject_theme():
             font-size: 17px !important;
         }}
 
-        /* General paragraph / markdown text */
         p, li, .stMarkdown p, [data-testid="stMarkdownContainer"] p {{
             color: var(--text-body) !important;
             font-size: 1.05rem !important;
             line-height: 1.7 !important;
         }}
 
-        /* Warm cream + colour-burst gradient base */
         [data-testid="stAppViewContainer"] {{
             background:
                 radial-gradient(ellipse at 5%  10%, rgba(234,88,12,0.14)  0%, transparent 40%),
@@ -435,13 +507,12 @@ def inject_theme():
                 #fff7ed !important;
         }}
 
-        /* Cartoon doodle background tile */
         [data-testid="stAppViewContainer"]::before {{
             content: "";
             position: fixed;
             inset: 0;
             background-image: url('{bg_tile}');
-            background-size: 200px 200px;
+            background-size: 240px 240px;
             background-repeat: repeat;
             pointer-events: none;
             z-index: 0;
@@ -452,14 +523,11 @@ def inject_theme():
             background: linear-gradient(155deg, #fff7ed 0%, #ecfeff 55%, #fefce8 100%) !important;
             border-right: 4px solid var(--accent1) !important;
         }}
-        [data-testid="stSidebar"] * {{
-            color: var(--text-main) !important;
-            font-family: var(--body-font) !important;
-        }}
+
+        {sidebar_font_rules}
 
         .main .block-container {{ position: relative; z-index: 1; }}
 
-        /* Headings — orange with teal shadow */
         h1, [data-testid="stHeading"] h1 {{
             font-family: var(--heading-font) !important;
             letter-spacing: 2.5px !important;
@@ -481,7 +549,6 @@ def inject_theme():
             color: var(--accent1) !important;
         }}
 
-        /* Metric boxes */
         [data-testid="metric-container"] {{
             background: var(--bg-card) !important;
             border: 3px solid var(--accent1) !important;
@@ -500,7 +567,6 @@ def inject_theme():
             font-size: 1.8rem !important;
         }}
 
-        /* Buttons */
         .stButton > button {{
             font-family: var(--heading-font) !important;
             letter-spacing: 2px !important;
@@ -517,7 +583,6 @@ def inject_theme():
             box-shadow: 6px 6px 0px var(--accent2) !important;
         }}
 
-        /* Inputs */
         .stTextInput input, .stTextArea textarea, .stNumberInput input {{
             background: var(--bg-card) !important;
             border: 2px solid var(--accent1) !important;
@@ -532,7 +597,6 @@ def inject_theme():
             font-size: 1rem !important;
             font-weight: 700 !important;
         }}
-
         .stSelectbox [data-baseweb="select"] {{
             background: var(--bg-card) !important;
             border: 2px solid var(--accent2) !important;
@@ -540,7 +604,6 @@ def inject_theme():
             color: var(--text-main) !important;
         }}
 
-        /* Expanders */
         details {{
             background: var(--bg-card) !important;
             border: 2px solid var(--accent1) !important;
@@ -553,7 +616,6 @@ def inject_theme():
             font-size: 1.05rem !important;
         }}
 
-        /* Tabs */
         .stTabs [data-baseweb="tab"] {{
             font-family: var(--heading-font) !important;
             font-size: 1.1rem !important;
@@ -565,30 +627,10 @@ def inject_theme():
             border-bottom: 3px solid var(--accent1) !important;
         }}
 
-        /* Alert boxes */
         .stAlert {{ border-radius: 10px !important; font-size: 1rem !important; }}
         .stAlert p {{ font-size: 1rem !important; color: var(--text-main) !important; }}
-
         hr {{ border-color: var(--accent1) !important; opacity: 0.25 !important; }}
-
-        /* Sidebar nav */
-        [data-testid="stSidebar"] .stRadio label {{
-            font-size: 1.1rem !important;
-            font-weight: 700 !important;
-            color: var(--text-main) !important;
-        }}
-        [data-testid="stSidebar"] .stCaption,
-        [data-testid="stSidebar"] small {{
-            color: var(--text-muted) !important;
-            font-size: 0.92rem !important;
-        }}
-
-        /* Caption / small text */
-        .stCaption, small {{
-            color: var(--text-muted) !important;
-            font-size: 0.95rem !important;
-        }}
-
+        .stCaption, small {{ color: var(--text-muted) !important; font-size: 0.95rem !important; }}
         ::-webkit-scrollbar {{ width: 8px; background: var(--bg-main); }}
         ::-webkit-scrollbar-thumb {{ background: var(--accent1); border-radius: 4px; }}
         </style>
@@ -920,7 +962,7 @@ elif page == "➕ Add a Cartoon":
         creator1_role = st.text_input("Creator 1 — role", placeholder="e.g. Character designer")
 
         st.subheader("Original studio")
-        studio_name   = st.text_input("Studio name")
+        studio_name    = st.text_input("Studio name")
         studio_founded = st.number_input("Studio founded year", min_value=1880, max_value=datetime.now().year, value=1920)
         studio_active  = st.checkbox("Studio still active", value=True)
 
