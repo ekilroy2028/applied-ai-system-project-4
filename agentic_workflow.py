@@ -3,20 +3,20 @@ agentic_workflow.py
 CartoonPal Agentic Copyright Research Workflow — Stretch Feature (+2 points)
 
 This implements a MULTI-STEP AGENTIC WORKFLOW where the AI:
-1. Plans its research approach
-2. Retrieves and analyzes ownership data
-3. Checks for copyright edge cases
-4. Synthesizes a final determination
-5. Self-evaluates its own confidence
+  1. Plans its research approach
+  2. Retrieves and analyzes ownership data
+  3. Checks for copyright edge cases
+  4. Synthesizes a final determination
+  5. Self-evaluates its own confidence
 
 Each step is OBSERVABLE — the UI shows what the agent is doing at each stage,
 making the reasoning chain transparent and verifiable.
 
 This goes beyond the basic RAG feature by adding:
-- Autonomous planning (agent decides what to investigate)
-- Multi-step tool-like calls (each step informs the next)
-- Self-evaluation (agent critiques its own output)
-- Observable intermediate steps visible in the UI
+  - Autonomous planning (agent decides what to investigate)
+  - Multi-step tool-like calls (each step informs the next)
+  - Self-evaluation (agent critiques its own output)
+  - Observable intermediate steps visible in the UI
 """
 
 import logging
@@ -31,22 +31,22 @@ def run_copyright_agent(cartoon: Cartoon, library: Library) -> dict:
     Multi-step agentic copyright research workflow.
 
     The agent autonomously:
-    Step 1 — PLAN:     Decide what aspects to investigate
-    Step 2 — RETRIEVE: Pull all structured data from CartoonPal database
-    Step 3 — ANALYZE:  Send structured data to Claude for initial analysis
-    Step 4 — CHECK:    Agent checks for edge cases and complicating factors
-    Step 5 — COMPARE:  Find similar characters for context
-    Step 6 — SYNTHESIZE: Claude produces final determination
-    Step 7 — EVALUATE: Agent self-evaluates confidence and flags uncertainties
+      Step 1 — PLAN:     Decide what aspects to investigate
+      Step 2 — RETRIEVE: Pull all structured data from CartoonPal database
+      Step 3 — ANALYZE:  Send structured data to Claude for initial analysis
+      Step 4 — CHECK:    Agent checks for edge cases and complicating factors
+      Step 5 — COMPARE:  Find similar characters for context
+      Step 6 — SYNTHESIZE: Claude produces final determination
+      Step 7 — EVALUATE: Agent self-evaluates confidence and flags uncertainties
 
     Returns:
         dict with keys:
-        steps: list of {name, status, output} — the observable reasoning chain
-        final_determination: str — the final copyright conclusion
-        confidence: str — HIGH / MEDIUM / LOW
-        edge_cases: list of str — any complicating factors found
-        similar_characters: list of str — comparable characters for context
-        success: bool
+          steps: list of {name, status, output} — the observable reasoning chain
+          final_determination: str — the final copyright conclusion
+          confidence: str — HIGH / MEDIUM / LOW
+          edge_cases: list of str — any complicating factors found
+          similar_characters: list of str — comparable characters for context
+          success: bool
     """
     try:
         import anthropic
@@ -235,7 +235,7 @@ def run_copyright_agent(cartoon: Cartoon, library: Library) -> dict:
             confidence = "LOW"
 
         add_step("SYNTHESIZE", "✅ Complete",
-                f"Final determination generated ({len(final_text)} chars) — confidence: {confidence}")
+                 f"Final determination generated ({len(final_text)} chars) — confidence: {confidence}")
 
         # ── STEP 7: SELF-EVALUATE ─────────────────────────────────────────
         # Agent evaluates its own reasoning quality
@@ -254,7 +254,7 @@ def run_copyright_agent(cartoon: Cartoon, library: Library) -> dict:
         add_step("SELF-EVALUATE", "✅ Complete", eval_text)
 
         log.info("Agent workflow complete for %s — %d steps, confidence: %s",
-                cartoon.name, len(steps), confidence)
+                 cartoon.name, len(steps), confidence)
 
         return {
             "success": True,

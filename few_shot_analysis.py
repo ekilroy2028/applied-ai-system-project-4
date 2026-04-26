@@ -5,19 +5,19 @@ CartoonPal Few-Shot Specialized Analysis — Stretch Feature (+2 points)
 This implements FINE-TUNING / SPECIALIZATION via few-shot prompting patterns.
 
 The technique:
-  - Provides Claude with carefully crafted EXAMPLE analyses (few-shot examples)
-  - Each example demonstrates the EXACT tone, structure, and depth we want
-  - Examples cover the key copyright scenario types: public domain, protected,
+- Provides Claude with carefully crafted EXAMPLE analyses (few-shot examples)
+- Each example demonstrates the EXACT tone, structure, and depth we want
+- Examples cover the key copyright scenario types: public domain, protected,
     complex ownership, international origin, approaching public domain
-  - Claude learns the CartoonPal house style from these examples
-  - Output is measurably different from the baseline RAG response:
+- Claude learns the CartoonPal house style from these examples
+- Output is measurably different from the baseline RAG response:
     more structured, consistent format, appropriate nuance per scenario
 
 This is measurably different from the basic RAG (ai_analysis.py) because:
-  1. Output follows a consistent structured format (Status / Basis / Nuance / Guidance)
-  2. Tone is calibrated — educational but precise, not overly cautious
-  3. Edge case handling matches CartoonPal's specific use cases
-  4. Responses are more actionable and specific than baseline
+1. Output follows a consistent structured format (Status / Basis / Nuance / Guidance)
+2. Tone is calibrated — educational but precise, not overly cautious
+3. Edge case handling matches CartoonPal's specific use cases
+4. Responses are more actionable and specific than baseline
 
 The few-shot examples act as a synthetic training signal, specializing
 Claude's behavior for the cartoon copyright domain without actual fine-tuning.
@@ -285,7 +285,7 @@ def run_few_shot_analysis(cartoon: Cartoon) -> dict:
                 sections[section] = analysis[start:next_section_pos].strip()
 
         log.info("Few-shot analysis complete for %s — confidence: %s, examples used: %d",
-                 cartoon.name, confidence, examples_used)
+                cartoon.name, confidence, examples_used)
 
         return {
             "success": True,
