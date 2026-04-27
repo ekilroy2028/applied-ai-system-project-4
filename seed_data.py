@@ -19,6 +19,7 @@ from characters.filmation_characters import add_filmation_characters
 from characters.wb_characters import add_wb_characters
 from characters.dc_characters import add_dc_characters
 from characters.marvel_characters import add_marvel_characters
+from characters.sanrio_characters import add_sanrio_characters
 
 
 def build_library() -> Library:
@@ -788,4 +789,5 @@ def build_library() -> Library:
     add_wb_characters(lib)
     add_dc_characters(lib)
     add_marvel_characters(lib)
+    add_sanrio_characters(lib)
     return lib

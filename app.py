@@ -46,7 +46,7 @@ else:
     BG        = "#FFF700"
     CARD      = "#FFFFFF"
     BORDER    = "#FF0080"
-    TEXT      = "#1A0050"
+    TEXT      = "#1B0060"
     SUBTEXT   = "#5500AA"
     SIDEBAR_BG = "#FF0080"
     INPUT_BG  = "#FFFFFF"
@@ -288,7 +288,9 @@ section[data-testid="stSidebar"] * {{
     background: linear-gradient(135deg, #FF0080, #FF6B00, #FFD700) !important;
     color: white !important;
     border: 3px solid rgba(0,0,0,0.15) !important;
-    border-radius: 14px !important;
+    border-radius: 6px !important;
+    min-width: 180px !important;
+    min-height: 44px !important;
     font-family: 'Nunito', sans-serif !important;
     font-weight: 900 !important;
     font-size: 1rem !important;
@@ -326,6 +328,18 @@ section[data-testid="stSidebar"] * {{
 .stTextInput input::placeholder {{
     color: {SUBTEXT} !important;
     font-style: italic;
+}}
+
+/* ── DASHBOARD LIST TEXT — purplish navy ── */
+.element-container p,
+.stMarkdown p,
+.stMarkdown li,
+.stMarkdown strong {{
+    color: {TEXT} !important;
+}}
+/* Dashboard specific — all list and caption text */
+.stMarkdown {{
+    color: {TEXT} !important;
 }}
 
 /* ── COPYRIGHT DASHBOARD OVERRIDES ── */
@@ -382,17 +396,58 @@ h2, h3, h4, h5 {{
     box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
 }}
 
-/* ── DIVIDERS ── */
+/* ── DIVIDERS — wavy SVG line ── */
 hr {{
     border: none !important;
-    border-top: 3px dashed {BORDER} !important;
+    height: 12px !important;
     margin: 20px 0 !important;
-    opacity: 0.8;
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='12'%3E%3Cpath d='M0 6 Q5 0 10 6 Q15 12 20 6 Q25 0 30 6 Q35 12 40 6' stroke='%23F4A261' stroke-width='2.5' fill='none'/%3E%3C/svg%3E")
+        repeat-x center !important;
+    opacity: 0.9;
 }}
 
 /* ── SUCCESS / WARNING / ERROR ── */
 [data-testid="stNotification"], .stAlert {{
     border-radius: 14px !important;
+    border-width: 3px !important;
+    font-weight: 700 !important;
+}}
+/* ── STATUS BOX BORDERS — darker version of each box color ── */
+
+/* Public Domain — green box: dark green border + shadow */
+div[data-testid="stAlert"][data-baseweb="notification"][kind="success"],
+[data-testid="stAlert"].st-success,
+div[class*="stSuccess"] {{
+    border: 3px solid #006400 !important;
+    border-radius: 12px !important;
+    box-shadow: 3px 3px 0px #004d00 !important;
+    font-weight: 700 !important;
+}}
+
+/* Protected (warning) — yellow box: dark amber border */
+div[data-testid="stAlert"][kind="warning"],
+[data-testid="stAlert"].st-warning,
+div[class*="stWarning"] {{
+    border: 3px solid #B8860B !important;
+    border-radius: 12px !important;
+    box-shadow: 3px 3px 0px #8B6508 !important;
+    font-weight: 700 !important;
+}}
+
+/* Protected (error) — red box: dark red border */
+div[data-testid="stAlert"][kind="error"],
+[data-testid="stAlert"].st-error,
+div[class*="stError"] {{
+    border: 3px solid #8B0000 !important;
+    border-radius: 12px !important;
+    box-shadow: 3px 3px 0px #660000 !important;
+    font-weight: 700 !important;
+}}
+
+/* Catch-all for Streamlit alert containers */
+div[role="alert"] {{
+    border-radius: 12px !important;
     border-width: 3px !important;
     font-weight: 700 !important;
 }}
@@ -403,6 +458,85 @@ p, .stMarkdown p {{
 }}
 h1, h2, h3, h4, h5, h6 {{
     color: {TEXT} !important;
+}}
+
+/* ── ALERT BOX BORDERS — guaranteed catch-all ── */
+/* Streamlit renders alerts inside these selectors */
+.stAlert {{
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+}}
+/* Green / Public Domain */
+.stAlert[data-baseweb="notification"] svg + div,
+[data-testid="stNotification"] {{
+    border-radius: 12px !important;
+}}
+/* Force borders on ALL alert types via attribute */
+[data-testid="stAlert"] {{
+    border-radius: 12px !important;
+    border-width: 3px !important;
+    border-style: solid !important;
+    box-shadow: 3px 3px 0px currentColor !important;
+}}
+/* Green success */
+[data-testid="stAlert"][style*="rgb(33, 195, 84)"],
+[data-testid="stAlert"][style*="green"],
+.st-emotion-cache-j7qwjs,
+[data-testid="stAlert"] p {{
+    font-weight: 800 !important;
+}}
+/* Inline style override — hardcode strokes on each color */
+.element-container div[style*="background-color: rgb(230, 244, 234)"] {{
+    border: 3px solid #006400 !important;
+    box-shadow: 3px 3px 0px #004d00 !important;
+    border-radius: 12px !important;
+}}
+.element-container div[style*="background-color: rgb(255, 237, 171)"] {{
+    border: 3px solid #B8860B !important;
+    box-shadow: 3px 3px 0px #8B6508 !important;
+    border-radius: 12px !important;
+}}
+.element-container div[style*="background-color: rgb(255, 220, 220)"] {{
+    border: 3px solid #8B0000 !important;
+    box-shadow: 3px 3px 0px #660000 !important;
+    border-radius: 12px !important;
+}}
+
+/* ── SIDEBAR NAV RADIO — larger text ── */
+section[data-testid="stSidebar"] [data-testid="stRadio"] label {{
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    color: #FFFDF7 !important;
+    padding: 6px 4px !important;
+    letter-spacing: 0.5px !important;
+    font-family: 'Fredoka One', sans-serif !important;
+}}
+section[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {{
+    color: #FFD700 !important;
+}}
+/* Selected nav item */
+section[data-testid="stSidebar"] [data-testid="stRadio"] [aria-checked="true"] + label,
+section[data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"] {{
+    color: #FFD700 !important;
+}}
+
+/* ── SIDEBAR METRICS — larger label and value ── */
+section[data-testid="stSidebar"] [data-testid="metric-container"] {{
+    padding: 10px 14px !important;
+}}
+section[data-testid="stSidebar"] [data-testid="stMetricValue"] {{
+    font-size: 2.2rem !important;
+    font-family: 'Bangers', cursive !important;
+    color: #FFD700 !important;
+    letter-spacing: 2px !important;
+}}
+section[data-testid="stSidebar"] [data-testid="stMetricLabel"] {{
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    color: #FF6B00 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    font-family: 'Fredoka One', sans-serif !important;
 }}
 
 /* ── SCROLLBAR ── */
@@ -432,13 +566,50 @@ analyzer = CartoonAnalyzer(lib)
 # ─────────────────────────────────────────────────────────────────────────────
 def copyright_badge(cartoon: Cartoon):
     if cartoon.is_public_domain:
-        st.success("✅  Public Domain — free to use")
+        st.markdown("""
+        <div style="
+            background: #CCFFD6;
+            border: 4px solid #006400;
+            border-radius: 12px;
+            box-shadow: 4px 4px 0px #004d00;
+            padding: 12px 18px;
+            font-weight: 800;
+            font-size: 1rem;
+            color: #004d00;
+            font-family: 'Fredoka One', sans-serif;
+        ">✅ Public Domain — free to use</div>
+        """, unsafe_allow_html=True)
     else:
         yrs = cartoon.years_until_public_domain
+        owner = cartoon.current_owner.owner_name if cartoon.current_owner else "?"
         if yrs <= 10:
-            st.warning(f"⚠️  Protected — © {cartoon.current_owner.owner_name if cartoon.current_owner else '?'}  ({yrs} yrs until public domain)")
+            st.markdown(f"""
+            <div style="
+                background: #FFF3CD;
+                border: 4px solid #B8860B;
+                border-radius: 12px;
+                box-shadow: 4px 4px 0px #8B6508;
+                padding: 12px 18px;
+                font-weight: 800;
+                font-size: 1rem;
+                color: #7A5000;
+                font-family: 'Fredoka One', sans-serif;
+            ">⚠️ Protected — © {owner} ({yrs} yrs until public domain)</div>
+            """, unsafe_allow_html=True)
         else:
-            st.error(f"🔒  Protected — © {cartoon.current_owner.owner_name if cartoon.current_owner else '?'}  ({yrs} yrs until public domain)")
+            st.markdown(f"""
+            <div style="
+                background: #FFDCDC;
+                border: 4px solid #8B0000;
+                border-radius: 12px;
+                box-shadow: 4px 4px 0px #660000;
+                padding: 12px 18px;
+                font-weight: 800;
+                font-size: 1rem;
+                color: #660000;
+                font-family: 'Fredoka One', sans-serif;
+            ">🔒 Protected — © {owner} ({yrs} yrs until public domain)</div>
+            """, unsafe_allow_html=True)
 
 
 def render_ownership_chain(cartoon: Cartoon):
@@ -714,20 +885,10 @@ with st.sidebar:
     st.divider()
 
     # ── DARK / LIGHT MODE TOGGLE ─────────────────────────────
-    col_sun, col_btn, col_moon = st.columns([1, 2, 1])
-    with col_sun:
-        st.markdown(
-            "<div style='text-align:right;font-size:1.4rem;padding-top:6px;'>☀️</div>",
-            unsafe_allow_html=True)
-    with col_btn:
-        label = "🌙 Dark Mode" if not st.session_state.dark_mode else "☀️ Light Mode"
-        if st.button(label, key="mode_toggle", use_container_width=True):
-            st.session_state.dark_mode = not st.session_state.dark_mode
-            st.rerun()
-    with col_moon:
-        st.markdown(
-            "<div style='text-align:left;font-size:1.4rem;padding-top:6px;'>🌙</div>",
-            unsafe_allow_html=True)
+    label = "🌙 Switch to Dark Mode" if not st.session_state.dark_mode else "☀️ Switch to Light Mode"
+    if st.button(label, key="mode_toggle", use_container_width=True):
+        st.session_state.dark_mode = not st.session_state.dark_mode
+        st.rerun()
 
     current_mode = "🌙 Dark Mode" if st.session_state.dark_mode else "☀️ Light Mode"
     st.markdown(
@@ -753,7 +914,18 @@ st.sidebar.metric("Protected", summary["protected"])
 # PAGE: Search
 # ─────────────────────────────────────────────────────────────────────────────
 if page == "🔍 Search":
-    st.title("🔍 Search CartoonPal")
+    st.markdown("""
+    <div class="cp-header cp-header-search">
+        <h1 style="font-family: 'Bangers', cursive !important;
+                   font-size: 3.2rem !important;
+                   letter-spacing: 4px !important;
+                   text-shadow: 4px 4px 0px rgba(0,0,0,0.25), -2px -2px 0px rgba(255,255,255,0.15) !important;
+                   color: white !important;">
+            🔍 Search CartoonPal!
+        </h1>
+        <p>Find any animated character — copyright status, ownership history, and AI analysis</p>
+    </div>
+    """, unsafe_allow_html=True)
     query = st.text_input("Enter a cartoon name", placeholder="e.g. Bugs Bunny, Betty Boop, Felix…")
 
     if query:
