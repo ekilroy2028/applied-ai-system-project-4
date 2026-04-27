@@ -213,8 +213,7 @@ The second lesson: AI collaboration requires the human to act as architect. The 
 - Trademark protection (perpetually renewable) is mentioned but not fully modeled
 - Historical ownership records may contain inaccuracies in complex corporate merger histories
 
-**Loom video walkthrough:** [ADD YOUR LOOM LINK HERE]
-
+**Loom video walkthrough:** [Watch the demo](https://www.loom.com/share/09d86a92f2864c7ea17b18d36ea7c5fb)
 ---
 
 ## File Structure

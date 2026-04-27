@@ -982,10 +982,10 @@ if page == "🔍 Search":
             st.divider()
             render_ai_analysis(result)
 
-            with st.expander("🤖 Agentic Workflow Research (Stretch Feature +2)"):
+            with st.expander("🤖 Agentic Workflow Research"):
                 render_agentic_workflow(result)
 
-            with st.expander("📚 Few-Shot Specialized Analysis (Stretch Feature +2)"):
+            with st.expander("📚 Few-Shot Specialized Analysis"):
                 render_few_shot_analysis(result)
 
         else:
