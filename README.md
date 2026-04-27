@@ -223,23 +223,25 @@ ai110-applied-ai-system-project-4/
 ├── cartoon_system.py           # OOP classes — core logic
 ├── seed_data.py                # Library builder
 ├── ai_analysis.py              # RAG AI module (Anthropic API)
+├── few_shot_analysis.py        # Few-shot specialization module
+├── agentic_workflow.py         # Agentic planning module
 ├── main.py                     # CLI demo script
 ├── app.py                      # Streamlit UI
 ├── requirements.txt
 ├── README.md
-├── reflection.md
+├── Reflection                  # Ethics & AI collaboration notes
 ├── characters/
 │   ├── __init__.py
-│   ├── anime_characters.py     # Sailor Moon, Dragon Ball Z
-│   ├── dc_characters.py        # Batman, Superman, Wonder Woman
-│   ├── dic_characters.py       # Inspector Gadget, Jem
-│   ├── disney_characters.py    # 50+ Disney characters
-│   ├── filmation_characters.py # He-Man, She-Ra, Fat Albert
-│   ├── hanna_barbera_characters.py  # Flintstones, Jetsons, 30+ HB
-│   ├── marvel_characters.py    # Spider-Man, X-Men, Avengers
-│   ├── mgm_characters.py       # Droopy, MGM cartoons
-│   ├── schoolhouse_rock.py     # All Schoolhouse Rock segments
-│   └── wb_characters.py        # Looney Tunes, Animaniacs, DCAU
+│   ├── anime_characters.py
+│   ├── dc_characters.py
+│   ├── dic_characters.py
+│   ├── disney_characters.py
+│   ├── filmation_characters.py
+│   ├── hanna_barbera_characters.py
+│   ├── marvel_characters.py
+│   ├── mgm_characters.py
+│   ├── schoolhouse_rock.py
+│   └── wb_characters.py
 ├── tests/
 │   └── test_cartoonpal.py      # 42 automated tests
 └── assets/
