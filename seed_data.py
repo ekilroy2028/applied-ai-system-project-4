@@ -20,6 +20,9 @@ from characters.wb_characters import add_wb_characters
 from characters.dc_characters import add_dc_characters
 from characters.marvel_characters import add_marvel_characters
 from characters.sanrio_characters import add_sanrio_characters
+from characters.nickelodeon_characters import add_nickelodeon_characters
+from characters.hasbro_characters import add_hasbro_characters
+from characters.cartoon_network_characters import add_cartoon_network_characters
 
 
 def build_library() -> Library:
@@ -790,4 +793,7 @@ def build_library() -> Library:
     add_dc_characters(lib)
     add_marvel_characters(lib)
     add_sanrio_characters(lib)
+    add_nickelodeon_characters(lib)
+    add_hasbro_characters(lib)
+    add_cartoon_network_characters(lib)
     return lib

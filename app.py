@@ -531,7 +531,7 @@ section[data-testid="stSidebar"] [data-testid="stMetricValue"] {{
     letter-spacing: 2px !important;
 }}
 section[data-testid="stSidebar"] [data-testid="stMetricLabel"] {{
-    font-size: 1rem !important;
+    font-size: 1.3rem !important;
     font-weight: 800 !important;
     color: #FF6B00 !important;
     text-transform: uppercase !important;
